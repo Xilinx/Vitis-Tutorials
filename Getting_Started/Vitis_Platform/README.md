@@ -14,7 +14,7 @@
 
 # Versal Platform Creation Quick Start
 
-***Vitis Unified IDE 2025.2***, ***Vivado 2025.2***
+***Vitis Unified IDE 2026.1***, ***Vivado 2026.1***
 
 ***Board: VCK190 VEK280***
 
@@ -22,7 +22,7 @@ In this module, we will get started with three steps to quickly create a platfor
 
 This time, we will utilize the AMD Versal™ extensible platform from the CED example, using a pre-built Linux common image and a device tree file generated with the Platform Creation. Next, we will create an embedded Versal acceleration platform using the AMD Vitis™ Unified IDE. Finally, we will validate this platform using the Vector Addition example.
 
-This is a quick start guide for Versal platform creation. If you have questions about specific steps or settings, or if you need to create a platform for a customer's board, please refer to[Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.2/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190). Besides, if you need to customize the Linux system image, refer to the [PetaLinux customization page](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.2/Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization) for reference.
+This is a quick start guide for Versal platform creation. If you have questions about specific steps or settings, or if you need to create a platform for a customer's board, please refer to[Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/2026.1/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190). Besides, if you need to customize the Linux system image, refer to the [PetaLinux customization page](https://github.com/Xilinx/Vitis-Tutorials/tree/2026.1/Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization) for reference.
 
 ## Step 1: Create Vivado Design and Generate XSA
 
@@ -110,12 +110,12 @@ This is a quick start guide for Versal platform creation. If you have questions 
 1. Download Versal common image from [AMD website download page](https://www.xilinx.com/support/download.html), place it under your `WorkSpace` directory, and extract the common image.
 
    ```bash
-   tar xvf ../xilinx-versal-common-v2025.2.tar.gz .
+   tar xvf ../xilinx-versal-common-v2026.1.tar.gz .
    ```
 
 2. Create Vitis platform
 
-   - Install SDK tool by typing `sh xilinx-versal-common-v2025.2/sdk.sh -d xilinx-versal-common-v2025.2/ -y` in console. Option `-d` is to specify the directory where to install. Option `-y` means confirmation. So it gets installed in `xilinx-versal-common-v2025.2/` folder.
+   - Install SDK tool by typing `sh xilinx-versal-common-v2026.1/sdk.sh -d xilinx-versal-common-v2026.1/ -y` in console. Option `-d` is to specify the directory where to install. Option `-y` means confirmation. So it gets installed in `xilinx-versal-common-v2026.1/` folder.
 
    >Note: The SDK installation is not required for platform creation; it is needed for application compilation. You can install it later as needed.
 
@@ -145,7 +145,7 @@ This is a quick start guide for Versal platform creation. If you have questions 
   
       ![vitis_platform_config](images/vitis_platform_config.PNG)
 
-   - **Pre-Built Image Directory**: Browse to extracted common image path directory: `xilinx-versal-common-v2025.2/` and click OK. Bootgen looks for boot components referred by BIF in this directory to generate `BOOT.BIN`.
+   - **Pre-Built Image Directory**: Browse to extracted common image path directory: `xilinx-versal-common-v2026.1/` and click OK. Bootgen looks for boot components referred by BIF in this directory to generate `BOOT.BIN`.
    - **DTB file**: It will be generated automatically and populated in this area.
    - **FAT32 Partition Directory**: if you have additional file to be stored in FAT32 partition diretory you can browse to the file. If not please omit this.
    - **QEMU Data**: This Directory is used to add additional file for emulation. User can set it according to your requirement.
@@ -168,9 +168,9 @@ This is a quick start guide for Versal platform creation. If you have questions 
 
   >Note: If you target VEK280, please select `vek280_custom` platform.
 
-- Input **Sysroot** path: `xilinx-versal-common-v2025.2/sysroots/cortexa72-cortexa53-amd-linux`
-- Input **RootFS** path: `xilinx-versal-common-v2025.2/rootfs.ext4`
-- Input **Kernel Image** path: `xilinx-versal-common-v2025.2/Image` and click **Next**.
+- Input **Sysroot** path: `xilinx-versal-common-v2026.1/sysroots/cortexa72-cortexa53-amd-linux`
+- Input **RootFS** path: `xilinx-versal-common-v2026.1/rootfs.ext4`
+- Input **Kernel Image** path: `xilinx-versal-common-v2026.1/Image` and click **Next**.
 - Review the project summary and click **Finish**.
 
   After seconds, the project is created.

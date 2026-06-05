@@ -202,7 +202,17 @@ ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
 	@echo "COMPLETE: emulation package created."
 else
 	v++ $(VPP_FLAGS) -t hw --platform $(PLATFORM) -p $(LINK_OUTPUT) $(LIBADF) --package.defer_aie_run -o $(XCLBIN)
-	v++ $(VPP_PFLAGS) -t hw --platform $(PLATFORM) -p $(XCLBIN) $(LIBADF) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.image_format=ext4 --package.boot_mode=sd --package.kernel_image=$(SD_IMAGE_FILE) --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file ./data --package.sd_file aieml_system 
+	v++ $(VPP_PFLAGS) -t hw --platform $(PLATFORM) -p $(XCLBIN) $(LIBADF) \
+		--package.out_dir $(PACKAGE_OUT) \
+		--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
+		--package.generate_sdcard \
+		--package.bl31 $(EDGE_COMMON_SW)/bl31.elf \
+		--package.uboot $(EDGE_COMMON_SW)/u-boot.elf \
+		--package.sd_file $(EDGE_COMMON_SW)/boot.scr \
+		--package.sd_file $(SD_IMAGE_FILE) \
+		--package.sd_file ../$(RUN_APP_SCRIPT) \
+		--package.sd_file ./data \
+		--package.sd_file aieml_system
 	@echo "### ***** sd_card generation done! ***** ###"
 endif
 ###################################################################################################
