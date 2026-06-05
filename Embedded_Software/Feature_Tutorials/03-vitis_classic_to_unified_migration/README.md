@@ -13,25 +13,11 @@
 
 # Vitis Classic to Unified Project Migration
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 >**Note**: The content of this tutorial is also available as an on-demand video, featuring a demo walkthrough from the ["Advancing Embedded Development: Migrating to AMD Vitis™ Unified IDE and Exploring Backend Innovations"](https://webinar.amd.com/Advancing-Embedded-Development-Migrating-to-AMD-Vitis-tm-Unified-IDE-and-Exploring-Backend-Innovations/en) webinar.
 
-The methodology to pass the metadata from hardware from Vivado to Vitis IDE has changed. However, these changes will not affect the users as the AMD baremetal drivers, standalone bsp and libraries have been fully ported to this new methodology.
-
-While this tutorial take an indepth look at the changes in the filesets and metadata transfer methodology, there is a migration script (discussed below), that users can (and should) use to port their Classic Vitis IDE workspaces to Unified Vitis IDE workspace. 
-
-## Migration Script from Vitis Classic IDE to Vitis Unified IDE
-
-There is also a migration utility in the Vitis Classic that users can use to port the workspace from Vitis Classic IDE to Vitis Unified IDE.  Users can port their workspace to Classic Vitis IDE, and then <i>Vitis ->  Export Workspace to Unified IDE</i>. The migration script will generate a script that will rebuild the workspace in the unified Vitis IDE using the Vitis Python API. Users can launch the Unified Vitis IDE and source this script <i>vitis -s script_name.py</i>. Click [here](#Vitis-Classic-workspace-to-Unified-workspace-Migration-Demo) for a demo on how to migrate from Vitis Classic to Unified IDE
-
-### Migration Script Limitations
-
-* Only Classic Vitis IDE to Unified Vitis IDE support
-* External repositories will not be reflected. Meaning if you have a custom driver in an external repo, then this driver will not be ported
-* Modification made to BSP will not be reflected
-* Build Configurations are not copied over to Unified. Users will need to generate this via the launnch configuration GUI
-* Only works for version's untill 2024.2 (Manual migration is recommended)
+The methodology to pass the metadata from hardware from Vivado to Vitis IDE has changed. However, these changes will not affect the users as the AMD baremetal drivers, standalone bsp and libraries have been fully ported to this new methodology. This tutorial will take an indepth look at the changes in the filesets and metadata transfer methodology and also walk you through how to manually migrate your projects from Vitis Classic to Vitis Unified.
 
 ## Metadata transfer Methodology change from Hardware to Software
 
@@ -344,7 +330,7 @@ If i set this from 0 to 1 then this will now be added in the lwipopts.h file
 
 ## Vitis Classic workspace to Unified workspace Migration Demo
 
-The Vitis Classic IDE is now deprecated from the 2025.1 release and therefore the Classic IDE to Vitis Unified IDE migration utility is no longer available as of 2025.1. You can either use the migration utility from a previous release (2024.2, 2024.1 or 2023.2) and then upgrade the project, or perform the migration manually. Follow the steps below for manual migration.
+The Vitis Classic IDE is now deprecated from the 2025.1 release and therefore the Classic IDE to Vitis Unified IDE migration utility is no longer available as of 2025.1. Follow the steps below for manual migration.
 
 ### Manual Migration
 
@@ -360,7 +346,7 @@ Below I have a trivial Block Design for the Zynq Ultrascale+ MPSoC which was cre
 
 ![](./images/2023.2_block_design.PNG)
 
-1. Load Vivado 2025.2 tools
+1. Load Vivado 2026.1 tools
 2. Select 'Open Project' and choose the 2023.2 project to be migrated
 
 ![](./images/open_project.PNG)
@@ -377,72 +363,12 @@ To upgrade the IP select 'Report IP Status' and then scroll to the bottom of the
 
 ![](./images/upgradable_ip.PNG)
 
-5. Export the hardware (XSA) and use it to recreate your platform in Vitis Unified 2025.2
-
-### Vitis Classic to Unified Migration Utility
-
-However if your project is from a previous release (2024.2, 2024.1 or 2023.2) you can follow the tutorial on this page for using the migration utility. There is a script supplied in this tutorial that will build a Vitis Classic Workspace. Follow the steps below to generate this workspace
-
-Launch XSCT, and use the command below
-
-```
-cd scripts
-make all
-```
-**Note:** The scripting flow provided in the tutorial will only work in versions (2023.2 - 2024.2) as the classic IDE is no longer provided in the install from version 2025.1.
-
-This will create the platform xsa file and the **classic_workspace** workspace. Launch Vitis Classic, and navigate to the workspace created above.
-
-The script above will set the app C/C++ build settings with an **EXAMPLE_SYMBOL**.
-
-![](./images/symbol.PNG)
-
-To test the BSP settings, the script will update the **extra_compiler_option** in the BSP to append the "-pg" option.
-
-![](./images/extra.PNG)
-
-
-I also added the **xilffs** library to the BSP. 
-
-![](./images/xilffs.PNG)
-
-**Note:** These are just for demonstration purposes.
-
-Follow the steps below to migrate this Classic workspace to Unified workspace.
-
-Vitis -> Export Workspace to Unified IDE
-
-![](./images/export.PNG)
-
-Choose the Vitis Unified workspace location.
-
-![](./images/migration.PNG)
-
-This will generate a **migration.py** python script that can be opened in the Vitis Unified IDE. First, close Vitis Classic IDE and follow the steps below.
-
-```
-cd path/to/unified_workspace
-vitis -s migrate.py
-```
-
-Once the script is complete, launch the Vitis Unified IDE and set the workspace to the newly generate **unified_workspace**.
-
-Open the **UserConfig.cmake** as shown below to verify that the symbol has been migrated.
-
-![](./images/unified_symbol.PNG)
-
-Open the **Vitis-comp.json** as shown below to verify that the xilfss driver is migrated.
-
-![](./images/unified_xilffs.PNG)
-
-Open the **Vitis-comp.json** as drop the psu_cortexa53_0 and verify that the **proc_extra_compiler_flags** is appended as expected with "-pg".
-
-![](./images/unified_extra.PNG)
+5. Export the hardware (XSA) and use it to recreate your platform in Vitis Unified 2026.1
 
 ## Summary
 
-As we can see above, we migrated successfully from a Vitis Classic IDE to Vitis Unified IDE workspace using the Migration Utility available in the Vitis Classic IDE. It is recommended that users fully evaluate the migrated workspace to make sure everything was ported correctly. Users should make themselves aware of the limitations discussed at the top of this tutorial.
+As we can see above, we migrated successfully from a Vitis Classic IDE to Vitis Unified IDE workspace by mnaully upgrading our vivado project and then using the new XSA file to create a new platform in Vitis Unified 2026.1. It is recommended that users fully evaluate the migrated workspace to make sure everything was ported correctly.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

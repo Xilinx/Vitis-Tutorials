@@ -1,12 +1,12 @@
 #
-# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
 # Author: Stephen MacMahon
 
 SHELL := /bin/bash
 TOOLS ?= ""
-VERSION ?= 2025.2
+VERSION ?= 2024.1
 
 all: create_xsa classic_workspace
 
