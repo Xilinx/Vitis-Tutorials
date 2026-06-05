@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2024-2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
@@ -22,7 +22,7 @@ platform_path=app_path+"/workspace_"+design_part+"/"+platform_name+"/export/"+pl
 #
 #   Create System Project
 #
-proj = client.create_sys_project(name="system_project", platform=platform_path, template="empty_accelerated_application")
+proj = client.create_sys_project(name="system_project", platform=platform_path, template="empty_accelerated_application", packaging_mode="petalinux")
 proj = client.get_sys_project(name="system_project")
 status = proj.add_container(name="binary_container_1")
 proj = proj.add_component(name="simple_aie_app", container_name=['binary_container_1'])
@@ -41,7 +41,9 @@ if (design_part=="4"):
 #   Edit Packager configuration
 #
 cfg = client.get_config_file(proj.project_location+'/package/package.cfg')
-cfg.set_value(section='package', key='enable_aie_debug', value='false')
+
+#if (target_sys=="hw"):
+#    cfg.set_value(section='package', key='enable_aie_debug', value='false')
 
 proj.build(target = target_sys)
 

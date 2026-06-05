@@ -15,28 +15,30 @@
 
 # RTL / AI Engine interfacing Examples 
 
-***Version: Vivado / Vitis 2025.2***
+***Version: Vivado / Vitis 2026.1***
 
 ## Introduction
 
-Connect the AMD Versal™ AI Engine to the programmable logic (PL) using AXI compliant AXI4-Stream interfaces. In most examples, connectivity between the PL and the AI Engine uses high‑level synthesis (HLS) kernels connected to the double data rate (DDR) memory. This is because the default VCK190 base platform includes only infrastructure blocks. To accelerate part of an application, connect the AI Engine to your existing RTL design. You need knowledge of the AXI-Stream protocol and its use for AI Engine connections in the Vitis acceleration flow. Your RTL might require some modification or bridging from the existing RTL. For example, to communicate with the AI Engine, the RTL needs to have a compliant AXI4-Stream interface (it needs to be able to handle back pressure when `tready` is Low).
-This tutorial shows multiple examples of connecting RTL blocks with AXI4-Stream present in a custom platform to the AI Engine using the Vitis Acceleration flow.
+This tuorial is demonstrating how you can connect the AMD Versal™ AI Engine to the programmable logic (PL) using AXI compliant AXI4-Stream interfaces. 
+
+In most examples, connectivity between the PL and the AI Engine uses high‑level synthesis (HLS) kernels connected to the double data rate (DDR) memory. This is because the default VCK190 base platform includes only infrastructure blocks. To accelerate part of an application, you minght want to connect the AI Engine to your existing RTL design. To achieve this, you need knowledge of the AXI-Stream protocol and its use for AI Engine connections in the Vitis acceleration flow. Your RTL might require some modification or bridging from the existing RTL. For example, to communicate with the AI Engine, the RTL needs to have a compliant AXI4-Stream interface (it needs to be able to handle back pressure when `tready` is Low).
+This tutorial shows multiple ways for connecting RTL blocks with AXI4-Stream present in a custom platform to the AI Engine using the Vitis Acceleration flow.
   
 ---
 ## Part 1 - Connecting RTL AXI4-Stream Interfaces (included in Block Design) to the AI Engine
 
 ### Platform
 
-In this example, you create a custom platform that includes RTL blocks with AXI4-Stream master and slave interfaces connected to the AI Engine.
+In this first example, we are creating a custom platform from a Vivado project with a Block Design which includes RTL blocks with AXI4-Stream master and slave interfaces connected to the AI Engine.
 
 ### Hardware Platform Creation
-You create the platform using the Versal extensible platform configurable example design (CED) included in AMD Vivado™.
+In this example, we assume you are creating the vivado platform starting from the Versal extensible platform configurable example design (CED) included in AMD Vivado™.
 
-![Versal Extensible Platform CED](./images/versal_extensible_example.jpg)
+![Versal Extensible Platform CED](./images/26.1_versal_extensible_example.jpg)
 
-In this example, you add custom IPs to the block design. The first one, `AXI4S_Counter` is a counter that generates data on a 64-bit AXI4-Stream interface. The second one, `dummy Sink`, is an AXI4-Stream slave that accepts any data and drops it (`tready` is always High). The AXI4-Stream interfaces of these two IP blcoks do not connect to any slave or master interfaces. You connect them to the AI Engine using the V++ linker.
+Then from the Versal extensible platform cCED we are adding custom IPs to the block design. The first one, `AXI4S_Counter` is a counter which generates data on a 64-bit AXI4-Stream interface. The second one, `dummy Sink`, is an AXI4-Stream slave which accepts any data and drops it (`tready` is always High). The AXI4-Stream interfaces of these two IP blocks are not connected to any slave or master interfaces in Vivado. We will connect them to the AI Engine using the V++ linker in the Vitis flow.
 
-![Custom IPs](./images/custom_IPs.jpg)
+![Custom IPs](./images/261_custom_IPs.jpg)
 
 >***Note:*** The AI Engine expects AXI4-Stream-compliant interfaces connected to its AXI4-Stream interfaces. Although the following guide focuses on designing Video IPs, it also contains considerations useful for designing any AXI4-Stream IP.
 >
@@ -51,7 +53,7 @@ set_property PFM.AXIS_PORT {S00_AXIS {type "S_AXIS" sptag "slave_axi_1" is_range
 ```
 Or you can do this through the Vivado GUI using the Platform tab.
 
-![Platform settings](./images/AXIS_pfm_settings.jpg)
+![Platform settings](./images/261_AXIS_pfm_settings.jpg)
 
 > ***Note***: The preceding flow assumes that the RTL AXI4-Stream interfaces are part of the block design (BD). In some designs, the RTL exists outside the BD. In that case, you can simply add an interface port to the BD set as AXI4-Stream (xilinx.com:interface:axis_rtl:1.0). Then add an IP in the BD to pass through all interface nets. The option appears in the **Part 2**.
 
@@ -86,7 +88,7 @@ make vitis_project
 
 If you open the generated Vivado project, which is located under Vitis/workspace_1/system_project/build/hw_emu/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/, you can see that the RTL AXI4-Stream interfaces have been connected to the AI Engine.
 
-![VPP Link Result](./images/vpp_link_phase_1.jpg)
+![VPP Link Result](./images/261_vpp_link_phase_1.jpg)
 
 While you can run this application on Hardware, there is no way to verify the good behaviour of the design. In the following part 3, the platform is modified to add ILAs to the custom RTL AXI4-Stream interfaces so you are able to monitor the activity on the streams in Hardware.
 
@@ -107,15 +109,21 @@ vitis -w Vitis/workspace_1/
 
 ![Enable waveforms](./images/start_emu_2.jpg)
 
-4. Add the M00_AXIS interface from the AXI4S_Counter_0 IP and the S00_AXIS from the dummy_sink_0 IP to the waveform window and run the simulation for 30us.
+4. In the Vivado window, add the M00_AXIS interface from the AXI4S_Counter_0 IP and the S00_AXIS from the dummy_sink_0 IP to the waveform window
 
-![Waveforms](./images/hw_emu.jpg)
+![Waveforms](./images/26.1_hw_emu.jpg)
+
+5. Run the simulation for at least 30us.
+
+![Waveforms](./images/26.1_hw_emu_2.jpg)
+
+6. In the Vitis IDE, click Run in the flow navigator to start the AI Engine
+
+![Waveforms](./images/26.1_hw_emu_3.jpg)
 
 5. After ~15us of simulation time, you see transactions on the AXI4-Stream interfaces from and to the AI Engine demonstrating the good behaviour of the design.
 
-![Waveforms](./images/251_hw_emu_1.jpg)
-
-> ***Note***: The option `enable_aie_debug` is set to *false* in the `package.cfg`. With this option set to true, the AI Engine waits for the Vitis IDE to connect to the emulation and start the AI Engine. In this case, there is no need to debug inside the AI Engine, thus this option is set to *false*.
+![Waveforms](./images/26.1_hw_emu_4.jpg)
 
 ---
 ## Part 2 - Connecting RTL AXI4-Stream interfaces (NOT included in Block Design) to the AI Engine
@@ -133,7 +141,7 @@ set_property PFM.AXIS_PORT {M_AXIS {type "M_AXIS" sptag "master_axi_1" is_range 
 set_property PFM.AXIS_PORT {S_AXIS {type "S_AXIS" sptag "slave_axi_1" is_range "false"}} [get_bd_cells /axis_register_slice_1]
 ```
 
-![Block Design](./images/BD_RTL_out.jpg)
+![Block Design](./images/261_BD_RTL_out.jpg)
 
 To build the HW design, run the following command:
 ```
@@ -149,7 +157,7 @@ make vitis_project RTL_OUT_BD=1
 
 If you open the generated Vivado project, which is located under `Vitis/workspace_2/system_project/build/hw_emu/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/`,  you can see that the RTL AXI4-Stream interfaces have been connected to the AI Engine.
 
-![VPP Link Result](./images/BD_linked_design_RTL_out.jpg)
+![VPP Link Result](./images/261_BD_linked_design_RTL_out.jpg)
 
 ### Hardware Emulation
 
@@ -171,16 +179,19 @@ vitis -w Vitis/workspace_2/
 
 4. Add the AXIS interface signals (tready, tvalid, tdata) from the AXI4S_Counter_0 IP and the S00_AXIS from the dummy_sink_0 IP to the waveform window and run the simulation for 30us.
 
-5. After ~10us of simulation time, you see transactions on the AXI4-Stream interfaces from and to the AI Engine demonstrating the good behaviour of the design.
+5. In the Vitis IDE, click Run in the flow navigator to start the AI Engine
 
-![simulation waveform](./images/251_hw_emu_RTL_out.jpg)
+![Waveforms](./images/26.1_hw_emu_3.jpg)
+
+6. After ~10us of simulation time, you see transactions on the AXI4-Stream interfaces from and to the AI Engine demonstrating the good behaviour of the design.
+
 ---
 ## Part 3 - Connecting Monitored RTL Interfaces to AI Engine
 
 ### Creating the design
 In some cases, it can be useful to add debug capabilities to the interfaces to monitor the data that is going in and out of the array. One way of adding the debug capabilities is to add the ILAs directly into the Vivado design. This is what is done in this part using the design from **Part 1**:
 
-![Custom IPs with ILAs](./images/custom_IPs_ILAs.jpg)
+![Custom IPs with ILAs](./images/261_custom_IPs_ILAs.jpg)
 
 While the Vivado contains a slight change, the Vitis project can be similar to the one from **Part 1**.
 
@@ -201,15 +212,15 @@ To run the design and observe the traces from the ILAs, open Vivado.
 
 4. Connect to the target and program the device using the generated `BOOT.BIN` (`Vitis/workspace_3/system_project/build/hw/package/package/BOOT.BIN`) and use the `.ltx` file from the V++ linker generated Vivado project (`Vitis/workspace_3/system_project/build/hw/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/prj.runs/impl_1/custom_pfm_strmIn_strmOut_bd_wrapper.ltx`).
 
-![Program device](./images/program_device.jpg)
+![Program device](./images/261_program_device.jpg)
 
 5. Open the ILA view and configure the ILA to trigger when M00_AXIS tready and tvalid are high. Change the number of captured window to two and set the trigger position in window setting to 10 and run the trigger for the ILA.
 
-![ILA configuration](./images/configure_ILAs.jpg)
+![ILA configuration](./images/261_configure_ILAs.jpg)
 
 6. The ILA should trigger and you should see an activity on the AXI4-Streams.
 
-![ILA Output](./images/ILA_output.jpg)
+![ILA Output](./images/261_ILA_output.jpg)
 
 ---
 ## Part 4 - Monitoring the AI Engine interfaces using V++ Link
@@ -232,7 +243,7 @@ aie.chipscope=PLIO_o_0
 
 If we open the Vivado design generated from v++ (Vitis/workspace_4/system_project/build/hw/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/prj.xpr) we can see one ILA added in the Vitis region monitoring the input and output PLIOs of the AI Engine:
 
-![CFG file](./images/252_design_vpp_ila.jpg)
+![CFG file](./images/261_design_vpp_ila.jpg)
 
 ### Running the Design in Hardware
 
@@ -244,11 +255,9 @@ To run the design and observe the traces from the ILAs, open Vivado.
 
 3. Open Vivado and open the Vivado HW manager.
 
-4. Connect to the target and program the device using the generated `BOOT.BIN` (`Vitis/workspace_4/system_project/build/hw/package/package/BOOT.BIN`) and use the `.ltx` file from the V++ linker generated Vivado project (`Vitis/workspace_3/system_project/build/hw/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/prj.runs/impl_1/debug_nets.ltx`).
+4. Connect to the target and program the device using the generated `BOOT.BIN` (`Vitis/workspace_4/system_project/build/hw/package/package/BOOT.BIN`) and use the `.ltx` file from the V++ linker generated Vivado project (`Vitis/workspace_4/system_project/build/hw/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/prj.runs/impl_1/debug_nets.ltx`).
 
 5. Open the ILA view and run auto trigger. You should see activity going in and out of the AI Engine
-
-![ILA configuration](./images/251_vpp_ila_hw.jpg)
 
 ---
 ## Part 5 - Broadcasting Data to the AI Engine and the Programmable 
@@ -259,7 +268,8 @@ Another option is to use an IP that would handle this for you. In the Vivado cat
 ### Creating the design
 In this example, the same design as **Part 1** with the AXI4S_Counter and dummy Sink custom RTL IPs is used. However, in this case, the source, the AXI4S_Counter, is connected to an AXI4-Stream broacaster IP to stream the data to both the PL and the AI Engine domains. A second dummy sink instance is added to simulate the connectivity with the PL.
 The connectivity between one of the AXI4-Stream interfaces of the AXI4-Stream Broadcaster IP and the second dummy sink is added directly to the Vivado design as shown below.
-![Vivado Design](./images/hw_design_AXIS_broadcast.jpg)
+
+![Vivado Design](./images/261_hw_design_AXIS_broadcast.jpg)
 
 Similar to **Part 1**, the HW design as 2 AXI4-Stream interfaces left unconnected, one master and one slave interface. The only difference is that the unconnected master interface is from the AXI4-Stream Broadcaster IP.
 However, same SP Tags are given to the two interfaces as in **Part 1**. Thus, you can use the exact same Vitis project.
@@ -289,12 +299,14 @@ vitis -w Vitis/workspace_5/
 
 4. Add the AXIS interface signals (tready, tvalid, tdata) from the AXI4S_Counter_0 IP and the S00_AXIS from the dummy_sink_0 IP to the waveform window and run the simulation for 30us.
 
-5. After ~15us of simulation time, you see transactions on the AXI4-Stream interfaces from the AXI4-Stream broadcaster to the AI Engine, the AXI4-Stream broadcaster to the PL and from the AI Engine to the PL demonstrating the good behaviour of the design.
+5. In the Vitis IDE, click Run in the flow navigator to start the AI Engine
 
-![HW emulation waveforms](./images/hw_emu_AXIS_broadcast.jpg)
+6. You see transactions on the AXI4-Stream interfaces from the AXI4-Stream broadcaster to the AI Engine, the AXI4-Stream broadcaster to the PL and from the AI Engine to the PL demonstrating the good behaviour of the design.
+
+![HW emulation waveforms](./images/261_hw_emu_AXIS_broadcast.jpg)
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2024–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2024–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
