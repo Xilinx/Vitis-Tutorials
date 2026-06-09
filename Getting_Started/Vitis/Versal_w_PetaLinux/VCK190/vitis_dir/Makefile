@@ -12,6 +12,9 @@ PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202610_1/xilinx_vck190_bas
 # Rootfs and Image
 export IMAGE  		= ${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS           = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
+export BL31             = ${COMMON_IMAGE_VERSAL}/bl31.elf
+export UBOOT            = ${COMMON_IMAGE_VERSAL}/u-boot.elf
+export BOOT_SCR         = ${COMMON_IMAGE_VERSAL}/boot.scr
 
 s2mm=../HLS_Kernels/s2mm/s2mm.xo
 mm2s=../HLS_Kernels/mm2s/mm2s.xo
@@ -23,20 +26,24 @@ linker: $(s2mm) $(mm2s) $(libadf)
 			--platform  ${PLATFORM} \
 			--config ./system.cfg \
 			../HLS_Kernels/s2mm/s2mm.xo ../HLS_Kernels/mm2s/mm2s.xo \
-			../AIE_Kernel/output_dir/libadf.a 
- 
+			../AIE_Kernel/output_dir/libadf.a
+
 packager:
 	v++ --package --target ${TARGET}  \
 	--platform  ${PLATFORM} \
 	--config pack.cfg \
 	--package.defer_aie_run \
+	--package.generate_sdcard \
+	--package.bl31 ${BL31} \
+	--package.uboot ${UBOOT} \
+	--package.sd_file ${BOOT_SCR} \
 	--package.kernel_image=${IMAGE} \
 	--package.rootfs=${ROOTFS}  \
 	../AIE_Kernel/output_dir/libadf.a \
 	./a.xsa -o a.xclbin
 
-run: 
-	cd pack_out_dir;	./launch_hw_emu.sh
+run:
+	cd pack_out_dir;	./launch_hw_emu.sh -run-app post_boot.sh
 
 
 clean:

@@ -5,7 +5,7 @@
 
 ############################## Setting up Project Variables ##############################
 TARGET := hw_emu
-VERSION=2025.2
+VERSION=2026.1
 #COMMON_IMAGE_VERSAL :=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-amd-linux
 SD_IMAGE_FILE := $(EDGE_COMMON_SW)/Image
@@ -193,16 +193,29 @@ ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
 		--platform $(PLATFORM) \
 		--package.out_dir $(PACKAGE_OUT) \
 		--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
-		--package.image_format=ext4 \
-		--package.boot_mode=sd \
-		--package.kernel_image $(SD_IMAGE_FILE) \
+		--package.generate_sdcard \
+		--package.bl31 $(EDGE_COMMON_SW)/bl31.elf \
+		--package.uboot $(EDGE_COMMON_SW)/u-boot.elf \
+		--package.sd_file $(EDGE_COMMON_SW)/boot.scr \
+		--package.sd_file $(SD_IMAGE_FILE) \
 		--package.defer_aie_run \
 		--package.sd_file ../$(RUN_APP_SCRIPT) \
 		--package.sd_file ./data \
 		--package.sd_file aieml_system $(LINK_OUTPUT) $(LIBADF) -o $(XCLBIN)
 	@echo "COMPLETE: emulation package created."
 else
-	v++ $(VPP_PFLAGS) -p -t hw --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.image_format=ext4 --package.boot_mode=sd --package.kernel_image=$(SD_IMAGE_FILE) --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file ./data --package.sd_file aieml_system $(LINK_OUTPUT) $(LIBADF) -o $(XCLBIN)
+	v++ $(VPP_PFLAGS) -p -t hw --platform $(PLATFORM) \
+		--package.out_dir $(PACKAGE_OUT) \
+		--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
+		--package.generate_sdcard \
+		--package.bl31 $(EDGE_COMMON_SW)/bl31.elf \
+		--package.uboot $(EDGE_COMMON_SW)/u-boot.elf \
+		--package.sd_file $(EDGE_COMMON_SW)/boot.scr \
+		--package.sd_file $(SD_IMAGE_FILE) \
+		--package.sd_file ../$(RUN_APP_SCRIPT) \
+		--package.sd_file ./data \
+		--package.sd_file aieml_system \
+		$(LINK_OUTPUT) $(LIBADF) -o $(XCLBIN)
 	@echo "### ***** sd_card generation done! ***** ###"
 endif
 ###################################################################################################

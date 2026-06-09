@@ -14,7 +14,7 @@
 
 # Vitis Introduction and Getting Started Tutorial
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 Welcome to Vitis Getting Started!
 
@@ -33,7 +33,7 @@ Please go through the Makefile provided in this tutorial to better understand th
 
 ## Prerequisites
 
-1. Source Vitis 2025.2:
+1. Source Vitis 2026.1:
 
    ```
    source <path_to_vitis_install>/settings64.sh
@@ -42,7 +42,7 @@ Please go through the Makefile provided in this tutorial to better understand th
 2. Export the following variable:
 
    ```
-   export COMMON_IMAGE_VERSAL=<path_to_common_image: xilinx-versal-common-v2025.2>
+   export COMMON_IMAGE_VERSAL=<path_to_common_image: xilinx-versal-common-v2026.1>
    ```
 
 3. To compile the binaries:
