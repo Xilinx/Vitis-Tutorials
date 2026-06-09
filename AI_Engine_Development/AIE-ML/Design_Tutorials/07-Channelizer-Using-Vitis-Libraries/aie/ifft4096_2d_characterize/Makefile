@@ -75,8 +75,6 @@ throughput:
 	../../scripts/throughput.py aiesimulator_output/data/front_o_0.txt --iscomplex
 	../../scripts/throughput.py aiesimulator_output/data/back_o_0.txt --iscomplex
 
-get_II:
-	@../../scripts/get_loop_II.py Work/aie/
 
 regression:
 	matlab -batch regression

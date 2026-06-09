@@ -85,8 +85,6 @@ throughput:
 		../../scripts/throughput.py aiesimulator_output/data/fft_back_o_$${z}.txt --iscomplex;\
 	done;
 
-get_II:
-	@scripts/get_loop_II.py Work/aie/
 
 check_sim_output_aie:
 	matlab -batch "check_sim_output('hw')"

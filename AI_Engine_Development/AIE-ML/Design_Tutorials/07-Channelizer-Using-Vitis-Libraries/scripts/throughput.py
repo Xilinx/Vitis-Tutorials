@@ -1,4 +1,4 @@
-#!/tools/gensys/anaconda3/bin/python3
+#!/usr/bin/env python3
 #
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT

@@ -59,8 +59,6 @@ throughput:
 		../../scripts/throughput.py aiesimulator_output/data/filterbank_o_$${z}.txt --iscomplex;\
 	done;
 
-loop_II:
-	@../../scripts/get_loop_II.py Work/aie
 
 check_sim_output_aie:
 	matlab -batch "check_sim_output('hw')"

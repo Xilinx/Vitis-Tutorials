@@ -15,13 +15,14 @@
 
 # Polyphase Channelizer on AIE-ML using Vitis Libraries
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
 - [Polyphase Channelizer on AIE-ML using Vitis Libraries](#polyphase-channelizer-on-AIE-ML-using-Vitis-Libraries)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
   - [Channelizer Requirements](#channelizer-requirements)
   - [System Partitioning](#system-partitioning)
     - [Filterbank System Partitioning](#filterbank-system-partitioning)
@@ -51,6 +52,20 @@ The polyphase channelizer [[1]] simultaneously down-converts a set of frequency-
 You can implement a 1D IFFT using a 2D IFFT algorithm with higher efficiency overall in cases of larger point size and SSR > 1 regime. This requires resources that span AIE and PL. 
 
 Note: To reproduce any of the steps below, begin by cloning [Vitis_Libraries](https://github.com/Xilinx/Vitis_Libraries) and set DSPLIB_ROOT path to point to the `<cloned_repo_path>/dsp`.
+
+## Prerequisites 
+
+This tutorial relies on both MATLAB and Python for generating input data and post-processing simulation results.
+
+MATLAB is required to generate the input data vectors used during the build flow (e.g., prior to running make all).
+Python is used to parse simulation outputs and compute throughput metrics (for example, using scripts like throughput.py).
+
+Before starting the tutorial, please ensure:
+
+MATLAB is installed and accessible from the terminal (matlab command available in PATH).
+Python (with required packages such as numpy) is installed and accessible from the terminal (python or python3 in PATH).
+
+If these dependencies are missing, some steps in the build and analysis flow may fail or produce incomplete results.
 
 ## Channelizer Requirements
 
@@ -141,8 +156,10 @@ We can instantiate the TDM FIR IP based on the following configuration. For more
 
 We can characterize its performance to confirm it works as expected.
 
+
 ```
 [shell]% cd <path-to-design>/aie/tdm_fir_characterize
+[shell]% make gen_vectors
 [shell]% make clean all
 [shell]% vitis_analyzer aiesimulator_output/default.aierun_summary
 ```
@@ -190,6 +207,7 @@ Compile and simulate the design to confirm it works as expected.
 
 ```
 [shell]% cd <path-to-design>/aie/tdm_fir
+[shell]% make gen_vectors
 [shell]% make clean all
 [shell]% vitis_analyzer aiesimulator_output/default.aierun_summary
 ```
@@ -352,6 +370,7 @@ The next step is to characterize its performance.
 
 ```
 [shell]% cd <path-to-design>/aie/ifft4096_2d_characterize
+[shell]% make gen_vectors
 [shell]% make clean all
 [shell]% vitis_analyzer aiesimulator_output/default.aierun_summary
 ```
@@ -372,6 +391,7 @@ We can also apply the `single_buffer` constraint on some I/Os of this block to r
 
 ```
 [shell]% cd <path-to-design>/aie/ifft4096_2d
+[shell]% make gen_vectors
 [shell]% make clean all
 [shell]% vitis_analyzer aiesimulator_output/default.aierun_summary
 ```
@@ -409,7 +429,7 @@ You can build the polyphase channelizer design from the command line.
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial, install AMD Vitis™ 2025.2 software. Download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial, install AMD Vitis™ 2026.1 software. Download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```.
 
