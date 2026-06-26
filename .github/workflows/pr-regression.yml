@@ -100,7 +100,12 @@ jobs:
               slim=$(python3 -c "
           import json
           data = json.loads(open('$file').read().strip())
-          idx = [{'name':e['name'],'path':e['path'],'timeout':e['timeout']} for e in data]
+          idx = []
+          for e in data:
+              item = {'name':e['name'],'path':e['path'],'timeout':e['timeout']}
+              if e.get('deps'):
+                  item['deps'] = e['deps']
+              idx.append(item)
           print(json.dumps(idx, separators=(',',':')))
           ")
               delimiter="MATRIX_EOF_$(echo "$stage" | tr 'a-z-' 'A-Z_')"
@@ -126,7 +131,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: ${{ matrix.tutorial.path }}
+          sparse-checkout: |
+            ${{ matrix.tutorial.path }}
+            ${{ matrix.tutorial.deps }}
 
       - uses: actions/checkout@v4
         with:
@@ -188,7 +195,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: ${{ matrix.tutorial.path }}
+          sparse-checkout: |
+            ${{ matrix.tutorial.path }}
+            ${{ matrix.tutorial.deps }}
 
       - uses: actions/checkout@v4
         with:
@@ -250,7 +259,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: ${{ matrix.tutorial.path }}
+          sparse-checkout: |
+            ${{ matrix.tutorial.path }}
+            ${{ matrix.tutorial.deps }}
 
       - uses: actions/checkout@v4
         with:
