@@ -1,0 +1,53 @@
+{
+    "name": "Versal_W_EDF_VEK280",
+    "description": "VEK280 EDF",
+    "gui": "false",
+    "flow": "versal",
+
+    "platform_allowlist": [ "vek280_base"],
+    "platform_blocklist": [],
+
+    "testinfo": {
+        "test_name": "GS_PFM_VEK280_EDF",
+        "jobs": [
+            {
+                "index": 0,
+                "dependency": [],
+                "env": "",
+                "cmd": "",
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 300,
+                    "vitis_hw_emu": 120,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "category": "canary",
+	"make_options": [
+            "EMU_CMD=\"./aieml_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./aieml_work/edf_qemu_images/combined/combined.qemuboot.conf -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'\"",
+            "EMBEDDED_PACKAGE_OUT=./aieml_work/package.hw/",
+            "EMBEDDED_EXEC_SCRIPT=./aieml_work/embedded_exec.sh"
+	    ],
+        "custom_build_target": {
+            "all": "all",
+            "hw": "sd_card"
+        },
+        "custom_board_target": "run_test",
+        "configuration": "segmented",
+        "compilation": "edf",
+        "tasks": {
+            "board" : {
+                "pre_exec" : ["./env_setup_yocto_edf.sh"]
+            },
+           "build": {
+               "pre_exec": ["./env_setup_yocto_edf.sh"]
+           }
+        }
+    }
+}

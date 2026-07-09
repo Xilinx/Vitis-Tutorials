@@ -1,0 +1,26 @@
+name: GS_PFM_VEK280_EDF
+category: canary
+platform: [vek280_base]
+flow: versal
+env:
+  build: env_setup_yocto_edf.sh
+  board: env_setup_yocto_edf.sh
+targets:
+  vitis_hw_emu:
+    timeout: 120m
+    memory: 64GB
+    run: make all TARGET=hw_emu EMU_CMD="./aieml_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./aieml_work/edf_qemu_images/combined/combined.qemuboot.conf
+      -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'" EMBEDDED_PACKAGE_OUT=./aieml_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./aieml_work/embedded_exec.sh
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make sd_card TARGET=hw EMU_CMD="./aieml_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./aieml_work/edf_qemu_images/combined/combined.qemuboot.conf
+      -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'" EMBEDDED_PACKAGE_OUT=./aieml_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./aieml_work/embedded_exec.sh
+  vitis_hw_run:
+    timeout: 30m
+    memory: 64GB
+    run: make run_test TARGET=hw EMU_CMD="./aieml_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./aieml_work/edf_qemu_images/combined/combined.qemuboot.conf
+      -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'" EMBEDDED_PACKAGE_OUT=./aieml_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./aieml_work/embedded_exec.sh

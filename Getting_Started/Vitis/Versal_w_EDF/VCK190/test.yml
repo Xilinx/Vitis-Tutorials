@@ -1,0 +1,28 @@
+name: GS_PFM_VCK190_EDF
+category: canary
+platform: [vck190_base]
+flow: versal
+deps:
+  - Getting_Started/Vitis/Versal_w_PetaLinux/VCK190
+env:
+  build: env_setup_yocto_edf.sh
+  board: env_setup_yocto_edf.sh
+targets:
+  vitis_hw_emu:
+    timeout: 120m
+    memory: 64GB
+    run: make all TARGET=hw_emu EMU_CMD="./vck190_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./vck190_work/edf_qemu_images/combined/combined.qemuboot.conf
+      -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'" EMBEDDED_PACKAGE_OUT=./vck190_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./vck190_work/embedded_exec.sh
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make all TARGET=hw EMU_CMD="./vck190_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./vck190_work/edf_qemu_images/combined/combined.qemuboot.conf
+      -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'" EMBEDDED_PACKAGE_OUT=./vck190_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./vck190_work/embedded_exec.sh
+  vitis_hw_run:
+    timeout: 30m
+    memory: 64GB
+    run: make run_test TARGET=hw EMU_CMD="./vck190_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./vck190_work/edf_qemu_images/combined/combined.qemuboot.conf
+      -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'" EMBEDDED_PACKAGE_OUT=./vck190_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./vck190_work/embedded_exec.sh

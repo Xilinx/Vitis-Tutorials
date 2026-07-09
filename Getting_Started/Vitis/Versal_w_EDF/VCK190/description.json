@@ -1,0 +1,52 @@
+{
+    "name": "Versal_W_EDF_VCK190",
+    "description": "VCK190 EDF",
+    "gui": "false",
+    "flow": "versal",
+
+    "platform_allowlist": [ "vck190_base"],
+    "platform_blocklist": [],
+
+    "testinfo": {
+        "test_name": "GS_PFM_VCK190_EDF",
+        "jobs": [
+            {
+                "index": 0,
+                "dependency": [],
+                "env": "",
+                "cmd": "",
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 300,
+                    "vitis_hw_emu": 120,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "category": "canary",
+	"make_options": [
+            "EMU_CMD=\"./vck190_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./vck190_work/edf_qemu_images/combined/combined.qemuboot.conf -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'\"",
+            "EMBEDDED_PACKAGE_OUT=./vck190_work/package.hw/",
+            "EMBEDDED_EXEC_SCRIPT=./vck190_work/embedded_exec.sh"
+	    ],
+        "custom_build_target": {
+            "all": "all"
+        },
+        "custom_board_target": "run_test",
+        "configuration": "segmented",
+        "compilation": "edf",
+        "tasks": {
+            "board" : {
+                "pre_exec" : ["./env_setup_yocto_edf.sh"]
+            },
+           "build": {
+               "pre_exec": ["./env_setup_yocto_edf.sh"]
+           }
+        }
+    }
+}
