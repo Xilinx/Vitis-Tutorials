@@ -19,7 +19,7 @@ Author: Faisal El-Shabani
 
 # Radio-ML on AMD Versal™ AI Edge Series Gen 2 (AIE-ML v2)
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
@@ -424,15 +424,24 @@ The following figure summarizes the AI Engine and PL resources required to imple
 
 ### Setup and Initialization
 
+<div style="border-left: 4px solid #2563eb; background: rgba(37, 99, 235, 0.05); padding: 0.75rem 1rem; margin: 1rem 0;">
+
+**ℹ️ Note**
+
+This tutorial has only been tested and verified on a REV-A VEK385 board. Other board revisions may require different image files or adjustments to these steps.
+</div>
+
 IMPORTANT: Before beginning the tutorial, verify you have:
 
-* Installed AMD Vitis™ 2025.2 software and set `PLATFORM_REPO_PATHS` to the value `<Vitis_tools>/base_platforms`.
+* Installed AMD Vitis™ 2026.1 software and set `PLATFORM_REPO_PATHS` to the value `<Vitis_tools>/base_platforms`.
 * Created directory `<path-to-design>/yocto_artifacts` and set environment variable YOCTO_ARTIFACTS to that path.
-* From [Embedded Development Framework (EDF) downloads page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) package 25.11:
+* From [AMD Embedded Development Framework Documentation downloads page](https://edf.docs.amd.com/en/latest/downloads-and-release-notes.html) package 26.06:
   * Downloaded amd-cortexa78-mali-common_meta-edf-app-sdk, run the script and set path output to `<path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk`.
-  * Downloaded VEK385 OSPI Image and move into `<path-to-design>/yocto_artifacts/`.
+  * Downloaded VEK385 OSPI Image and move into `<path-to-design>/yocto_artifacts/`. 
+    * For Rev-A board: `edf-ospi-versal-2ve-2vm-vek385-multidomain-20260609231841.bin` 
   * Downloaded amd-cortexa78-mali-common_edf-linux-disk-image (SD wic), unzip and move into `<path-to-design>/yocto_artifacts/`.
-  * Downloaded amd-cortexa78-mali-common_vek385_qemu_prebuilt, unzip and move `amd-cortexa78-mali-common_vek385_qemu_prebuilt` into `<path-to-design>/yocto_artifacts/`.
+  * Downloaded amd-cortexa78-mali-common_vek385_qemu_prebuilt, unzip and move into `<path-to-design>/yocto_artifacts/`.
+    * For Rev-A board: `amd-cortexa78-mali-common_vek385_qemu_prebuilt.tar.gz`
 
 ### Hardware Emulation
 
@@ -484,20 +493,81 @@ Build this design for the VEK385 board using the Makefile as follows:
 
 The build process generates all the design specific files needed to run the design on hardware in the `package` folder.
 
-1. Write the EDF boot firmware (OSPI) to the primary boot device following instructions [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/AMD+EDF+Getting+started+-+Discovery+and+Evaluation+AMD+Versal+device+portfolio#Writing-the-EDF-boot-firmware-to-the-primary-boot-device-%2F-media-using-System-Controller-(SC)). Find the OSPI image in `<path-to-design>/yocto_artifacts/edf-ospi-versal-2ve-2vm-vek385-sdt-seg-20251116021631.bin`.
-2. Write `<path-to-design>/yocto_artifacts/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs-20251116015456.wic` to sd_card using your favorite SD imaging tool (Balena Etcher and Win32DiskImager seem to work well).
+1. Write the EDF boot firmware (OSPI) to the primary boot device following instructions in [How to Boot a Board Using the Pre-built Images](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/Discovery+and+Evaluation+AMD+Versal+Device+Portfolio#How-to-Boot-a-Board-Using-the-Pre-built-Images).
+Find the OSPI image in `<path-to-design>/yocto_artifacts`:
+    * For Rev-A board: `edf-ospi-versal-2ve-2vm-vek385-multidomain-20260609231841.bin`
+2. Write `<path-to-design>/yocto_artifacts/edf-platform-disk-image-amd-cortexa78-common.rootfs-20260609231841.wic` to sd_card using your favorite SD imaging tool (Balena Etcher and Win32DiskImager seem to work well).
 3. Put the sd_card into the board, boot it, and log in. (default username is amd-edf and you are prompted to set a password)
 4. Determine the IP address eth0 on the board with `ip addr show eth0`.
 5. cd `<path-to-design>/package; scp * amd-edf@<ip_address>:~/`
 6. Run the design: `sudo ./embedded_exec.sh`
 
 The following displays on the terminal.
+~~~
+root@amd-edf:/storage/sd_card_01RadioML# sudo ./embedded_exec.sh
+INFO: Load the pdi and dtbo using fpgautil
+mkdir: cannot create directory '/configfs': File exists
+Time taken to load BIN is 966.000000 Milli Seconds
+BIN FILE loaded through FPGA manager successfully
+Initializing ADF API...
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(dut.xclbin)
+PASSED:  Create GMIO buffer objects
+PASSED:  Successfully read input file data_iq.txt
+PASSED:  Successfully read input file w1_weights-rtp.txt
+PASSED:  Successfully read input file w1_biases-rtp.txt
+PASSED:  Successfully read input file w3_weights-rtp.txt
+PASSED:  Successfully read input file w3_biases-rtp.txt
+PASSED:  Successfully read input file w5_weights-rtp.txt
+PASSED:  Successfully read input file w5_biases-rtp.txt
+PASSED:  Successfully read input file w7_weights-rtp.txt
+PASSED:  Successfully read input file w7_biases-rtp.txt
+PASSED:  Successfully read input file w9_weights-rtp.txt
+PASSED:  Successfully read input file w9_biases-rtp.txt
+PASSED:  Successfully read input file w11_weights-rtp.txt
+PASSED:  Successfully read input file w11_biases-rtp.txt
+PASSED:  Successfully read input file w13_weights-rtp.txt
+PASSED:  Successfully read input file w13_biases-rtp.txt
+PASSED:  Successfully read input file w16_0_weights-rtp.txt
+PASSED:  Successfully read input file w16_1_weights-rtp.txt
+PASSED:  Successfully read input file w16_biases-rtp.txt
+PASSED:  Successfully read input file w17_weights-rtp.txt
+PASSED:  Successfully read input file w17_biases-rtp.txt
+PASSED:  Successfully read input file w18_weights-rtp.txt
+PASSED:  Successfully read input file w18_biases-rtp.txt
+PASSED:  Successfully read input file data_o.txt
+PASSED:  Read all IO/RTP files
+PASSED:  Read modulation_classes.txt file
+PASSED:  auto my_graph  = xrt::graph(my_device, xclbin_uuid, "aie_dut")
+PASSED:  my_graph.reset()
+PASSED:  Transferred design RTP's to AIE graphs
+PASSED:  xrt::aie::profiling handle(my_device);
+PASSED:  my_graph.run( NUM_ITER=8 )
+Graph completed execution
+Model accuracy is within tolerance of 0.05
+Inference # = 0 golden_classification = OOK implementation_classification = OOK
+Inference # = 1 golden_classification = 4ASK implementation_classification = 4ASK
+Inference # = 2 golden_classification = 8ASK implementation_classification = 8ASK
+Inference # = 3 golden_classification = BPSK implementation_classification = BPSK
+Inference # = 4 golden_classification = QPSK implementation_classification = QPSK
+Inference # = 5 golden_classification = 8PSK implementation_classification = 8PSK
+Inference # = 6 golden_classification = 16PSK implementation_classification = 16PSK
+Inference # = 7 golden_classification = 32PSK implementation_classification = 32PSK
+==============================
+Cycle count: 690462
+Approx Inference Throughput: 14.4831 KHz
+==============================
 
-![figure](images/hardware-run.png)
+--- PASSED ---
+INFO: Embedded host run completed.
+~~~
 
 ## Summary
 
-This tutorial has presented the design of a Radio-ML ConvNet Modulation Classifier in AIE-ML v2. The solution has 258,648 parameters and requires ~20 tiles. It achieves a throughput of ~15K inferences per second with a latency of ~466 μs.
+This tutorial has presented the design of a Radio-ML ConvNet Modulation Classifier in AIE-ML v2. The solution has 258,648 parameters and requires ~20 tiles. It achieves a throughput of ~14.4K inferences per second with a latency of ~466 μs.
 
 ## References
 

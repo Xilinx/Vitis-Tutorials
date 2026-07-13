@@ -15,7 +15,7 @@
 
 # Migrating Fractional Delay Farrow Filter from AIE-ML to AIE-ML v2 Architecture
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -44,7 +44,7 @@ After reviewing the background on the farrow filter design in AIE and AIE-ML, be
 | Coefficients data type | `int16` |
 | Delay input data type | `int16` |
 
-**IMPORTANT**: Before starting the tutorial, read and follow the *Vitis Software Platform Release Notes* (v2025.2) to set up the software and install the VEK385 base platform.
+**IMPORTANT**: Before starting the tutorial, read and follow the *Vitis Software Platform Release Notes* (v2026.1) to set up the software and install the VEK385 base platform.
 
 Run the following steps:
 
@@ -87,7 +87,7 @@ Make sure to set the `PLATFORM_REPO_PATHS` environment variable.
 Enter the following command to source the Vitis tool:
 
 ```
-source /<TOOL_INSTALL_PATH>/Vitis/2025.2/settings.sh
+source /<TOOL_INSTALL_PATH>/Vitis/2026.1/settings.sh
 ```
 
 #### Update the Makefile to switch the device from AIE-ML to AIE-ML v2
@@ -199,14 +199,25 @@ The following diagram shows the EDF flows. The flow we use in this tutorial call
 
 #### Setup and Initialization
 
+<div style="border-left: 4px solid #2563eb; background: rgba(37, 99, 235, 0.05); padding: 0.75rem 1rem; margin: 1rem 0;">
+
+**ℹ️ Note**
+
+This tutorial has only been tested and verified on a REV-A VEK385 board. Other board revisions may require different image files or adjustments to these steps.
+
+</div>
+
 IMPORTANT: Before beginning the tutorial, download and install the following:
 
-* Installed AMD Vitis™ 2025.2 software and set `PLATFORM_REPO_PATHS` to the value `<Vitis_tools>/base_platforms`.
+* Installed AMD Vitis™ 2026.1 software and set `PLATFORM_REPO_PATHS` to the value `<Vitis_tools>/base_platforms`.
 * Created directory `<path-to-design>/yocto_artifacts` and set environment variable YOCTO_ARTIFACTS to that path.
-* From [Embedded Development Framework (EDF) downloads page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) package 25.11:
-  * Downloaded EDF Application & Machine SDK, run the script and set path output to `<path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk`.
-  * Downloaded SD/WIC Linux Image VEK385 and move them to `<path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_edf-linux-disk-image`.
-  * Downloaded EDF QEMU File Set for Versal™ AI Edge Series Gen 2 VEK385 evaluation board, unzip and move `amd-cortexa78-mali-common_vek385_qemu_prebuilt` into `<path-to-design>/yocto_artifacts/`.
+* From [AMD Embedded Development Framework Documentation downloads page](https://edf.docs.amd.com/en/latest/downloads-and-release-notes.html) package 26.06:
+  * Downloaded amd-cortexa78-mali-common_meta-edf-app-sdk, run the script and set path output to `<path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk`.
+  * Downloaded VEK385 OSPI Image and move into `<path-to-design>/yocto_artifacts/`. 
+    * For Rev-A board: `edf-ospi-versal-2ve-2vm-vek385-multidomain-20260609231841.bin` 
+  * Downloaded amd-cortexa78-mali-common_edf-linux-disk-image (SD wic), unzip and move into `<path-to-design>/yocto_artifacts/`.
+  * Downloaded amd-cortexa78-mali-common_vek385_qemu_prebuilt, unzip and move into `<path-to-design>/yocto_artifacts/`.
+    * For Rev-A board: `amd-cortexa78-mali-common_vek385_qemu_prebuilt.tar.gz`
 
 ##### Host Code with XRT APIs
 
@@ -263,11 +274,13 @@ $ make clean all TARGET=hw
 
 The build process generates all the design specific files needed to run the design on hardware in the ```package``` folder.
 
-1. Write the EDF boot firmware (OSPI) to the primary boot device following instructions [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/AMD+EDF+Getting+started+-+Discovery+and+Evaluation+AMD+Versal+device+portfolio#Writing-the-EDF-boot-firmware-to-the-primary-boot-device-%2F-media-using-System-Controller-(SC)). You can find the OSPI image in `<path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_vek385_qemu_prebuilt/qemu-ospi-versal-2ve-2vm-vek385-sdt-seg.bin`.
-2. Write `<path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_edf-linux-disk-image/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic` to sd_card using your favorite SD imaging tool (Balena Etcher and Win32DiskImager seems to work well).
-3. Put the sd_card in to the board, boot it and log in. (default username is amd-edf and you will be promted to set a password)
-4. On your terminal application, determine the IPv6 address eth0 on the board by typing `ip addr show eth0`.
-5. cd `<path-to-design>/package; scp -6 * amd-edf@<ipv6_address>:~/`
+1. Write the EDF boot firmware (OSPI) to the primary boot device following instructions in [How to Boot a Board Using the Pre-built Images](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/Discovery+and+Evaluation+AMD+Versal+Device+Portfolio#How-to-Boot-a-Board-Using-the-Pre-built-Images).
+Find the OSPI image in `<path-to-design>/yocto_artifacts`:
+    * For Rev-A board: `edf-ospi-versal-2ve-2vm-vek385-multidomain-20260609231841.bin`
+2. Write `<path-to-design>/yocto_artifacts/edf-platform-disk-image-amd-cortexa78-common.rootfs-20260609231841.wic` to sd_card using your favorite SD imaging tool (Balena Etcher and Win32DiskImager seem to work well).
+3. Put the sd_card into the board, boot it, and log in. (default username is amd-edf and you are prompted to set a password)
+4. Determine the IP address eth0 on the board with `ip addr show eth0`.
+5. cd `<path-to-design>/package; scp * amd-edf@<ip_address>:~/`
 6. Run the design: `sudo ./embedded_exec.sh`
 
 Note: If you need to change the permissions of the files in the home directory, run the **"chmod +x *"** command. The following displays on the terminal:
@@ -283,8 +296,8 @@ PASSED:  xrt::aie::profiling handle(my_device);
 INFO:    Started profiling timers...
 
 PASSED:  my_graph.run( ITERATION=4 )
-Throughput of the graph: 8572.62 MB/s
-Throughput of the graph: 2143.16 MSPS
+Throughput of the graph: 8536.89 MB/s
+Throughput of the graph: 2134.22 MSPS
 --- PASSED ---
 GMIO transactions finished
 INFO: Embedded host run completed.

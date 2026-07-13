@@ -70,7 +70,7 @@ profile:
 	aiesimulator --online -wdb -text --profile 2>&1 | tee -a log
 
 trace:
-	aiesimulator --hang-detect-time=5000 --online -wdb -text 2>&1 | tee -a log
+	aiesimulator --hang-detect-time=20000 --online -wdb -text 2>&1 | tee -a log
 
 clean:
 	rm -rf .Xil Work libadf.a
