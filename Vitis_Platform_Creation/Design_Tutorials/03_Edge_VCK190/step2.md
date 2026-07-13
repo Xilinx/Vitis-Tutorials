@@ -41,7 +41,7 @@ As most of the components are extracted from the common image package, we will p
    tree -L 1     # to see the directory hierarchy
    .
    ├── custom_hardware_platform
-   └── xilinx-versal-common-v2025.2.tar.gz
+   └── xilinx-versal-common-v2026.1.tar.gz
    ```
 
 2. Extract the common image.
@@ -50,15 +50,15 @@ As most of the components are extracted from the common image package, we will p
 
    ```bash
    cd WrokSpace
-   tar xvf ../xilinx-versal-common-v2025.2.tar.gz -C .
+   tar xvf ../xilinx-versal-common-v2026.1.tar.gz -C .
    ```
 
-   You can see the **xilinx-versal-common-v2025.2** folder which contains some components located in **WorkSpace** folder as shown below.
+   You can see the **xilinx-versal-common-v2026.1** folder which contains some components located in **WorkSpace** folder as shown below.
 
    ```bash
    tree -L 2
    .
-   ├── xilinx-versal-common-v2025.2
+   ├── xilinx-versal-common-v2026.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -77,7 +77,7 @@ From the above picture, you can see boot file, kernel image, rootfs, and SDK too
 
 1. Install the sysroot
 
-   - Go to common image extracted directory <WorkSpace/xilinx-versal-common-v2025.2/>.
+   - Go to common image extracted directory <WorkSpace/xilinx-versal-common-v2026.1/>.
    - Type `./sdk.sh -d <Install Target Dir>` to install the PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory. (This is an example. `.` means current directory) and confirm.
 
    >Note: The environment variable LD_LIBRARY_PATH must not be set when running this command.
@@ -113,7 +113,7 @@ From the above picture, you can see boot file, kernel image, rootfs, and SDK too
   
       ![vitis_platform_config](images/step2/vitis_linux_config.png)
 
-   - **Pre-Built Image Directory**: Browse to extracted common image path directory: `xilinx-versal-common-v2025.2/` and click OK. Bootgen looks for boot components referred by BIF in this directory to generate `BOOT.BIN`.
+   - **Pre-Built Image Directory**: Browse to extracted common image path directory: `xilinx-versal-common-v2026.1/` and click OK. Bootgen looks for boot components referred by BIF in this directory to generate `BOOT.BIN`.
    - **DTB file**: DTB will be generated automatically and populated in this area.
    - **FAT32 Partition Directory**: if you have additional file to be stored in FAT32 partition diretory you can browse to the file. If not please omit this.
    - **QEMU Data**: This Directory is used to add additional file for emulation. User can set it according to your requirement.

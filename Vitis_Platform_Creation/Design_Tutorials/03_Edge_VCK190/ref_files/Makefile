@@ -4,8 +4,8 @@
 #*/
 
 XSA=step1_vivado/build/vivado/custom_hardware_platform_hw.xsa
-XPFM=step2_pfm/custom_platform/export/custom_platform/custom_platform.xpfm
-VERSION				?=2025.2
+XPFM=step2_pfm/ws/custom_platform/export/custom_platform/custom_platform.xpfm
+VERSION				?=2026.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 
 .PHONY: help
