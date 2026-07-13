@@ -13,6 +13,8 @@
 #include <unistd.h>
 #include <byteswap.h>
 #include <assert.h>
+#include <cstring>
+#include <stdexcept>
 
 #include <boost/bind/bind.hpp>
 #include <boost/asio.hpp>
@@ -192,7 +194,9 @@ static void music_data_process(uint8_t **out_data, uint32_t *out_data_bytes,
 int main(int argc, char** argv)
 {
     int opt;
-    app_ctx_t *app = (app_ctx_t *)malloc(sizeof(app_ctx_t));
+    app_ctx_t *app = static_cast<app_ctx_t*>(std::calloc(1, sizeof(app_ctx_t)));
+    if (!app)
+        throw std::runtime_error("calloc(app_ctx_t) failed");
     boost::asio::io_context io_context;
 
     while ((opt = getopt(argc, argv, ":p:c:")) != -1)

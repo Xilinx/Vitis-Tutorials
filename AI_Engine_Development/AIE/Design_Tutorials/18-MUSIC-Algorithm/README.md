@@ -15,7 +15,7 @@
 
 # MUltiple SIgnal Classification (MUSIC) Algorithm on AI Engine
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
@@ -291,14 +291,14 @@ You can achieve timing closure of the top-level device automatically with the st
 
 ### Setup and Initialization
 
-IMPORTANT: Install Vitis™ 2025.2 software before beginning the tutorial. Download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Install Vitis™ 2026.1 software before beginning the tutorial. Download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. Additional information on this process may be found [here](../../../AIE#environment-settings).
 
 The remaining environment variables are configured in the top-level Makefile ```<path-to-design>/18-MUSIC-Algorithm/Makefile``` file.
 
 ```
-RELEASE=2025.2
+RELEASE=2026.1
 
 PLATFORM_NAME              = xilinx_vck190_base_202610_1
 PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}

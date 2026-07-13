@@ -7,7 +7,7 @@
 ECHO                               = @echo
 export TARGET                      ?= hw
 
-RELEASE=2025.2
+RELEASE=2026.1
 
 PLATFORM_NAME              = xilinx_vck190_base_202610_1
 PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}

@@ -14,6 +14,7 @@ XO                    := ../hls/mm2s/mm2s.xo ../hls/s2mm/s2mm.xo
 GRAPH_O               := ${IP_DIR}/libadf.a
 XSA                   := my.xsa
 PS_EXE                := ../ps_apps/host_app
+EMBD_EXC              := embedded_exec.sh
 
 SD_CARD               := $(abspath ../package)
 BUILD_DIR             := build_${TARGET}
@@ -46,7 +47,7 @@ ${BUILD_DIR}/${XSA}: ${XO} ${GRAPH_O} ${SYSTEM_CFG}
 			--output ${XSA} \
 			2>&1 | tee vpp_link.log
 
-${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${KERNEL_IMAGE} ${ROOTFS}
+${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${KERNEL_IMAGE} ${ROOTFS} ${EMBD_EXC}
 	cd ${BUILD_DIR} && \
 		v++ --package --debug --save-temps \
 	                -o binary_container_1.xclbin \
@@ -62,9 +63,9 @@ ${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${KERNEL_IMAGE} ${ROOTFS}
 			../${GRAPH_O} \
 			${XSA} \
 			$(addprefix --package.sd_file=../, ${PS_EXE}) \
+			$(addprefix --package.sd_file=../,${EMBD_EXC}) \
 			2>&1 | tee vpp_pack.log
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
 
 clean:
 	rm -rf ${SD_CARD} ${BUILD_DIR}
-
