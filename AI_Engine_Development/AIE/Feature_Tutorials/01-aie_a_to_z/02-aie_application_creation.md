@@ -37,16 +37,11 @@ In this section of the tutorial, learn how to create a new AI Engine application
 
       ![missing image](images/232_aie_app_pg1.jpg)
 
-6. On the platform page, select the platform you want to use:
-
-      * If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created. If you do not use the same workspace from last step, click **Add**, and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
-      * If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_202510_1) which is part of the Vitis platform installation.
-
-      >**NOTE 1:** There is a current limitation in the Vitis IDE when using the base platform (vck190_base_202510_1). The recommendation is to follow step 1 to create a custom platform from the Vivado IDE.
+6. On the platform page, select the platform you have created  following step 1, by selecting the **base_pfm_vck190** platform. If you do not use the same workspace from last step, click **Add**, and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
 
       ![missing image](images/232_aie_app_pg2.jpg)
 
-        >**NOTE 2:** In the Vitis Unified IDE you can also select the device directly (xcvc1902) and link the platform later in the flow
+      >**NOTE:** In the Vitis Unified IDE you can also select the device directly (xcvc1902) and link the platform later in the flow
 
 7. Click ***Finish***.
 

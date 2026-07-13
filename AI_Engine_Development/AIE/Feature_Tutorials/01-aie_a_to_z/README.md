@@ -15,9 +15,9 @@
 
 # A to Z Bare-metal Flow
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
-This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2025.2 Vitis unified software platform.
+This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2026.1 Vitis unified software platform.
 
 >**NOTE**: Different versions of this tutorial correspond to different versions of the tools. You can find each version available in the specific Github branch. AMD recommends using the latest version available.
 
@@ -25,9 +25,7 @@ The flow has four different steps as shown in the following diagram.
 
 ![missing image](images/diagram_22.1.png)
 
-[Start with Custom Platform Creation (Optional)](./01-custom_base_platform_creation.md)
-
-[Start with AI Engine Development Using a Base Platform](./02-aie_application_creation.md)
+[Start with Custom Platform Creation](./01-custom_base_platform_creation.md)
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 

@@ -17,25 +17,7 @@
 
 In this section of the tutorial, learn how to add programmable logic (PL) kernels in HLS into the system project and build the whole system.
 
-## Step 1: Modify the Graph for Use in Hardware Build
-
-You now have a working application to run on the AI Engine array. What you need now is to modify the AI Engine graph for use in hardware and connect the AI Engine array to the PL using the Vitis compiler (V++).
-
-The `main` function in `project.cpp` is not used in the hardware run, so add a switch (`#if defined(...)`) to ensure `main` is not taken into account for the hardware build.
-
-```cpp
-#if defined(__AIESIM__) || defined(__X86SIM__) || defined(__ADF_FRONTEND__)
-
-int main(void) {
-  mygraph.init();
-  mygraph.run(4);
-  mygraph.end();
-  return 0;
-}
-#endif
-```
-
-## Step 2: Add PL Kernels
+## Step 1: Add the PL Kernels
 
 In this example, HLS kernels bridge between memory and the AXI4-Stream interface to input and output data from memory.
 
@@ -58,16 +40,22 @@ In this example, HLS kernels bridge between memory and the AXI4-Stream interface
 
       ![missing image](images/232_mm2s_comp3.jpg)
 
-6. In the **Select Platform** Page:
-
-    * If you have created the platform following step 1, select the **base_pfm_vck190** platform you created.
-    * If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_202510_1) which is part of the Vitis installation.
+6. In the **Select Platform** Page, select **Hardware Design** select the XSA file generated from the platform creation step (custom_platform_vck190.xsa).
 
     Click ***Next***.
 
-7. In the **Edit Settings** page, select ***vitis*** under **flow_target** and ***xo*** under **package.output_format** and click ***Next***.
+7. In the **Edit Settings** page,  ***xo*** under **package.output_format** and click ***Next***.
 
-      ![missing image](images/251_mm2s_comp4.jpg)
+      ![missing image](images/261_mm2s_comp4.jpg)
+
+8. Open the  hls_config.cfg file under settings and change to source editor view. Add the following line under hls:
+      
+      ```cpp
+      [hls]
+      flow_target=vitis
+      ```
+
+      ![missing image](images/261_hls_vitis_flow.jpg)
 
 8. Click ***Finish***.
 
@@ -81,10 +69,7 @@ Now that you have imported the kernels, you need to tell the Vitis linker how to
 
 2. Call this system component **simple_aie_application_system_project** and click ***Next***
 
-3. In the **Select Platform** Page:
-
-   * If you have created the platform following step 1, select the **base_pfm_vck190** platform you created.
-   * If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_002320_1) which is part of the Vitis installation.
+3. In the **Select Platform** Page, select **Hardware Design** and select the xsa from the platform creation step (custom_platform_vck190.xsa).
 
 4. Skip the **Embedded Component Paths** page (click ***Next***). This page is used for system running Linux. This system uses bare-metal.
 
@@ -110,10 +95,6 @@ Now that you have imported the kernels, you need to tell the Vitis linker how to
       ![missing image](images/232_cfg_file1.jpg)
 
       Note that per the [Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/connectivity-Options), the naming convention for the compute units (or kernel instances) is `<kernel>_#`, where `#` indicates the CU instance. Thus, the CU names built corresponding to the kernels `mm2s` and `s2mm` in your project are respectively `mm2s_1` and `s2mm_1`. The `stream_connect` option is defined as `<compute_unit_name>.<kernel_interface_name>:<compute_unit_name>.<kernel_interface_name>`. For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit name) called `s` (kernel interface name) to the `mygraph_in` (interface name) input of the graph in the `ai_engine_0` (compute unit name) IP, use the following option: `stream_connect=mm2s_1.s:ai_engine_0.mygraph_in`.
-
-9. In the **binary_container_1-link.cfg** page, change back the view to **Settings Forms** and enable **Export hardware (XSA)**.
-
-      ![missing image](images/232_cfg_file2.jpg)
 
 ## Step 4. Build the System
 

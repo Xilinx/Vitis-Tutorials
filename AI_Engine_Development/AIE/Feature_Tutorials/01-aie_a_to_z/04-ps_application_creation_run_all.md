@@ -101,41 +101,7 @@ In this section of the tutorial, learn how to build a PS bare-metal application 
 
       If you are looking for a free running graph, turn off this option.
 
-4. In the **AI Engine section** deselect the option **Enable debug**.
-
-   ![missing image](images/232_package_option_4.jpg)
-
-   >**NOTE:** Use this option when running the debugger. In this case, run the system without using the debugger.
-
-5. Build the **simple_aie_application_system_project** project for Hardware emulation (Click ***Build All*** under **HARDWARE EMULATION** in the Flow navigator).
-
-## Step 4: Run the System in Hardware Emulation
-
-Now that you have built the system, test it in hardware emulation.
-
-   1. In the flow navigator, click ***Start Emulator*** under **HARDWARE EMULATION**
-
-         ![missing image](images/232_hw_emu_1.jpg)
-
-   2. On the **Start Emulator** pop up window, keep the default settings and click ***Start***.
-
-         ![missing image](images/232_hw_emu_2.jpg)
-
-      >**NOTE:** You can use the **Show Waveform** option to open the Vivado Simulator, and observe the waveform from the PL signals. If you select this option, make sure you run the simulation in the Vivado simulator as the QEMU waits for it.
-
-   3. The console shows the application running successfully with no error in the Vitis console.
-
-         ![missing image](images/232_hw_emu_3.jpg)
-
-   4. To stop the emulator, click ***x*** on the Start Emulator line in the Flow Navigator.
-
-         ![missing image](images/232_hw_emu_4.jpg)
-
-## Step 5: Build the System targeting the Hardware
-
-Before you run the system in hardware, you need to rebuild the system to target the hardware.
-
-   1. Build the **simple_aie_application_system_project** project for Hardware  (Click ***Build All*** under **HARDWARE** in the Flow navigator).
+4. Build the **simple_aie_application_system_project** project for Hardware emulation (Click ***Build All*** under **HARDWARE** in the Flow navigator).
 
 ## Step 6A: Run the System in Hardware with SD Boot
 

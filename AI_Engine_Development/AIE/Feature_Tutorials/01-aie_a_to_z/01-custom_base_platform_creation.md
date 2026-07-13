@@ -43,11 +43,11 @@ This tutorial targets the VCK190 board (refer to <https://www.xilinx.com/product
 
 5. In the design preset page, keep the default settings. Note that AI Engine is enabled:
 
-      ![missing image](images/251_design_preset_config.jpg)
+      ![missing image](images/261_design_preset_config.jpg)
 
 6. Click ***Finish*** to complete the example design creation phase. This opens the Vivado project with the template design you just created. You can open the block design to view the details of the platform design. By using the pre-built template, you can get a validated hardware design of the platform to move on to the next step. In your real design development procedure, you can use this as a baseline design and make further modifications on top of it.
 
-      ![missing image](images/251_block_design_complete.jpg)
+      ![missing image](images/261_block_design_complete.jpg)
 
 7. Click ***Generate Block Design*** from the Flow Navigator panel on the left, click ***Generate***, and wait for the process to complete.
 
@@ -57,19 +57,19 @@ This tutorial targets the VCK190 board (refer to <https://www.xilinx.com/product
 
    a. On the second page, select ***Hardware and hardware emulation*** as the platform type.
 
-      ![missing image](images/221_export_xsa_pg1.png)
+      ![missing image](images/261_export_xsa_pg1.jpg)
 
    b. On the third page select ***Pre-synthesis***.
 
-      ![missing image](images/export_xsa_pg2.png)
+      ![missing image](images/261_export_xsa_pg2.jpg)
 
    c. On the fourth page, add the name of the platform.
 
-      ![missing image](images/export_xsa_updated.PNG)
+      ![missing image](images/261_export_xsa_pg3.jpg)
 
    d. On the fourth page, set the name of the XSA, and click ***Finish***.
 
-      ![missing image](images/export_xsa_pg4.png)
+      ![missing image](images/261_export_xsa_pg4.jpg)
 
 9. Close the Vivado project after platform export process finishes.
 

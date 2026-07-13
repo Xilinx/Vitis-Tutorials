@@ -156,6 +156,9 @@ int main()
     printf("Done \n");
     printf("- \n");
 
+	printf("Initiallizing the graph\n");
+	gr.init();
+
     printf("Running Graph for 4 iterations\n");
     gr.run(4);
 
