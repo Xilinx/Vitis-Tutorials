@@ -90,7 +90,7 @@ Porting the design from AIE-ML (VEK280) to AIE-ML v2 (VEK385) required the follo
 
 ### Boot and Software Framework Changes
 
-- **Embedded Development Framework (EDF)**: For Versal AI Edge Series Gen 2, AMD tools by default use [Segmented Configuration](https://docs.amd.com/r/en-US/ug1273-versal-acap-design/Segmented-Configuration) and [AMD Embedded Development Framework (EDF)](https://docs.amd.com/r/en-US/ug1304-versal-acap-ssdg/Embedded-Development-Framework-for-Versal-Prime-Series-Gen-2-and-Versal-AI-Edge-Series-Gen-2-Devices).
+- **Embedded Development Framework (EDF)**: For Versal AI Edge Series Gen 2, AMD tools by default use [Segmented Configuration](https://docs.amd.com/r/en-US/ug1273-versal-acap-design/Segmented-Configuration) and [AMD Embedded Development Framework (EDF)](https://edf.docs.amd.com/en/latest/downloads-and-release-notes.html).
   - **Segmented Configuration**: Enables processor boot and DDR memory access before programmable logic (PL) configuration
   - **Primary Boot**: OSPI firmware image - example pre-built disk image `VEK385 EDF boot firmware Image (OSPI) Image` available from [AMD Adaptive Computing Support Downloads page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
   - **Secondary Boot**: Linux built using Yocto, also found on the same page: `amd-cortexa78-mali-common_edf-linux-disk-image (SD wic)`
@@ -200,16 +200,21 @@ Compared to the original design on VEK280, this design achieves better performan
 You can build the polyphase channelizer design from the command line.
 
 ### Setup and Initialization
+> [!NOTE]
+> This tutorial has only been tested and verified on a **Rev-A VEK385** board.
+> Other board revisions may require different image files or adjustments to these steps. 
 
 IMPORTANT: Before beginning the tutorial, ensure you have completed the following:
 
 - Installed AMD Vitis™ 2026.1 software and set `PLATFORM_REPO_PATHS` to the value `<Vitis_tools>/base_platforms`.
 - Created directory `<path-to-design>/yocto_artifacts` and set environment variable YOCTO_ARTIFACTS to that path.
-- From [Embedded Development Framework (EDF) downloads page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) package 25.11:
+- From [AMD Embedded Development Framework (EDF) Documentation downloads page](https://edf.docs.amd.com/en/latest/downloads-and-release-notes.html) package 26.06:
   - Downloaded amd-cortexa78-mali-common_meta-edf-app-sdk, run the script and set path output to `<path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk`.
   - Downloaded VEK385 OSPI Image and move into `<path-to-design>/yocto_artifacts/`.
+    - For Rev-A board: `edf-ospi-versal-2ve-2vm-vek385-multidomain-20260609231841.bin`
   - Downloaded amd-cortexa78-mali-common_edf-linux-disk-image (SD wic), unzip and move into `<path-to-design>/yocto_artifacts/`.
   - Downloaded amd-cortexa78-mali-common_vek385_qemu_prebuilt, unzip and move `amd-cortexa78-mali-common_vek385_qemu_prebuilt` into `<path-to-design>/yocto_artifacts/`.
+    - For Rev-A board: `amd-cortexa78-mali-common_vek385_qemu_prebuilt.tar.gz`
 
 ### Hardware Emulation
 
@@ -225,7 +230,7 @@ This takes about 90 minutes to run. The build process generates a folder `packag
 
 ![figure16](images/channelizer_hw_emu.png)
 
-You can meausre throughput by inspecting the traces. The design processes eight transforms, each with 4k samples in 13.7 µs. Throughput = 8 x 4096 / 13.7 = 2390 Msps.
+You can measure throughput by inspecting the traces. The design processes eight transforms, each with 4k samples in 13.584 µs. Throughput = 8 x 4096 / 13.584 = 2412 Msps.
 
 ![figure17](images/channelizer_hw_emu_trace.png)
 
@@ -240,8 +245,8 @@ You can build the channelizer design for the VEK385 board using the Makefile as 
 
 The build process generates all the design specific files needed to run the design on hardware in the ```package``` folder.
 
-1. Write the EDF boot firmware (OSPI) to the primary boot device following the instructions [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/AMD+EDF+Getting+started+-+Discovery+and+Evaluation+AMD+Versal+device+portfolio#Writing-the-EDF-boot-firmware-to-the-primary-boot-device-%2F-media-using-System-Controller-(SC)). The OSPI image is in `<path-to-design>/yocto_artifacts/edf-ospi-versal-2ve-2vm-vek385-sdt-seg-20251116021631.bin`.
-2. Write `<path-to-design>/yocto_artifacts/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs-20251116015456.wic` to the sd_card using your favorite SD imaging tool (Balena Etcher and Win32DiskImager seem to work well).
+1. Write the EDF boot firmware (OSPI) to the primary boot device following instructions in [How to Boot a Board Using the Pre-built Images](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/Discovery+and+Evaluation+AMD+Versal+Device+Portfolio#How-to-Boot-a-Board-Using-the-Pre-built-Images). Find the OSPI image in `<path-to-design>/yocto_artifacts/edf-ospi-versal-2ve-2vm-vek385-multidomain-20260609231841.bin`.
+2. Write `<path-to-design>/yocto_artifacts/edf-platform-disk-image-amd-cortexa78-common.rootfs-20260609231841.wic` to the sd_card using your favorite SD imaging tool (Rufus, Balena Etcher, and Win32DiskImager seem to work well).
 3. Put the sd_card in to the board, boot it and log in. (Default username is amd-edf and you will be prompted to set a password.)
 4. Determine the IP address of eth0 on the board using `ip addr show eth0`.
 5. cd `<path-to-design>/package; scp * amd-edf@<ip_address>:~/`
@@ -258,7 +263,7 @@ The following displays on the terminal.
 | Platform | Throughput | Improvement | Margin vs. 2000 MSPS Target | Notes |
 |----------|-----------|-------------|------------------------------|-------|
 | VEK280 (AIE-ML) | ~2250 MSPS | Baseline | 12.5% | Original tutorial |
-| VEK385 (AIE-ML v2) | ~2390 MSPS | **+6.2%** | 19.5% | This tutorial - bandwidth-bound by I/O ports |
+| VEK385 (AIE-ML v2) | ~2412 MSPS | **+7.2%** | 20.6% | This tutorial - bandwidth-bound by I/O ports |
 
 ### AI Engine Placement Summary
 

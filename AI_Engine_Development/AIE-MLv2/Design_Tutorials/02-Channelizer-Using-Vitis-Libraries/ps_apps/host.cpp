@@ -157,6 +157,9 @@ int main(int argc, char* argv[])
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;
 
+  dma_src_run.wait();
+  std::cout << STR_PASSED << "dma_src_run.wait()" << std::endl;
+
   // ------------------------------------------------------------
   // Retrieve Results
   // ------------------------------------------------------------
