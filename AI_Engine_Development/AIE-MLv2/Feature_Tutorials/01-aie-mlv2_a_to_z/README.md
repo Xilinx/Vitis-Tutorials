@@ -15,11 +15,11 @@
 
 # A to Z AI Engine Bare-metal Flow for VEK385
 
-***Version: Vivado / Vitis 2025.2***
+***Version: Vivado / Vitis 2026.1***
 
 ***Supported Boards: VEK385 Rev. A, VEK385 Rev.B***
 
-This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2025.2 Vivado and Vitis unified software platform.
+This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2026.1 Vivado and Vitis unified software platform.
 
 In this tutorial, you will learn how to create an HW extensible platform for the VEK385 in Vivado using a Configurable Example Design. You will then use this platform in the Vitis Unified IDE to create a simple AIE-MLv2 application that will be connected to the HW extensible platform using HLS kernels.
 You will then run this design on the VEK385 board by booting from JTAG using the Vitis Unified IDE.

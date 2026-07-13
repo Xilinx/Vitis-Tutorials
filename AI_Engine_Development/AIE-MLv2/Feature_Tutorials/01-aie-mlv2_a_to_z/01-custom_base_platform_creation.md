@@ -33,7 +33,7 @@ This tutorial targets the VEK385 board
 
 ### Step 1: Build the AMD Versal™ Extensible Embedded Platform Example Design in Vivado
 
-1. Launch Vivado IDE, and select ***Open Example Project*** from the Welcome window. You can also do it by clicking ***File*** from the menu, and select ***Project*** and then ***Open Example***.
+1. Launch Vivado IDE, and select ***Example Project*** from the Welcome window. You can also do it by clicking ***File*** from the menu, and select ***Project*** and then ***Open Example***.
 
 2. Click ***Next*** to skip the first page of the wizard. In the template selection page, select the ***Versal Embedded Common Platform*** template. Click ***Next***.
 
@@ -43,12 +43,12 @@ This tutorial targets the VEK385 board
 
 5. In the design preset page, change the **Design Type** to **Extensible** and keep the default settings for the clocks:
 
-      ![missing image](images/252_design_preset_config_VEK385.jpg)
+      ![missing image](images/261_design_preset_config_VEK385.jpg)
 
 
 6. Click **Next** and ***Finish*** to complete the example design creation phase, and this will open up the Vivado project with the template design you just created. You can open the block design to view the details of the platform design. By using the pre-built template, you can easily get a validated hardware design of the platform to move on to the next step. In your real design development procedure, you can use this as a baseline design and make further modifications on top of it.
 
-      ![missing image](images/251_block_design_complete.jpg)
+      ![missing image](images/261_block_design_complete.jpg)
 
 
 7. Click ***Generate Block Design*** from the Flow Navigator panel on the left, click ***Generate***, and wait for the process to complete.
@@ -59,19 +59,19 @@ This tutorial targets the VEK385 board
 
    a. On the second page, select ***Hardware and hardware emulation*** as the platform type.
 
-      ![missing image](images/221_export_xsa_pg1.png)
+      ![missing image](images/261_export_xsa_pg1.jpg)
 
    b. On the third page select ***Pre-synthesis***.
 
-      ![missing image](images/export_xsa_pg2.png)
+      ![missing image](images/261_export_xsa_pg2.jpg)
 
    c. On the fourth page, add the name of the platform.
 
-      ![missing image](images/251_platform_properties_vek385.jpg)
+      ![missing image](images/261_platform_properties_vek385.jpg)
 
    d. On the fourth page, set the name of the XSA, and click ***Finish***.
 
-      ![missing image](images/251_platform_properties_vek385_2.jpg)
+      ![missing image](images/261_platform_properties_vek385_2.jpg)
 
 9. Close the Vivado project after platform export process finishes.
 

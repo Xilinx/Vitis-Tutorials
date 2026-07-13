@@ -1,12 +1,12 @@
 #
-# Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2025 - 2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
 
 ################################################################################
 # Variables needed for AMD tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
-REQUIRED_VERSION                   = 2025.2
+REQUIRED_VERSION                   = 2026.1
 VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "vivado ")
 VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 

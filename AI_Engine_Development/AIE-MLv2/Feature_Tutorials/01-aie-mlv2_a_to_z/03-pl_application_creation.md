@@ -50,13 +50,22 @@ In this example, HLS kernels are used which bridge between memory and the AXI4-S
 
       ![missing image](images/232_mm2s_comp4.jpg)
 
-8. Click ***Finish***
+8. Open the  hls_config.cfg file under settings and change to source editor view. Add the following line under hls:
+      
+      ```cpp
+      [hls]
+      flow_target=vitis
+      ```
 
-9. In the flow navigator, click on ***Run*** under **C SYNTHESIS**. 
+      ![missing image](images/261_hls_vitis_flow.jpg)
 
-10. In the flow navigator, click on ***Run*** under **PACKAGE**.
+9. Click ***Finish***.
 
-11. Repeat steps 1 to 10 to create another HLS component called **s2mm** with the **s2mm.cpp** source file
+10. In the flow navigator, click on ***Run*** under **C SYNTHESIS**. 
+
+11. In the flow navigator, click on ***Run*** under **PACKAGE**.
+
+12. Repeat steps 1 to 10 to create another HLS component called **s2mm** with the **s2mm.cpp** source file
 
 ## Step 3: Configure the Hardware Linking Project
 

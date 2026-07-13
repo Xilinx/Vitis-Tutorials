@@ -130,6 +130,7 @@ int main()
     printf("- \n");
 
     printf("Running Graph for 4 iterations\n");
+	gr.init();
     gr.run(4);
 
     int checks = 1;
