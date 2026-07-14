@@ -16,13 +16,12 @@ The tutorials use pre-built base platforms from the Vitis installation path to c
 
 Please read the `Makefile` provided in each sub-tutorial to better understand the Vitis EDF tool flow.
 
-## Sub-tutorials
-
 | Tutorial | Board | AI Engine Architecture | Status |
 |---|---|---|---|
 | [VCK190](./VCK190/README.md) | AMD Versal™ AI Core VCK190 | AI Engine | EDF flow (Vitis 2026.1) |
 | [VEK280](./VEK280/README.md) | AMD Versal™ AI Edge VEK280 | AI Engine-ML (AIE-ML) | EDF flow (Vitis 2026.1) |
 | [VEK385](./VEK385/README.md) | AMD Versal™ AI Edge Gen2 VEK385 | AI Engine 2-PS (AIE2-PS) | EDF flow (Vitis 2026.1) |
+| [VRK160](./VRK160/README.md) | AMD Versal™ RF Series VRK160 | AI Engine (AIE) | EDF flow (Vitis 2026.1) |
 
 > **Note on VCK190 DFX:** Dynamic Function eXchange (DFX) is **not supported in the EDF flow for Vitis 2026.1**. For the DFX flow, use the legacy [`Versal_w_PetaLinux/VCK190_dfx`](../Versal_w_PetaLinux/VCK190_dfx/README.md) tutorial.
 
@@ -39,7 +38,7 @@ IMPORTANT: Before beginning any sub-tutorial, ensure you have:
 
 Download the EDF Yocto artifacts for your board from the [Embedded Development Framework (EDF) downloads page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) (package matching Vitis 2026.1):
 
-### Versal Gen1 (Cortex-A72) – VCK190 and VEK280
+### Versal Gen1 (Cortex-A72) – VCK190, VEK280, and VRK160
 
 * **EDF Application SDK (Cortex-A72)**: `amd-cortexa72-common_meta-edf-app-sdk`. Run the installer and direct the output to `${YOCTO_ARTIFACTS}/amd-cortexa72-common_meta-edf-app-sdk/`:
 
@@ -52,6 +51,7 @@ Download the EDF Yocto artifacts for your board from the [Embedded Development F
 * **QEMU Prebuilt (per board)**:
   * VCK190: `amd-cortexa72-common_vck190_qemu_prebuilt`
   * VEK280: `amd-cortexa72-common_vek280_qemu_prebuilt`
+  * VRK160: `amd-cortexa72-common_vrk160_qemu_prebuilt`
 
   Unzip and move each into `${YOCTO_ARTIFACTS}/`.
 

@@ -1,0 +1,20 @@
+name: GS_PFM_VRK160
+category: canary
+platform: [vrk160_base]
+flow: versal
+deps:
+  - AI_Engine_Development/AIE/Feature_Tutorials/02-using-gmio/single_aie_gmio/step3
+env:
+  build: env_setup_yocto_edf.sh
+targets:
+  vitis_hw_emu:
+    timeout: 120m
+    memory: 64GB
+    run: make all TARGET=hw_emu EMU_CMD="./vrk160_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./vrk160_work/edf_qemu_images/combined/combined.qemuboot.conf
+      -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'" EMBEDDED_PACKAGE_OUT=./vrk160_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./vrk160_work/embedded_exec.sh
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make sd_card TARGET=hw EMBEDDED_PACKAGE_OUT=./vrk160_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./vrk160_work/embedded_exec.sh

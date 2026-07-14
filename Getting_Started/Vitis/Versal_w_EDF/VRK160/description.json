@@ -1,0 +1,46 @@
+{
+    "name": "Versal_W_EDF_VRK160",
+    "description": "VRK160",
+    "gui": "false",
+    "flow": "versal",
+
+    "platform_allowlist": [ "vrk160_base"],
+    "platform_blocklist": [],
+
+    "testinfo": {
+        "test_name": "GS_PFM-EDF-VRK160",
+        "jobs": [
+            {
+                "index": 0,
+                "dependency": [],
+                "env": "",
+                "cmd": "",
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 300,
+                    "vitis_hw_emu": 120
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+            "vitis_hw_build"
+        ],
+        "category": "canary",
+	"make_options": [
+            "EMU_CMD=\"./vrk160_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./vrk160_work/edf_qemu_images/combined/combined.qemuboot.conf -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/mmcblk0p2 /media; cd /media; ./run_app_hw_emu.sh'\"",
+            "EMBEDDED_PACKAGE_OUT=./vrk160_work/package.hw/",
+            "EMBEDDED_EXEC_SCRIPT=./vrk160_work/embedded_exec.sh"
+	    ],
+        "custom_build_target": {
+            "all": "all"
+        },
+        "configuration": "segmented",
+        "compilation": "edf",
+        "tasks": {
+           "build": {
+               "pre_exec": ["./env_setup_yocto_edf.sh"]
+           }
+        }
+    }
+}

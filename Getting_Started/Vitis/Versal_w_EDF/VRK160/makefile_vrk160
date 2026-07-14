@@ -1,0 +1,305 @@
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
+
+# =============================================================================
+# Project Configuration  (inner Makefile staged into vrk160_work/ at build time)
+# =============================================================================
+ROOT_DIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
+TARGET ?= hw_emu
+
+RMDIR := rm -rf
+
+# =============================================================================
+# Toolchain / Sysroot (EDF Gen1 Cortex-A72 SDK)
+# =============================================================================
+SYSROOT := $(YOCTO_ARTIFACTS)/amd-cortexa72-common_meta-edf-app-sdk/sdk/sysroots/cortexa72-cortexa53-amd-linux/
+
+# =============================================================================
+# Platform
+# =============================================================================
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/vrk160_base/vrk160_base.xpfm
+
+CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
+
+# =============================================================================
+# QEMU / EDF Packaging Configuration
+# =============================================================================
+export QEMU_COMBINED := edf_qemu_images
+export COMBINED := combined
+export WIC_FILE := edf-platform-disk-image-amd-cortexa72-common.rootfs.wic.qemu-sd
+export WIC_PARTITION := $(WIC_FILE):2
+export WIC_BOOT_PARTITION := $(WIC_FILE):1
+
+# v++ packager emits a BOOT.bin that bundles bootloader + our design's PDI.
+# VRK160 boots in OSPI mode (mode=8 in combined.qemuboot.conf), so runqemu
+# reads BOOT.bin from MTD offset 0 of qemu-ospi.bin (the OSPI flash image),
+# not from the loose BOOT-...-multidomain.bin file.  We must therefore both
+# swap the loose file (so wic cp / runqemu strict-mode checks see the new
+# BOOT.bin) AND `dd` the v++ BOOT.bin into qemu-ospi.bin so the OSPI loader
+# actually extracts our design's PDI during boot.
+VPP_BOOT_BIN     = $(PACKAGE_OUT)/BOOT.bin
+BOOT_BIN_BOARD   = $(QEMU_COMBINED)/$(COMBINED)/BOOT-versal-vrk160-multidomain.bin
+QEMU_OSPI_BIN    = $(QEMU_COMBINED)/$(COMBINED)/qemu-ospi.bin
+
+DISK_IMAGES := amd-cortexa72-common_edf-platform-disk-image
+QEMU_IMAGES	:= amd-cortexa72-common_vrk160_qemu_prebuilt
+YOCTO_QEMU_ARTIFACTS :=
+EMBEDDED_EXEC_SCRIPT := embedded_exec.sh
+
+# Build artifact names match the reference's verified-working naming.
+LINK_OUTPUT := sys_gmio_async_xrt.xsa
+XCLBIN := gmio_async_xrt.xclbin
+
+# Source paths.  The inner Makefile runs from vrk160_work/ (sibling of aie/
+# at the tutorial root), so the design sources are referenced as ../aie/...
+# The AIE graph/kernel/host source itself is fetched into ../aie/ from the
+# AI_Engine_Development GMIO Gen1 tutorial by fetch_source below, rather
+# than being vendored as a second copy under this tutorial.
+GEN1_GMIO_DIR := $(realpath ../../../../../AI_Engine_Development/AIE/Feature_Tutorials/02-using-gmio/single_aie_gmio/step3)
+GRAPH_SRC := ../aie/graph.cpp
+HOST_SRC  := ../aie/host.cpp
+
+LIBADF := libadf.a
+
+# Host application
+EXECUTABLE := ./host.exe
+
+# Run-app / package paths
+RUN_APP_SCRIPT := run_app_hw_emu.sh
+PACKAGE_OUT := ./package.$(TARGET)
+
+# Tools
+VPP := v++
+AIECC := aiecompiler
+AIESIM := aiesimulator
+
+# =============================================================================
+# Compile Flags
+# =============================================================================
+AIE_WORKDIR := _aie
+GRAPH_FLAGS := \
+	--include="../aie" \
+	--include="../aie/kernels" \
+	--output-archive=$(LIBADF)
+
+XAIE_FLAGS := \
+	-include="${XILINX_VITIS}/aietools/include" \
+	-include="./" \
+	-workdir "$(AIE_WORKDIR)"
+
+# v++ link/package common flags.  Configs live in ../aie/cfg/ alongside the
+# design sources (same layout as VEK385/aie2ps/cfg/).
+XCXX_COMMON_OPTS := -s --config ../aie/cfg/global.ini -t $(TARGET) -I . --config ../aie/cfg/package_link.ini
+XCXX_PACKAGE_LINK_COMMON_OPTS := --package.defer_aie_run --config ../aie/cfg/package_link.ini
+
+# Host build flags (mirror the working reference's CFLAGS)
+HOST_CFLAGS := -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -luuid -lrt -ldl -lcrypt -lstdc++ \
+	-std=c++17 -O0 -g -Wall -fmessage-length=0 \
+	-DTARGET_FLOW_HW=0 -DTARGET_FLOW_HW_EMU=1 -DTARGET_FLOW_SW_EMU=0 \
+	-DTARGET_DEVICE=\"vrk160_base\" \
+	-I=/usr/include -I=/usr/include/xrt -L=/usr/lib \
+	--sysroot=$(SYSROOT) \
+	-I${XILINX_VITIS}/aietools/include -L${XILINX_VITIS}/aietools/lib/aarch64.o \
+	-I${XILINX_VITIS}/include
+
+# =============================================================================
+# Build Rules
+# =============================================================================
+.PHONY: all clean cleanall emconfig dtbo aiesim_options aie build host sd_card run qemu_combined copy_bin insert_image start_emu fetch_source
+all: aie build host sd_card
+
+# Fetch the AIE graph/kernel/host source from the upstream Gen1 GMIO
+# tutorial into ../aie/, if not already present. These are real file
+# rules (not phony) so they only run once per top-level build: the
+# hw_emu packaging flow below re-invokes make recursively (emconfig,
+# start_emu, ...), and a phony fetch step would re-touch these files'
+# mtimes on every recursive call, forcing libadf.a and the XSA to be
+# needlessly rebuilt/relinked each time.
+fetch_source: $(GRAPH_SRC) $(HOST_SRC)
+
+$(GRAPH_SRC):
+	@if [ -z "$(GEN1_GMIO_DIR)" ]; then \
+		echo "ERROR: GEN1_GMIO_DIR did not resolve — the upstream GMIO tutorial"; \
+		echo "       (AI_Engine_Development/AIE/Feature_Tutorials/02-using-gmio/single_aie_gmio/step3)"; \
+		echo "       is not checked out. If running under CI, add it to this tutorial's"; \
+		echo "       test.yml 'deps:' list so the sparse checkout includes it."; \
+		exit 1; \
+	fi
+	@cp -f $(GEN1_GMIO_DIR)/aie/graph.cpp $(GEN1_GMIO_DIR)/aie/graph.h \
+	       $(GEN1_GMIO_DIR)/aie/kernel.h $(GEN1_GMIO_DIR)/aie/weighted_sum.cc \
+	       ../aie/
+	@echo "Fetched AIE graph/kernel source from $(GEN1_GMIO_DIR) into ../aie/"
+
+$(HOST_SRC):
+	@if [ -z "$(GEN1_GMIO_DIR)" ]; then \
+		echo "ERROR: GEN1_GMIO_DIR did not resolve — the upstream GMIO tutorial"; \
+		echo "       (AI_Engine_Development/AIE/Feature_Tutorials/02-using-gmio/single_aie_gmio/step3)"; \
+		echo "       is not checked out. If running under CI, add it to this tutorial's"; \
+		echo "       test.yml 'deps:' list so the sparse checkout includes it."; \
+		exit 1; \
+	fi
+	@cp -f $(GEN1_GMIO_DIR)/sw/host.cpp ../aie/
+	@echo "Fetched host source from $(GEN1_GMIO_DIR) into ../aie/"
+
+# emconfig.json describes the platform/board topology to XRT in emulation mode
+# (XCL_EMULATION_MODE=hw_emu). The cosim XRT shim in the guest reads it from
+# the host application's working directory; we ship it alongside the host exe
+# in /media on the guest rootfs (see insert_image).
+EMCONFIG_FILE := emconfig.json
+emconfig: $(LINK_OUTPUT)
+	@echo "Generating $(EMCONFIG_FILE) from $(LINK_OUTPUT)..."
+	emconfigutil --platform $(PLATFORM) --od . --nd 1
+
+# Compile the auto-generated zocl device-tree overlay so it can be applied at
+# runtime via fpgautil.  Without this overlay the booted Linux DT has no
+# `zyxclmm_drm` (compatible "xlnx,zocl-versal") node, and zocl never registers
+# a /dev node -> XRT throws "No such device with index '0'".
+# For pure-GMIO designs, v++ -p already emits a correctly-anchored
+# device-tree overlay (zocl under `&amba` with proper CMA fixups) at
+# $(PACKAGE_OUT)/gmio_async_xrt.dtbo — no separate compilation step
+# needed.  We wic-copy it directly in insert_image.
+PKG_DTBO := $(PACKAGE_OUT)/gmio_async_xrt.dtbo
+PKG_PDI  := $(PACKAGE_OUT)/gmio_async_xrt.pdi
+
+# aiesim_options.txt points launch_hw_emu.sh's AIE simulator backend at the
+# absolute path of the AIE compiler workdir, which is where xsim looks for the
+# graph/CDO/elfs it needs to cosimulate the AIE side.
+AIESIM_OPTIONS := aiesim_options.txt
+aiesim_options: $(AIESIM_OPTIONS)
+$(AIESIM_OPTIONS):
+	@echo "Writing $(AIESIM_OPTIONS) (points AIE simulator at $(ROOT_DIR)/$(AIE_WORKDIR))"
+	@rm -f $@
+	@echo "AIE_PKG_DIR=$(ROOT_DIR)/$(AIE_WORKDIR)" > $@
+
+#########################################################
+# Compile the AIE graph into libadf.a
+aie: $(LIBADF)
+$(LIBADF): $(GRAPH_SRC)
+	@echo "Building AI Engine graph..."
+	$(AIECC) $(XAIE_FLAGS) --platform $(PLATFORM) $(GRAPH_FLAGS) $(GRAPH_SRC)
+	@echo "COMPLETE: $(LIBADF) created."
+
+########################################################
+# Link the AIE archive into a fixed XSA.
+build: $(LINK_OUTPUT)
+$(LINK_OUTPUT): $(LIBADF)
+	@echo "Linking AIE into $(LINK_OUTPUT)..."
+	$(VPP) $(XCXX_COMMON_OPTS) --platform $(PLATFORM) -l -o $(LINK_OUTPUT) $(LIBADF) --config ../aie/cfg/gmio_async_xrt.xclbin_config.ini --config ../aie/cfg/system.cfg
+	@echo "COMPLETE: $(LINK_OUTPUT) created"
+
+############################################################################################################################
+# Build the host application
+host: $(EXECUTABLE)
+$(EXECUTABLE): $(HOST_SRC) $(LIBADF)
+	@echo "Compiling host application..."
+	$(CXX) $(HOST_SRC) -o $(EXECUTABLE) $(HOST_CFLAGS)
+	@echo "COMPLETE: Host application created."
+
+##################################################################################################
+# Package for the EDF flow.  For hw_emu we wic-inject artifacts into the
+# rootfs WIC and launch QEMU.  For hw we copy the deploy bundle into
+# hw_run/ for transfer to the board.
+sd_card: $(LINK_OUTPUT) $(XCLBIN)
+
+$(XCLBIN): $(LIBADF) $(LINK_OUTPUT) $(EXECUTABLE)
+ifeq ($(TARGET),hw_emu)
+	$(VPP) $(XCXX_PACKAGE_LINK_COMMON_OPTS) -s -f $(LINK_OUTPUT) $(LIBADF) -t $(TARGET) -p -o $(XCLBIN) --package.out_dir $(PACKAGE_OUT)
+	@echo "COMPLETE: emulation package created."
+	$(MAKE) emconfig
+	$(MAKE) aiesim_options
+	$(MAKE) qemu_combined
+	$(MAKE) copy_bin
+	$(MAKE) insert_image TARGET=hw_emu
+	$(MAKE) start_emu
+else
+	$(VPP) $(XCXX_PACKAGE_LINK_COMMON_OPTS) -s -f $(LINK_OUTPUT) $(LIBADF) -t hw -p -o $(XCLBIN) --package.out_dir $(PACKAGE_OUT)
+	@echo "### ***** sd_card generation done! ***** ###"
+	@mkdir -p hw_run/
+	@cp -rf $(PACKAGE_OUT)/*.pdi $(PACKAGE_OUT)/*.dtbo ./$(XCLBIN) $(EXECUTABLE) $(EMBEDDED_EXEC_SCRIPT) hw_run/
+	@echo "Copy hw_run/ to your board and execute $(EMBEDDED_EXEC_SCRIPT)"
+endif
+
+# =============================================================================
+# EDF QEMU Helpers
+# =============================================================================
+qemu_combined:
+	@echo "Preparing QEMU combined images..."
+	$(RM) -rf ${QEMU_COMBINED}
+	@mkdir -p ${QEMU_COMBINED}/${COMBINED}
+	@if ls ${YOCTO_ARTIFACTS}/${DISK_IMAGES}/*.wic* >/dev/null 2>&1; then \
+		echo "Copying from YOCTO_ARTIFACTS..."; \
+		cp -prf ${YOCTO_ARTIFACTS}/${DISK_IMAGES}/* ${QEMU_COMBINED}/${COMBINED}/; \
+		cp -prf ${YOCTO_ARTIFACTS}/${QEMU_IMAGES}/* ${QEMU_COMBINED}/${COMBINED}/; \
+	elif ls ${YOCTO_QEMU_ARTIFACTS}/*.wic* >/dev/null 2>&1; then \
+		echo "Primary source not found, copying from YOCTO_QEMU_ARTIFACTS..."; \
+		cp -prf ${YOCTO_QEMU_ARTIFACTS}/* ${QEMU_COMBINED}/${COMBINED}/; \
+	else \
+		echo "Error: Required WIC files not found in either source directory."; \
+		exit 1; \
+	fi
+
+copy_bin:
+	@if [ -f $(VPP_BOOT_BIN) ]; then \
+		echo "Replacing $(BOOT_BIN_BOARD) with locally-built $(VPP_BOOT_BIN)"; \
+		$(RM) $(BOOT_BIN_BOARD); \
+		cp $(VPP_BOOT_BIN) $(BOOT_BIN_BOARD); \
+		echo "Patching $(QEMU_OSPI_BIN) with $(VPP_BOOT_BIN) (OSPI boot image)"; \
+		dd if=$(BOOT_BIN_BOARD) of=$(QEMU_OSPI_BIN) conv=notrunc; \
+		echo "Refreshing boot.bin symlink so wic cp + runqemu pick up the new BOOT.bin"; \
+		$(RM) $(QEMU_COMBINED)/$(COMBINED)/boot.bin; \
+		ln -sf BOOT-versal-vrk160-multidomain.bin $(QEMU_COMBINED)/$(COMBINED)/boot.bin; \
+	else \
+		echo "WARNING: $(VPP_BOOT_BIN) not found; keeping prebuilt $(BOOT_BIN_BOARD)."; \
+		echo "         The design PL/AIE PDI will not be loaded during boot."; \
+	fi
+
+insert_image:
+	@echo "Inserting images into base WIC..."
+	@bash -c '\
+	unset LD_LIBRARY_PATH; \
+	source $(XILINX_VITIS)/data/emulation/qemu/comp/qemu_edf/environment-setup-x86_64-amdedfsdk-linux; \
+	echo "Sourced environment"; \
+	wic cp --sector-size=512 ./$(QEMU_COMBINED)/$(COMBINED)/boot.bin ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_BOOT_PARTITION); \
+	echo "Copied boot.bin into partition 1 (EFI)"; \
+	wic cp --sector-size=512 ./$(RUN_APP_SCRIPT) ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	echo "Copied $(RUN_APP_SCRIPT)"; \
+	wic cp --sector-size=512 $(EXECUTABLE) ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	echo "Copied host application"; \
+	wic cp --sector-size=512 ./$(XCLBIN) ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	echo "Copied xclbin"; \
+	if [ -f ./$(EMCONFIG_FILE) ]; then \
+	  wic cp --sector-size=512 ./$(EMCONFIG_FILE) ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	  echo "Copied $(EMCONFIG_FILE)"; \
+	else \
+	  echo "WARNING: $(EMCONFIG_FILE) not found, skipping (XRT cosim may not find device)"; \
+	fi; \
+	if [ -f $(PKG_DTBO) ]; then \
+	  wic cp --sector-size=512 $(PKG_DTBO) ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	  echo "Copied $(PKG_DTBO)"; \
+	else \
+	  echo "WARNING: $(PKG_DTBO) not found, skipping (zocl will not bind, XRT will see no device)"; \
+	fi; \
+	if [ -f $(PKG_PDI) ]; then \
+	  wic cp --sector-size=512 $(PKG_PDI) ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	  echo "Copied $(PKG_PDI)"; \
+	else \
+	  echo "WARNING: $(PKG_PDI) not found, skipping (fpgautil cannot load PDI)"; \
+	fi'
+
+start_emu:
+	$(ROOT_DIR)/$(PACKAGE_OUT)/launch_hw_emu.sh \
+		-qemu-config $(ROOT_DIR)/${QEMU_COMBINED}/${COMBINED}/${COMBINED}.qemuboot.conf \
+		-login "amd-edf" -password "amd-edf" \
+		-aie-sim-options $(ROOT_DIR)/$(AIESIM_OPTIONS) \
+		-run-app "mount /dev/mmcblk0p2 /media; cd /media; ./$(RUN_APP_SCRIPT)" | tee embedded_run.log; exit $${PIPESTATUS[0]}
+
+############################## Cleaning Rules ##############################
+clean:
+	-$(RMDIR) $(EXECUTABLE) $(XCLBIN)
+	-$(RMDIR) *.rpt *.csv *.o *.xpe *.xsa cfg qemu_dts_files emu_qemu_scripts *.db sim *.a
+	-$(RMDIR) _aie .Xil emconfig.json dltmp* xmltmp* *.log *.jou *.wcfg *.wdb *bin* *summary* *.BIN *.bif *.exe Work *.txt
+
+cleanall: clean
+	-$(RMDIR) build_dir* sd_card*
+	-$(RMDIR) package.* run_app.sh
+	-$(RMDIR) _x* *xclbin.run_summary qemu-memory-_* emulation _vimage start_simulation.sh *.xclbin
