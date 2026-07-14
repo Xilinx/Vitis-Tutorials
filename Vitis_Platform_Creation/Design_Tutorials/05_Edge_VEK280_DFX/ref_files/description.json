@@ -1,0 +1,50 @@
+
+{
+    "name": "Vitis_Platform_Creation-Introduction-05-Edge-VEK280-DFX",
+    "description": "Creating a custom VEK280 DFX platform from scratch",
+    "gui": "false",
+    "flow": "vitis",
+    "platform_allowlist": ["VEK280"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "PFM_D_05_VEK280_DFX",
+        "jobs": [
+            {
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_emu": 120,
+                    "vitis_hw_build": 300,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "category": "canary",        
+        "make_options": [
+            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_aie.sh\\\"",
+            "EMBEDDED_PACKAGE_OUT=./step3_validate/aie_work/package.hw/", 
+            "EMBEDDED_EXEC_SCRIPT=./run_vadd.sh",
+            "EMBEDDED_EXEC_SCRIPT=./run_aie.sh"
+        ],
+        "custom_build_target":
+        {
+            "all": "all",
+            "hw" : "sd_card"
+        },
+        "custom_board_target": "run_test",
+	"tasks": {
+            "board" : {
+                "pre_exec" : ["./env_setup_versal.sh"]
+            },
+           "build": {
+                "pre_exec": ["./env_setup_versal.sh"]
+           }
+        }
+    }
+}
+
+
