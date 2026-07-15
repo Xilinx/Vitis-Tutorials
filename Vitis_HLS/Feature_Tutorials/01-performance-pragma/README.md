@@ -13,7 +13,7 @@
 
 # Streamlined Optimization with Vitis HLS Performance Pragma
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -91,12 +91,12 @@ The top-level function `Filter2DKernel` orchestrates the pipeline stages. To imp
    ```
 
 ### Calculate Performance Target
-Define the throughput goal based on system requirements, For example, to process HD frames at 140 FPS on a 300 MHz clock.
+Define the throughput goal based on system requirements. For example, to process HD frames at 140 FPS on a 300 MHz clock.
 
 - **Frame interval** = 1000 ms ÷ 140 ≈ **7.14 ms**
 - **Cycle budget** = 300 MHz × 7.14 ms ≈ **2,142,857 cycles per frame**
 
-This meanss the entire kernel must complete within approximately 2.14 million cycles. 
+This means the entire kernel must complete within approximately 2.14 million cycles.
 
 ### Re-architect for Dataflow
 Ensure the design explicitly follows the **Load → Compute → Store** pattern and apply:
