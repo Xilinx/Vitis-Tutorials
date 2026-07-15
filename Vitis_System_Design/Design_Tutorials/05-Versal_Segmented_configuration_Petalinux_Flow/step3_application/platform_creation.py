@@ -42,7 +42,7 @@ if mode == "hw" and not xsa_path:
     print("ERROR: --xsa_path is required for platform creation mode")
     sys.exit(1)
 
-if mode == "app" and not platform_fixed is None:
+if mode == "app" and platform_fixed is None:
    raise RuntimeError(
         "Application creation requires an explicit fixed platform. "
         "Fallback to base platforms is not allowed."

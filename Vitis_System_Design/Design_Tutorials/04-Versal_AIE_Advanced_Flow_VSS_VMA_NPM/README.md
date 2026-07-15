@@ -52,8 +52,8 @@ This project demonstrates a complete workflow for integrating AI Engine (AIE) de
 
 ## Prerequisites
 
-- **Version: Vitis 2025.2** 
-- **Version: Vivado 2025.2** 
+- **Version: Vitis 2026.1** 
+- **Version: Vivado 2026.1** 
 - **Versal device** (tested on VEK280)
 
 ## Quick Start

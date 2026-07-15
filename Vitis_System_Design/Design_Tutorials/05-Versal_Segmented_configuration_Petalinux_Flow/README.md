@@ -1,9 +1,9 @@
 # Tutorial: VCK190 Segmented Configuration with Petalinux
 
 **Version:**  
-**Vitis: 2025.2**  
-**Vivado: 2025.2**  
-**Petalinux: 2025.2**
+**Vitis: 2026.1**  
+**Vivado: 2026.1**  
+**Petalinux: 2026.1**
 
 This tutorial guides you through creating a complete acceleration application for the **VCK190 board** using **segmented configuration desing** and **Petalinux common image**. You will learn how to build a hardware platform, integrate AI Engine and PL kernels, and deploy a complete system.
 
