@@ -14,7 +14,7 @@
 
 # Getting Started in Vitis Unified Embedded IDE
 
-***Version: 2025.2***
+***Version: 2026.1***
 
 This tutorial should act as the start point, or a refresher to the AMD Vitis™ Unified Embedded flows. The concepts will be kept simple to allow the user to navigate through the IDE with minimal steps to get started. We will accomplish the following tasks in this tutorial:
 
