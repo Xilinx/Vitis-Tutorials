@@ -13,7 +13,7 @@
 
 # Vitis Embedded Software Debugging Guide (UG1515)
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2026.1***
 
 ## [Debugging Bare-Metal Applications](./1-debugging-bare-metal-applications/README.md)
 
@@ -34,6 +34,10 @@ First Stage Boot Loader (FSBL) can initialize the SoC device, load the required 
 ## [Cross Triggering in Vitis Unified Embedded IDE](./4-cross-triggering/README.md)
 
 Embedded systems can be complex, that may contain multiple processors. You may also need to debug across software and hardware domains and can use PS-PL cross triggering. However, in this simple tutorial, we learn how to debug over multiple processors using cross triggering.
+
+## [On Chip Trace in Vitis Unified Embedded IDE](./5-ps_trace/README.md)
+
+This tutorial introduces PS Trace, a hardware-accelerated instruction tracing feature in the Vitis Unified IDE. You will learn how to install and configure the OpenCSD library required to decode trace data, how to capture and analyse a PS Trace of a Hello World application running on a ZCU102 board, and how to interpret the resulting assembly-level trace output. Once you have completed this introduction, the follow-on chapter walks through using PS Trace to diagnose real baremetal system crashes on a VCK190 board.
 
 </hr class="sphinxhide">
 
