@@ -14,7 +14,7 @@
 
 # Vitis Introduction and Getting Started Tutorial
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 Welcome to Vitis Getting Started!
 
@@ -42,5 +42,5 @@ Ensure you have the following installed on your machine:
 * Commom Image
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2025–2026 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
