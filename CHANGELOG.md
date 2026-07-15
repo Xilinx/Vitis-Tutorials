@@ -1,5 +1,25 @@
 # Vitis-Tutorials ChangeLog
 
+## 2026.1 (Jul. 15, 2026)
+
+### New Tutorials
+
+- Vitis_Platform_Creation/Design_Tutorials/05_Edge_VEK280_DFX/
+
+### Tutorial Updates
+
+- Revamped Getting Started tutorial
+    - Getting_Started/Vitis/Versal_w_EDF/VCK190/
+    - Getting_Started/Vitis/Versal_w_EDF/VEK280/
+    - Getting_Started/Vitis/Versal_w_EDF/VEK385/
+    - Getting_Started/Vitis/Versal_w_EDF/VRK160/
+    - Getting_Started/Vitis/Versal_w_PetaLinux/VCK190/
+    - Getting_Started/Vitis/Versal_w_PetaLinux/VCK190_dfx/
+    - Getting_Started/Vitis/Versal_w_PetaLinux/VEK280/
+
+<details open>
+    <summary>2025.2 Release</summary>
+
 ## 2025.2_update (May 22, 2026)
 
 ### New Tutorials
@@ -43,7 +63,9 @@
 
 - Introduce a new sub-category `AIE-MLv2` under `AI_Engine_Development` to host new tutorials focused on Versal Gen2 devices with AI Engine ML v2 architecture.
 
-<details open>
+</details>
+
+<details close>
     <summary>2025.1 Release</summary>
 
 ## 2025.1_update (Sep. 10, 2025)

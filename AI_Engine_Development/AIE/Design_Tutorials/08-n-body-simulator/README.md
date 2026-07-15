@@ -216,7 +216,7 @@ This modules presents the PL HLS kernels:
 
 This module shows how to link the AI Engine design and PL kernels together into a single XCLBIN and view the actual hardware implementation Vivado™ solution.
 
-[Read more...](Module_04_xclbin/README.md)
+[Read more...](Module_04_full_system_design/README.md)
 
 ### Module 05 - Host Software
 

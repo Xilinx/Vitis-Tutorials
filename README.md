@@ -45,10 +45,10 @@ The default branch always reflects the latest Vitis release. If you need a diffe
 
 Alternatively, you can download the repository as a ZIP file. This includes only the selected branch and is smaller than a full clone. To download a ZIP file of a specific branch, do one of the following:
 - From a browser, select the desired branch. Next, click the green `Code` button and select `Download ZIP`.
-- From a terminal, execute the following command. The following uses the 2025.2 branch as an example.
+- From a terminal, execute the following command. The following uses the 2026.1 branch as an example.
 
 ```code
-wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2025.2.zip && unzip 2025.2.zip 
+wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2026.1.zip && unzip 2026.1.zip 
 ```
 
 If you already know exactly which tutorials or folders you need, `git sparse-checkout` is an option to download only those parts. Please refer to Git documentation for usage details.
@@ -101,7 +101,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
     <tbody>
         <tr>
             <td colspan="4" height="24" align="center">
-                <strong> <a href="./AI_Engine_Development/AIE-MLv2/">AI Engine Development on AIE-MLv2 :new: </a></strong>
+                <strong> <a href="./AI_Engine_Development/AIE-MLv2/">AI Engine Development on AIE-MLv2</a></strong>
             </td>
         </tr>
         <tr>
@@ -119,10 +119,10 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE-MLv2/Feature_Tutorials/01-aie-mlv2_a_to_z/">A to Z AIE Bare-metal Flow for VEK385 :new:</a>
+                <a href="./AI_Engine_Development/AIE-MLv2/Feature_Tutorials/01-aie-mlv2_a_to_z/">A to Z AIE Bare-metal Flow for VEK385</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE-MLv2/Design_Tutorials/01-Radio-ML">Radio-ML on AIE-MLv2 :new:</a>
+                <a href="./AI_Engine_Development/AIE-MLv2/Design_Tutorials/01-Radio-ML">Radio-ML on AIE-MLv2</a>
             </td>
             <td>
                 <a href="./AI_Engine_Development/AIE-MLv2/Design_Tutorials/02-Channelizer-Using-Vitis-Libraries/">Channelizer on AIE-MLv2 using Vitis Libraries :new:</a>
@@ -390,7 +390,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/25-AIE-kernel-optimization/">AIE Kernel Optimization </a>         
             </td>
             <td>   
-                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/26-gentle_intro_to_aie_kernel_programming/">AI Engine Kernel Programming :new: </a>                
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/26-gentle_intro_to_aie_kernel_programming/">AI Engine Kernel Programming</a>                
             </td>
             <td>
                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer </a>
@@ -401,7 +401,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
         </tr>  
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/27-system-timeline/">System Timeline Tutorial :new: </a>         
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/27-system-timeline/">System Timeline Tutorial</a>         
             </td>
             <td>              
             </td>
@@ -503,7 +503,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                 <a href="./Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows">Vitis Embedded Scripting Flow</a>            
             </td>            
             <td> 
-                <a href="./Embedded_Software/Feature_Tutorials/05-vitis_version_control/">Vitis Version Control :new: </a>
+                <a href="./Embedded_Software/Feature_Tutorials/05-vitis_version_control/">Vitis Version Control</a>
             </td>
             <td>           
             </td>            
@@ -594,7 +594,9 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                 </td>
             </tr>
             <tr>
-                <td height="24"> </td>
+                <td height="24">
+                    <a href="./Vitis_Platform_Creation/Design_Tutorials/05_Edge_VEK280_DFX">Versal AI Edge Custom DFX Platform Creation Tutorial :new:</a>
+                </td>
                 <td>
                   <a href="./Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation">Versal Extensible Hardware Design Validation</a>             
                 </td>

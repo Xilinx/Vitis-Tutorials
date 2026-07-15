@@ -33,6 +33,11 @@
   <td align="center"><a href="./04_Edge_VCK190_DFX/README.md">Custom Versal DFX Platform Creation Tutorial</a></td>
   <td>This tutorial demonstrates how you can create a custom DFX platform to run acceleration applications for VCK190 evaluation board.</td>
  </tr>
+
+ <tr>
+  <td align="center"><a href="./05_Edge_VEK280_DFX/README.md">Versal AI Edge Custom DFX Platform Creation Tutorial</a></td>
+  <td>This tutorial demonstrates how you can create a custom DFX platform targeting AI Engine-ML (AIE-ML) and PL acceleration applications on the VEK280 evaluation board.</td>
+ </tr>
 </table>
 
 
