@@ -15,7 +15,7 @@
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -26,11 +26,11 @@ The purpose of this tutorial is to provide hands-on experience designing AI Engi
 Install the tools:
 
 * Get and install [MATLAB® and Simulink®](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
-  * Supported MATLAB® releases: R2024a, R2024b, R2025a, R2025b.
+  * Supported MATLAB® releases: R2025a, R2025b.
   * Also install the DSP System Toolbox (required for this tutorial).
-* Get and install [Vitis 2025.2](https://www.xilinx.com/support/download.html).
+* Get and install [Vitis 2026.1](https://www.xilinx.com/support/download.html).
 
->**IMPORTANT**: Before beginning the tutorial, read and follow the *Vitis Software Platform Release Notes* (v2025.2) for software set up and VCK190 base platform installation.
+>**IMPORTANT**: Before beginning the tutorial, read and follow the *Vitis Software Platform Release Notes* (v2026.1) for software set up and VCK190 base platform installation.
 
 ## Overview
 
