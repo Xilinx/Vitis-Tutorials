@@ -13,7 +13,7 @@
 
 # User Managed Mode in Vitis Unified Embedded IDE
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 This is a new feature with the Vitis Unified Embedded IDE, where users can add a makefile and argument that can be used to create custom builds. This allows the user more control over their project builds instead of letting the tools generate the components.
 
