@@ -14,7 +14,7 @@
 
 # PetaLinux Building and System Customization
 
-***Version: PetaLinux 2025.2***
+***Version: PetaLinux 2026.1 (VCK190) / PetaLinux 2025.2 (ZCU104)***
 
 This module demonstrates platform software components customization. Use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained and you can pick your desired customization.
 
@@ -231,6 +231,10 @@ Scripts are provided to re-create PetaLinux project and generate outputs.
    make all XSA_PATH=<path/to/base_platform/> # to specify the XSA file path 
    ```
 
+   > **Board compatibility note:**
+   > - **VCK190** (`ref_files/vck190/`): validated with PetaLinux **2026.1**.
+   > - **ZCU104** (`ref_files/zcu104/`): requires PetaLinux **2025.2**. `xilinx-zynqmp-common-v2026.1` is not yet available; use the 2025.2 common image (`xilinx-zynqmp-common-v2025.2`).
+
 2. To clean the generated files, run the command
 
    ```bash
@@ -239,6 +243,6 @@ Scripts are provided to re-create PetaLinux project and generate outputs.
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
