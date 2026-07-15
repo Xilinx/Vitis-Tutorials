@@ -24,7 +24,7 @@ You can verify hardware configuration (clocks, memory) and software configuratio
 
   ```bash
    # Find the XPFM file
-   cd ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx
+   cd ref_files/step2_sw/vck190_custom_dfx/export/vck190_custom_dfx
    # Report Platform Info
    platforminfo vck190_custom_dfx.xpfm
 
@@ -32,100 +32,147 @@ You can verify hardware configuration (clocks, memory) and software configuratio
    Basic Platform Information
    ==========================
    Platform:           vck190_custom_dfx
-   File:               Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/vck190_custom_dfx.xpfm
+   File:               Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/vck190_custom_dfx/export/vck190_custom_dfx/vck190_custom_dfx.xpfm
    Description:        
-   A custom VCK190 DFX platform
-      
+   Hardware:                             1
+   Has Software Platform(s):             1
+   Has Hardware Emulation:               1
 
    =====================================================
    Reconfigurable Partition Platform (Shell) Information
    =====================================================
-   Reconfigurable Partition:
-      id: 0
-      Hardware Platform:            Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/hw/vck190_custom_dfx_rp.xsa
-      Hardware Emulation Platform:  Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/hw_emu/vck190_custom_dfx_hw_emu.xsa
+     Reconfigurable Partition:
+       id: 0
+       Hardware Platform:            Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/vck190_custom_dfx/export/vck190_custom_dfx/hw/vck190_custom_dfx_rp.xsa
+       Hardware Emulation Platform:  Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/vck190_custom_dfx/export/vck190_custom_dfx/hw_emu/vck190_custom_dfx_hw_emu.xsa
 
    =====================================
    Hardware Platform (Shell) Information
    =====================================
    Vendor:                           xilinx.com
-   Board:                            versal_extensible_dfx_platform_base
-   Name:                             versal_extensible_dfx_platform_base
+   Board:                            vck190_dfx_base
+   Name:                             vck190_dfx_base
    Version:                          1.0
-   Generated Version:                2025.2
-   Hardware:                         1
-   Software Emulation:               1
-   Hardware Emulation:               0
-   Hardware Emulation Platform:      0
+   Generated Version:                2026.1
+   Is Extensible:                      1
+   Supports Hardware Target:           1
+   Is a Hardware Emulation Platform:   0
    FPGA Family:                      versal
    FPGA Device:                      xcvc1902
    Board Vendor:                     xilinx.com
-   Board Name:                       xilinx.com:vck190:3.2
+   Board Name:                       xilinx.com:vck190:3.4
    Board Part:                       xcvc1902-vsva2197-2MP-e-S
 
    ==========
    Design IDs
    ==========
-   Design ID:             3720683517
-   Parent ID:             4170761552
-   Node ID:               3684403989
+     Design ID:             1389007476
+     Parent ID:             887538532
+     Node ID:               2
+
+   ==============
+   AIE Partitions
+   ==============
+          Start Col: 0
+          # Columns: 50
+
+   =====================
+   Available Resources  
+   =====================
+   NoC PL NSU:          28
+   NoC PL NMU:          20
 
    =================
    Clock Information
    =================
-   Default Clock Index: 0
-   Clock Index:         0
-      Frequency:         156.250000
-   Clock Index:         1
-      Frequency:         104.166666
+     Default Clock Index: 1
+     Clock Index:         0
+       Frequency:         104.166666
+       Status:            fixed
+     Clock Index:         1
+       Frequency:         156.250000
+       Status:            fixed
+     Clock Index:         2
+       Frequency:         312.500000
+       Status:            fixed
+     Clock Index:         3
+       Frequency:         78.125000
+       Status:            fixed
+     Clock Index:         4
+       Frequency:         208.333333
+       Status:            fixed
+     Clock Index:         5
+       Frequency:         416.666666
+       Status:            fixed
+     Clock Index:         6
+       Frequency:         625.000000
+       Status:            fixed
+
+   ========================
+   AIE Hardware Information
+   ========================
+   Arch: AIE1
+   NPI Base Address: 0xf70a0000
+   AXI Base Address: 0x20000000000
+   Shim Row Start: 0 # Rows: 1
+   Core Row Start: 1 # Rows: 8
+
+   ==========
+   Valid SLRs
+   ==========
+   SLR0
 
    =====================
    Resource Availability
    =====================
-   =====
-   Total
-   =====
-      LUTs:  893687
-      FFs:   1790592
-      BRAMs: 967
+     =====
+     Total
+     =====
+       LUTs:  893438
+       FFs:   1789962
+       BRAMs: 967
+       DSPs:  1968
 
    ==================
    Memory Information
    ==================
-   Bus SP Tag: DDR
+     Bus SP Tag: DDR
+     Bus SP Tag: LPDDR
+     Bus SP Tag: S_AXI_AIE
 
    =============================
    Software Platform Information
    =============================
-   Number of Runtimes:            1
+   Number of Runtimes:            2
    Default System Configuration:  vck190_custom_dfx
    System Configurations:
-   System Config Name:                      vck190_custom_dfx
-   System Config Description:               vck190_custom_dfx
-   System Config Default Processor Group:   xrt
-   System Config Default Boot Image:        standard
-   System Config Is QEMU Supported:         1
-   System Config Processor Groups:
-      Processor Group Name:      aiengine
-      Processor Group CPU Type:  ai_engine
-      Processor Group OS Name:   aie_runtime
-      Processor Group Name:      xrt
-      Processor Group CPU Type:  cortex-a72
-      Processor Group OS Name:   linux
-   System Config Boot Images:
-      Boot Image Name:           standard
-      Boot Image Type:           
-      Boot Image BIF:            vck190_custom_dfx/boot/linux.bif
-      Boot Image Data:           vck190_custom_dfx/xrt/image
-      Boot Image Boot Mode:      sd
-      Boot Image RootFileSystem: 
-      Boot Image Mount Path:     /mnt
-      Boot Image Read Me:        vck190_custom_dfx/boot/generic.readme
-      Boot Image QEMU Args:      vck190_custom_dfx/qemu/pmc_args.txt:vck190_custom_dfx/qemu/qemu_args.txt
-      Boot Image QEMU Boot:      
-      Boot Image QEMU Dev Tree:  
-      Supported Runtimes:
-   Runtime: C/C++
+     System Config Name:                      vck190_custom_dfx
+     System Config Description:               
+     System Config Default Processor Group:   xrt
+     System Config Default Boot Image:        standard
+     System Config Is QEMU Supported:         1
+     System Config Processor Groups:
+       Processor Group Name:      xrt
+       Processor Group CPU Type:  cortex-a72
+       Processor Group m_os Name:   xrt
+       Processor Group Name:      aiengine
+       Processor Group CPU Type:  ai_engine
+       Processor Group m_os Name:   aiengine
+     System Config Boot Images:
+       Boot Image Name:           standard
+       Boot Image Type:           
+       Boot Image BIF:            boot/linux.bif
+       Boot Image Data:           xrt/image
+       Boot Image Boot Mode:      
+       Boot Image RootFileSystem: 
+       Boot Image Mount Path:     
+       Boot Image Read Me:        
+       Boot Image QEMU Args:      qemu/pmc_args.txt:qemu/qemu_args.txt
+       Boot Image QEMU Boot:      
+       Boot Image QEMU Dev Tree:  
+   Supported Runtimes:
+     Runtime: C/C++
+     Runtime: XRT
 
    ```
 
@@ -511,6 +558,6 @@ If user need to do iteration for your project, you could go through the [Iterati
 
 [The next chapter](./faq.md) will list some frequently encountered problems and frequently asked questions.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -150,6 +150,6 @@ Solution:
 
 The error message shows that the BDC Aperture `0x800000000 [0x180000000]` on the BDC interface `/VitisRegion/DDR_2` is not used by downstream NOC endpoint `/noc_ddr/MC0_2`. It is because the noc_ddr only enables 2 GB memory space. Check that you followed the noc_ddr setup instructions to enable `DDR LOW 1` address region.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

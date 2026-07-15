@@ -37,6 +37,6 @@ When using Vitis flow to create platform and develop acceleration applications, 
 When using Vitis export to Vivado flow to develop acceleration application, please follow [Vitis Export to Vivdao](../../Feature_Tutorials/03_Vitis_Export_To_Vivado/README.md) to do iteration.
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -13,7 +13,7 @@
 
 # AMD Versal Custom DFX Platform Creation Tutorial
 
-***Version: 2025.2***
+***Version: 2026.1***
 
 In this module, you will create a custom Dynamic Function eXchange (DFX) platform to run acceleration applications for VCK190 evaluation board. Platforms that support DFX features allows you to reload acceleration kernels during runtime.
 
@@ -65,6 +65,14 @@ Start with [Step 1](./step1.md).
 
 ## Changelog
 
+### 2026.1
+
+- Migrated from 2025.2 to 2026.1.
+- Updated `VERSION=2026.1` in `step2_sw/Makefile` and `step3_validate/Makefile`.
+- Reworked `makefile_aie` and `makefile_vadd` `v++ --package` invocations for both the `hw_emu` and `hw` targets to use explicit boot components (`--package.bl31`, `--package.uboot`, `--package.generate_sdcard`, `--package.sd_file <Image>`/`<boot.scr>`) instead of the legacy `--package.image_format`/`--package.boot_mode`/`--package.kernel_image` set. The legacy flags trigger a 2026.1 `82-12113 "DTSI file type is not found in XSA"` warning on CED-based custom DFX platforms; for `hw`, this went on to fail SD-card image creation outright (`82-10337`).
+- Fixed `cpAieCode` in `step3_validate/Makefile`: it copied the AIE sample sources with `cp -a` (preserving the Vitis install's original timestamps) into `aie_work/` without first removing a prior build. Since a stale `hw_emu`-built `krnl_adder.xclbin` could be newer than the freshly-copied (but old-timestamped) sources, `make sd_card` would silently skip rebuilding it (`Nothing to be done for 'sd_card'`) if run after `make all` in the same tree. Now does `rm -rf aie_work` first and copies with `cp -rf`, matching `cpVaddCode` and the VEK280 DFX tutorial.
+- Fixed `step3.md`'s `platforminfo` walkthrough: the documented `cd` path (`step2_sw/build/pfm/vck190_custom_dfx/export/...`) no longer matches where `step2_sw/Makefile` actually exports the platform (`step2_sw/vck190_custom_dfx/export/...`). Updated the path and refreshed the sample `platforminfo` output to match the current tool's output format.
+
 ### 2025.2
 
 - Update system-user.dtsi as per CED design.
@@ -88,6 +96,6 @@ Start with [Step 1](./step1.md).
 
 - New Tutorial
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

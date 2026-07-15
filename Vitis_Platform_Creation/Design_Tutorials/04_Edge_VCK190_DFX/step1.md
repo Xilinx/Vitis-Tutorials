@@ -259,6 +259,6 @@ You have completed the Hardware platform creation flow. Next go to [step 2](./st
 - Turn a Block Design Container into a Reconfigurable Partition in *Vivado Design Suite User Guide: Dynamic Function eXchange* [(UG909)](https://docs.amd.com/r/en-US/ug909-vivado-partial-reconfiguration/Turn-a-Block-Design-Container-into-a-Reconfigurable-Partition)
 - Create a Floorplan for the Reconfigurable Region in *Vivado Design Suite User Guide: Dynamic Function eXchange* [(UG909)](https://docs.amd.com/r/en-US/ug909-vivado-partial-reconfiguration/Create-a-Floorplan-for-the-Reconfigurable-Region)
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

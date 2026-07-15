@@ -6,7 +6,7 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=vck190_custom_dfx
 CUSTOM_PLATFORM=$(ROOT_DIR)/../step2_sw/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
-VERSION=2025.2
+VERSION=2026.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/
 
@@ -22,8 +22,9 @@ sd_card:platforminfo vadd_hw aie_adder_hw
 
 
 cpAieCode:
+	rm -rf aie_work
 	mkdir -p aie_work
-	cp $(XILINX_VITIS)//samples/aie_system_examples/aie_sys_design/* aie_work -a
+	cp -rf $(XILINX_VITIS)//samples/aie_system_examples/aie_sys_design/* aie_work/
 	cp makefile_aie aie_work/Makefile
 
 cpVaddCode:

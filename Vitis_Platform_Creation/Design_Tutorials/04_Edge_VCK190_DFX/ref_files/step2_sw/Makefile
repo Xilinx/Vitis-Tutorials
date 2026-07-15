@@ -19,7 +19,7 @@ HW_EMU_XSA=$(ROOT_DIR)/../step1_hw/build/vivado/$(XSA_NAME)_hw_emu.xsa
 BOOT_DIR=$(ABS_BUILD_PATH)/boot
 SD_DIR=$(ABS_BUILD_PATH)/sd_dir
 USER_DTSI=$(ROOT_DIR)/system-user.dtsi
-VERSION=2025.2
+VERSION=2026.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 
 SW_COMP_PATH=$(ABS_BUILD_PATH)/sw_comp
