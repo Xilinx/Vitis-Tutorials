@@ -15,7 +15,7 @@
 
 # A "Gentle" Introduction to AI Engine Kernel Programming
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Overview
 
