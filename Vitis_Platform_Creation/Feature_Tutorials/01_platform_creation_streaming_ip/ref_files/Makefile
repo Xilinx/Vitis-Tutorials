@@ -1,5 +1,5 @@
 #/*
-#Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 #*/
 
@@ -8,7 +8,7 @@ ABS_BUILD_PATH=$(ROOT_DIR)/build
 ABS_HW_PATH=$(ABS_BUILD_PATH)/vivado
 BD_TCL=run.tcl
 ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
-VERSION=2025.2
+VERSION=2026.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)
 XSA_PATH=$(ROOT_DIR)/build/vivado/
 XSA_NAME=custom_hardware_platform
