@@ -1,5 +1,5 @@
 # /*
-# Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 # */
 HOST_EXE   = ../main.elf
@@ -16,13 +16,13 @@ AIE_FILE   = ../Work/ps/c_rts/aie_control.cpp
 .PHONY: clean
 
 ${HOST_EXE}: ${HOST_OBJ}
-	${HOST_CXX} *.o -g -mcpu=cortex-a72 -Wl,-T -Wl,./lscript.ld -L../fixed_platform/export/fixed_platform/sw/fixed_platform/standalone_domain/bsplib/lib  -L${XILINX_VITIS}/aietools/lib/aarchnone64.o -ladf_api -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group ${HOST_INC} -o ../main.elf 
+	${HOST_CXX} *.o -g -mcpu=cortex-a72 -Wl,-T -Wl,./lscript.ld -L../ws/fixed_platform/export/fixed_platform/sw/standalone_psv_cortexa72_0/lib  -L${XILINX_VITIS}/aietools/lib/aarchnone64.o -ladf_api -Wl,--start-group,-lxil,-lxilstandalone,-lcframe,-lcfupmc,-lxiltimer,-lxilpm,-ltrngpsv,-lgcc,-lc,-lstdc++,--end-group ${HOST_INC} -o ../main.elf 
 	
 main.o: main.cpp aie_control.o 
-	 ${HOST_CXX} -I../fixed_platform/export/fixed_platform/sw/fixed_platform/standalone_domain/bspinclude/include -I${XILINX_VITIS}/aietools/include -I${XILINX_VITIS}/include -I${XILINX_HLS}/include -I.. -I. -I../src -g -c -D__PS_BARE_METAL__ -std=c++17 -o main.o main.cpp
+	 ${HOST_CXX} -I../ws/fixed_platform/export/fixed_platform/sw/standalone_psv_cortexa72_0/include -I${XILINX_VITIS}/aietools/include -I${XILINX_VITIS}/include -I${XILINX_HLS}/include -I.. -I. -I../src -g -c -D__PS_BARE_METAL__ -std=c++17 -o main.o main.cpp
 
 aie_control.o: ${AIE_FILE} 
-	 ${HOST_CXX} -I../fixed_platform/export/fixed_platform/sw/fixed_platform/standalone_domain/bspinclude/include -I${XILINX_VITIS}/aietools/include -I${XILINX_VITIS}/include -I${XILINX_HLS}/include -I.. -I. -I../src -g -c -D__PS_BARE_METAL__ -std=c++17 -o aie_control.o ../Work/ps/c_rts/aie_control.cpp 
+	 ${HOST_CXX} -I../ws/fixed_platform/export/fixed_platform/sw/standalone_psv_cortexa72_0/include -I${XILINX_VITIS}/aietools/include -I${XILINX_VITIS}/include -I${XILINX_HLS}/include -I.. -I. -I../src -g -c -D__PS_BARE_METAL__ -std=c++17 -o aie_control.o ../Work/ps/c_rts/aie_control.cpp 
 
 clean:
 	rm -rf ${HOST_OBJ} .Xil ${HOST_EXE} *.elf 

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 #include <stdio.h>
@@ -31,13 +31,13 @@ static XS2mm_1 S2mmInstance;
 static XMm2s_1 Mm2sInstance;
 
 #ifndef TESTAPP_GEN
-	#define S2MM_BASEADDRESS		XPAR_XS2MM_1_0_S_AXI_CONTROL_BASEADDR
+	#define S2MM_BASEADDRESS		XPAR_XS2MM_1_0_BASEADDR
 //#define MM2S_BASEADDRESS		  XPAR_XMM2S_1_0_DEVICE_ID
-	#define MM2S_BASEADDRESS		XPAR_VITISREGION_MM2S_1_1_S_AXI_CONTROL_BASEADDR
+	#define MM2S_BASEADDRESS		XPAR_VITISREGION_MM2S_1_1_BASEADDR
 #endif
 
-#define MM2S_1_BASE XPAR_XMM2S_1_0_S_AXI_CONTROL_BASEADDR
-#define S2MM_1_BASE XPAR_XS2MM_1_0_S_AXI_CONTROL_BASEADDR
+#define MM2S_1_BASE XPAR_XMM2S_1_0_BASEADDR
+#define S2MM_1_BASE XPAR_XS2MM_1_0_BASEADDR
 
 #define GRAPH_ITER  1
 #define INPUT_SIZE 	32*GRAPH_ITER

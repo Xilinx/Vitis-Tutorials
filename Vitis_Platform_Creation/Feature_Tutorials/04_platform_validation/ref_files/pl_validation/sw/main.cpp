@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 #include <stdio.h>
@@ -13,6 +13,10 @@ SPDX-License-Identifier: MIT
 #include "xmm2s_1.h"
 #include "xs2mm_1.h"
 #include "input.h"
+// The 2026.1 platform generation flow no longer emits the aggregate
+// XPAR_INTC_MAX_NUM_INTR_INPUTS macro that xintc.h expects; alias it to the
+// equivalent per-instance macro before pulling in the driver header.
+#define XPAR_INTC_MAX_NUM_INTR_INPUTS XPAR_AXI_INTC_0_NUM_INTR_INPUTS
 #include "xintc.h"
 #include "xscugic.h"
 
@@ -29,18 +33,18 @@ SPDX-License-Identifier: MIT
 
 #ifndef TESTAPP_GEN
 //#define GIC_BASE_ADDRESS		  XPAR_CIPS_0_PSPMC_0_PSV_ACPU_GIC_DEVICE_ID
-#define GIC_BASE_ADDRESS		XPAR_CIPS_0_PSPMC_0_PSV_ACPU_GIC_BASEADDR
+#define GIC_BASE_ADDRESS		XPAR_XSCUGIC_0_BASEADDR
 //#define S2MM_BASEADDRESS		  XPAR_S2MM_1_1_DEVICE_ID
-#define S2MM_BASEADDRESS		XPAR_XS2MM_1_0_S_AXI_CONTROL_BASEADDR
+#define S2MM_BASEADDRESS		XPAR_XS2MM_1_0_BASEADDR
 //#define MM2S_BASEADDRESS		  XPAR_XMM2S_1_0_DEVICE_ID
-#define MM2S_BASEADDRESS		XPAR_VITISREGION_MM2S_1_1_S_AXI_CONTROL_BASEADDR
-//#define INTC_BASEADDRESS		  XPAR_INTC_0_DEVICE_ID 
-#define INTC_BASEADDRESS       XPAR_AXI_INTC_0_BASEADDR	
+#define MM2S_BASEADDRESS		XPAR_VITISREGION_MM2S_1_1_BASEADDR
+//#define INTC_BASEADDRESS		  XPAR_INTC_0_DEVICE_ID
+#define INTC_BASEADDRESS       XPAR_AXI_INTC_0_BASEADDR
 #endif
 #define INPUT_SIZE 	32
 #define OUTPUT_SIZE 32
-#define MM2S_1_BASE  XPAR_XMM2S_1_0_S_AXI_CONTROL_BASEADDR
-#define S2MM_1_BASE XPAR_XS2MM_1_0_S_AXI_CONTROL_BASEADDR
+#define MM2S_1_BASE  XPAR_XMM2S_1_0_BASEADDR
+#define S2MM_1_BASE XPAR_XS2MM_1_0_BASEADDR
 #define IRQ_NUMBER 				116U //XPAR_FABRIC_INTC_0_VEC_ID
 //For debug
 #define DEBUG       0
@@ -52,7 +56,7 @@ int32_t*  INTOUT_BUFF_ADDR;
 // Judge the interrupt is coming or not.
 static int int_coming=1;
 #ifdef DEBUG
-#define INTERRUPT_CONTROLLER_BASE_ADDRESS XPAR_INTC_0_BASEADDR
+#define INTERRUPT_CONTROLLER_BASE_ADDRESS XPAR_XINTC_0_BASEADDR
 int  ObtainPLIntContrlIRQStatus(uint64_t interrupt_controller_base_addr)
 {
 	//if(DEBUG)

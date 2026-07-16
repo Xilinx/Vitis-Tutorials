@@ -1,5 +1,5 @@
 # /*
-# Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 # */
 EXTENSIBLE_XSA ?= 
@@ -9,7 +9,7 @@ TARGET    = hw
 FIXED_XSA = design.xsa
 HOST_EXE  = main.elf 
 
-FIXED_PLATFORM = fixed_platform/export/fixed_platform/fixed_platform.xpfm
+FIXED_PLATFORM = ws/fixed_platform/export/fixed_platform/fixed_platform.xpfm
 
 
 ##########################################################################################################################################################
@@ -49,7 +49,8 @@ ${FIXED_XSA}: ${VPP_SPEC} ${XOS}
 fixed_platform: ${FIXED_PLATFORM}
 
 ${FIXED_PLATFORM}: ${FIXED_XSA}
-	generate-platform.sh -name fixed_platform -hw ${FIXED_XSA} -domain psv_cortexa72_0:standalone
+	rm -rf ws/fixed_platform
+	mkdir -p vitis_data_dir && export XILINX_VITIS_DATA_DIR=$(CURDIR)/vitis_data_dir && vitis -s create_platform.py --name fixed_platform --hw ${FIXED_XSA} --cpu psv_cortexa72_0
 
 baremetal_elf: $(HOST_EXE)
 ${HOST_EXE}: ${FIXED_PLATFORM} sw/main.cpp
@@ -80,5 +81,5 @@ help:
 clean:
 	rm -rf _x v++_* ${XOS} *.o.* *.xo.* \
 	       *.xclbin* *.xsa *_log *.log Work Map_Report.csv *.bin  mm2s_1 s2mm_1\
-	       BOOT* *.xo emu_qemu_scripts *.cdo *.bif compile_log_pre *.elf *.o launch_hw_emu.sh qemu_args.txt *.xsa xnwOut *.pdi fixed_platform v++.package_summary *.link_summary libadf* lpd* NOC* pmc* plm* sd_card* sim ilpProblem* sol.db drivers .Xil .ipcache package.hw* ext_platform_wrapper_*
+	       BOOT* *.xo emu_qemu_scripts *.cdo *.bif compile_log_pre *.elf *.o launch_hw_emu.sh qemu_args.txt *.xsa xnwOut *.pdi ws vitis_data_dir v++.package_summary *.link_summary libadf* lpd* NOC* pmc* plm* sd_card* sim ilpProblem* sol.db drivers .Xil .ipcache package.hw* ext_platform_wrapper_*
 	make -C sw clean
