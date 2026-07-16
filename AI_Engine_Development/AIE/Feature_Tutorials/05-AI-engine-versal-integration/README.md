@@ -15,7 +15,7 @@
 
 # AI Engine Versal Integration
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -25,18 +25,18 @@ This tutorial demonstrates creating a system design running on the AI Engine, PS
 
 This tutorial steps through software emulation, hardware emulation, and hardware flow in the context of a complete Versal adaptive SoC system integration. By default, the Makefile sets the build target to `hw_emu`. To build for `hw`, use the corresponding TARGET option as described in the following sections.
 
->**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ unified software platform 2025.2. The software includes all the embedded base platforms including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from this link: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html
+>**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ unified software platform 2026.1. The software includes all the embedded base platforms including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from this link: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2026.1.html
 
 The 'common image' package contains a prebuilt Linux kernel and root file system for embedded design development with the Versal board using the Vitis IDE.
 
 Before starting this tutorial, run the following steps:
 
 1. Navigate to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh```.
-3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2025.2``` directory.
+2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2026.1/sdk.sh```.
+3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2026.1``` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/base_platforms/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm```.
 
-This tutorial targets VCK190 production board for 2025.2 version.
+This tutorial targets VCK190 production board for 2026.1 version.
 
 ## Objectives
 
@@ -52,7 +52,7 @@ After completing this tutorial, you can:
 This tutorial contains two flows that you can work through:
 
 * The Vitis classic command line flow incorporating the aiecompiler, aiesimulator, and v++ command
-* The new Vitis unified IDE flow which demonstrates the use of the new tool available in the 2025.2 release as described in the *Vitis Unified IDE and Common Command-Line Reference Guide* ([UG1702](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference)). The following text documents the classic command-line flow. Find the new Vitis unified IDE flow [here](./unified-ide.md).
+* The new Vitis unified IDE flow which demonstrates the use of the new tool available in the 2026.1 release as described in the *Vitis Unified IDE and Common Command-Line Reference Guide* ([UG1702](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference)). The following text documents the classic command-line flow. Find the new Vitis unified IDE flow [here](./unified-ide.md).
 
 ## Tutorial Overview
 
@@ -336,10 +336,10 @@ Or
 cd ./sw
 v++ --package -t hw_emu \
     -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm \
-    --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
+    --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2026.1/rootfs.ext4 \
     --package.image_format=ext4 \
     --package.boot_mode=sd \
-    --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2025.2/Image \
+    --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2026.1/Image \
     --package.defer_aie_run \
     --package.sd_file host.exe ../tutorial.xsa ../libadf.a
 cd ..
@@ -449,10 +449,10 @@ After packaging, everything is set to run emulation. Because you ran `aiesimulat
     cd ./sw
     v++ --package -t hw \
         -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm \
-        --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
+        --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2026.1/rootfs.ext4 \
         --package.image_format=ext4 \
         --package.boot_mode=sd \
-        --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2025.2/Image \
+        --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2026.1/Image \
         --package.defer_aie_run \
         --package.sd_file host.exe ../tutorial.xsa ../libadf.a
     cd ..
