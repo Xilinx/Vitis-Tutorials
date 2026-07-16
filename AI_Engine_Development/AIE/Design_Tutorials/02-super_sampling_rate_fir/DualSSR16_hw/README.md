@@ -15,7 +15,7 @@
 
 # Dual Implementation of a Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 The purpose of this fifth part of the tutorial is to implement and run in hardware two instances of SSR with dual-stream I/Os.
 

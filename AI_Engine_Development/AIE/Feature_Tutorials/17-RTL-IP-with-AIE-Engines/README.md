@@ -15,7 +15,7 @@
 
 # Using RTL IP with AI Engines
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -24,18 +24,18 @@ This tutorial demonstrates the following two features of the AMD Vitis™ unifie
 1. Reusing an AXI-based IP initially created as an RTL IP.
 2. Controlling the platform and converting an RTL IP to a kernel for a more streamlined process of creating the design.
 
-**IMPORTANT**: Before beginning the tutorial, install the Vitis 2025.2 software platform. This release includes all the embedded base platforms, including the VCK190 base platform, used in this tutorial. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html).
+**IMPORTANT**: Before beginning the tutorial, install the Vitis 2026.1 software platform. This release includes all the embedded base platforms, including the VCK190 base platform, used in this tutorial. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2026.1.html).
 
 The 'common image' package contains a prebuilt Linux kernel and root file system that you can used with AMD Versal™ adaptive SoCs boards for embedded design development using the Vitis software platform.
 
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell run the `/Common Images Dir/amd-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the `/Common Images Dir/amd-versal-common-v2025.2/sdk.sh`.
-3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/amd-versal-common-v2025.2` directory.
+2. In a Bash shell run the `/Common Images Dir/amd-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the `/Common Images Dir/amd-versal-common-v2026.1/sdk.sh`.
+3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/amd-versal-common-v2026.1` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms/amd_vck190_base_202610_1/amd_vck190_base_202610_1.xpfm`
 
-**NOTE**: This tutorial targets the 2025.2 VCK190 production board.
+**NOTE**: This tutorial targets the 2026.1 VCK190 production board.
 
 ## Objectives
 
@@ -234,10 +234,10 @@ To package the design, run the following command:
 cd ./sw
 v++ -p -t hw_emu \
     -f ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm \
-    --package.rootfs=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
+    --package.rootfs=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2026.1/rootfs.ext4 \
     --package.image_format=ext4 \
     --package.boot_mode=sd \
-    --package.kernel_image=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.2/Image \
+    --package.kernel_image=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2026.1/Image \
     --package.defer_aie_run \
     --package.sd_file host.exe ../tutorial.xsa ../libadf.a
 cd ..

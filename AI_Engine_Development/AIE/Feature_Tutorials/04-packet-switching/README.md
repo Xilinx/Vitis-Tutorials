@@ -15,7 +15,7 @@
 
 # Packet Switching Tutorial
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 AI Engine kernels can share a single processor and execute in an interleaved manner. In addition, they can also share multiple stream connections on a single physical channel. The explicit packet switching feature allows fine-grain control over how packets are generated, distributed, and consumed in a graph computation. Explicit packet switching is typically recommended in cases where many low bandwidth streams from a common programmable logic (PL) source can be distributed to different AI Engine destinations. Similarly, many low bandwidth streams from different AI Engine sources to a common PL destination can also take advantage of this feature. Because a single physical channel is shared between multiple streams, you minimize the number of AI Engine - PL interface streams used.
 
@@ -29,18 +29,18 @@ The AI Engine kernels differ in each step. Step 3 introduces packet stream inter
 
 The current version of the AI Engine tools supports only integer format values in data files for the AI Engine simulator. Steps 1 and 2 detail the data format and how to convert data from other types to integer format.
 
->**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ unified software platform 2025.2. This Vitis release includes all the embedded base platforms including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/amd/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ unified software platform 2026.1. This Vitis release includes all the embedded base platforms including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/amd/en/downloadNav/embedded-platforms.html).
 
 The 'common image' package contains a prebuilt Linux kernel and root file system that you can use with the AMD Versal™ board for embedded design development using Vitis tools.
 
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/**Common Images Dir**/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the `/**Common Images Dir**/xilinx-versal-common-v2025.2/sdk.sh`.
-3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the `/**Common Images Dir**/xilinx-versal-common-v2025.2` directory.
+2. In a Bash shell, run the `/**Common Images Dir**/xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the `/**Common Images Dir**/xilinx-versal-common-v2026.1/sdk.sh`.
+3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the `/**Common Images Dir**/xilinx-versal-common-v2026.1` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms`.
 
-This tutorial targets VCK190 production board for 2025.2 version.
+This tutorial targets VCK190 production board for 2026.1 version.
 
 ## Objectives
 

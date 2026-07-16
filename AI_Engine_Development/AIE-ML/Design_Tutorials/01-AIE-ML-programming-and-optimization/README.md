@@ -15,22 +15,22 @@
 
 # AI Engine-ML Programming
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
->**IMPORTANT**: Before you begin this tutorial, install the Vitis 2025.2 software. This release includes all embedded base platforms, including the VEK280 base platform used in this tutorial. Also download the *Common Images for Embedded Vitis Platforms* from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT**: Before you begin this tutorial, install the Vitis 2026.1 software. This release includes all embedded base platforms, including the VEK280 base platform used in this tutorial. Also download the *Common Images for Embedded Vitis Platforms* from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 The *common image* package contains a prebuilt Linux kernel and root file system that you can use with the AMD Versal™ board for embedded design development using the Vitis software platform.
 
 Follow these steps before starting the tutorial:
 
 1. Go to the directory where you unzipped the AMD Versal™ `Common Image` package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run `/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh`.
-3. Set the `ROOTFS` and `IMAGE` variables to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2025.2` directory.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run `/Common Images Dir/xilinx-versal-common-v2026.1/sdk.sh`.
+3. Set the `ROOTFS` and `IMAGE` variables to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2026.1` directory.
 4. Set the `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/base_platforms`.
 
-This tutorial targets the VEK280 board for 2025.2 version.
+This tutorial targets the VEK280 board for 2026.1 version.
 
 You need [Python 3](https://www.python.org/downloads/) with the following packages for data generation:
 

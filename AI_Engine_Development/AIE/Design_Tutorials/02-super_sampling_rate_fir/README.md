@@ -15,7 +15,7 @@
 
 # Super Sampling Rate FIR Filters: Implementation on the AI Engine
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -29,17 +29,17 @@ The purpose of this tutorial is to provide a methodology to enable you to make a
 
 Before beginning this tutorial, familiarize yourself with Versal adaptive SoC architecture, and specifically, the AI Engine array processor and interconnect architecture.
 
->**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ 2025.2 software platform. The Vitis release includes all the embedded base platforms, including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from this link: [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html).
+>**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ 2026.1 software platform. The Vitis release includes all the embedded base platforms, including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from this link: [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2026-1.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2026-1.html).
 
 The `common image` package contains a prebuilt Linux kernel and root file system that you can use with the Versal board for embedded design development using the AMD Vitis™ software platform.
 
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh`.
-3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2025.2` directory.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2026.1/sdk.sh`.
+3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2026.1` directory.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/base_platforms`.
-This tutorial targets VCK190 production board for 2025.2 version and the makefiles are set up to use `xilinx_vck190_base_202610_1` automatically.
+This tutorial targets VCK190 production board for 2026.1 version and the makefiles are set up to use `xilinx_vck190_base_202610_1` automatically.
 
 Data generation for this tutorial requires Python:
 

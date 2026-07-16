@@ -15,24 +15,24 @@
 
 # GMIO Tutorial
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
 A global memory input/output (GMIO) port attribute connects external memory-mapped interfaces to or from the global memory. You make these connections between AI Engine kernels or programmable logic (PL) kernels and the logical global memory ports of a hardware platform design. This tutorial guides you through using the GMIO interface in the AI Engine simulator and hardware flows.
 
->**IMPORTANT**: Before starting, make sure you installed the AMD Vitis™ 2025.2 software. This Vitis release includes all embedded base platforms, including the VCK190 base platform used in this tutorial. Also download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT**: Before starting, make sure you installed the AMD Vitis™ 2026.1 software. This Vitis release includes all embedded base platforms, including the VCK190 base platform used in this tutorial. Also download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 The common image package contains a prebuilt Linux kernel and root file system. You use it with the AMD Versal™ board for embedded design development in the Vitis software platform.
 
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you unzipped the Versal Common Image package.
-2. In a Bash shell, run ``/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux``. This script sets the `SDKTARGETSYSROOT` and `CXX` variables. If the script is missing, run ``/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh``.
-3. Set `ROOTFS` and `IMAGE` to point to ``rootfs.ext4`` ``Image`` files located in the ``/Common Images Dir/xilinx-versal-common-v2025.2`` directory.
+2. In a Bash shell, run ``/Common Images Dir/xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux``. This script sets the `SDKTARGETSYSROOT` and `CXX` variables. If the script is missing, run ``/Common Images Dir/xilinx-versal-common-v2026.1/sdk.sh``.
+3. Set `ROOTFS` and `IMAGE` to point to ``rootfs.ext4`` ``Image`` files located in the ``/Common Images Dir/xilinx-versal-common-v2026.1`` directory.
 4. Set your `PLATFORM_REPO_PATHS` environment variable to ``$XILINX_VITIS/base_platforms``.
 
-This tutorial targets VCK190 production board for 2025.2.
+This tutorial targets VCK190 production board for 2026.1.
 
 ## Objectives
 
