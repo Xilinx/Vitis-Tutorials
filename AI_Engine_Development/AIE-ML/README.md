@@ -23,15 +23,15 @@ The tutorials under the AI Engine for Machine Learning (AIE-ML) Development help
 
 - The AIE-ML Development [**Design Tutorials**](./Design_Tutorials/) showcase the two major phases of AI Engine-ML application development: architecting the application and developing the kernels. These tutorials demonstrate both phases.
 
->**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ unified software platform 2025.2. This Vitis release includes all the embedded base platforms including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/amd/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ unified software platform 2026.1. This Vitis release includes all the embedded base platforms including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/amd/en/downloadNav/embedded-platforms.html).
 
 The `common image` package contains a prebuilt Linux kernel and root file system that you can use with Versal boards for embedded design development using the Vitis software platform.
 
 Before starting a tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh`.
-3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the `/Common Images Dir/xilinx-versal-common-v2025.2` directory.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2026.1/sdk.sh`.
+3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the `/Common Images Dir/xilinx-versal-common-v2026.1` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms`.
 
 ### Feature Tutorials
@@ -328,6 +328,6 @@ These tutorials target the **VEK280** board. The following table lists the tutor
  </tr>  
  </table>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
