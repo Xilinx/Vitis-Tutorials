@@ -15,7 +15,7 @@
 
 # AIE API based FFT for Many Instances Applications on AIE-ML <!-- omit from toc -->
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -80,7 +80,7 @@ To thoroughly understand the content of this tutorial, it is necessary to know a
 For further information, please refer to the following documentation:
 
 - [AI Engine-ML Kernel and Graph Programming Guide (UG1603)](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
-- [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2025_2/aiengine_api/aie_api/doc)
+- [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2026_1/aiengine_api/aie_api/doc)
 - [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)
 - [Versal Adaptive SoC AIE-ML Architecture Manual (AM020)](https://docs.amd.com/r/en-US/am020-versal-aie-m)
 - [Versal Adaptive SoC Technical Reference Manual (AM011)](https://docs.amd.com/r/en-US/am011-versal-acap-trm)
@@ -150,7 +150,7 @@ The resulting system follows the diagram shown in figure 1, where 128 instances 
 In this section it is explained the rationale of the kernel and graph implementation, that has been done following the coding guidelines found in:
 
 - [AI Engine-ML Kernel and Graph Programming Guide (UG1603)](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
-- [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2025_2/aiengine_api/aie_api/doc)
+- [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2026_1/aiengine_api/aie_api/doc)
 
 ### Designing the Kernel with the AI Engine API
 
@@ -224,7 +224,7 @@ The file structure of choice to write the kernels is:
 ##### Twiddles Header File
 
 The first header file, that contains all the twiddle factor entries, is a rather long file. Because of the regular structure of the code, and because the mathematical formula to compute the twiddles is well known, the better choice is to generate the header file using a script.
-The twiddle generation script, written in Python following the [AIE API](https://www.xilinx.com/htmldocs/xilinx2025_2/aiengine_api/aie_api/doc/group__group__fft.html) guidelines, along with an explanation of its functionalities can be found in the [support twiddles folder](./support/twiddles/) of this repository.
+The twiddle generation script, written in Python following the [AIE API](https://www.xilinx.com/htmldocs/xilinx2026_1/aiengine_api/aie_api/doc/group__group__fft.html) guidelines, along with an explanation of its functionalities can be found in the [support twiddles folder](./support/twiddles/) of this repository.
 
 In particular, the defined twiddles vectors are organized with two subscripts, the first indicating the FFT stage, and the second indicating the stage entry. Thus for instance, the third entry of the fifth stage of a radix-4 FFT stage will be named *TWID4_2*. Because this project is about a radix-4 staged implementation, the generated header file contains 15 twiddle tables, three per each of the five stages.
 
@@ -605,12 +605,12 @@ To create the AIE-ML project in Vitis Unified IDE, follow those steps:
    ![AI Engine Component Creation in Vitis Unified IDE](./images/2_1_Vitis.png)
    > *Fig. 4*: AI Engine Component Creation in Vitis Unified IDE
 5. Select the project name and component directory and press "next".
-6. Select "Add folder" and import the `src` folder of this repository. Make sure that `fft1k_128_graph.cpp` is the top-level file and press "next".
-  ![AIE Component Creation - Source Files Selection](./images/2_2_Vitis.png)
-  > *Fig. 5*: AIE Component Creation - Source Files Selection
-7. When chosing the hardware, select the VEK280 board-based platform, as shown in the following figure, and press "next", and then "finish".
-   ![AIE Component Creation - Platform Selection](./images/2_3_Vitis.png)
-   > *Fig. 6*: AIE Component Creation - Platform Selection
+6. When chosing the hardware, select the VEK280 board-based platform, as shown in the following figure, and press "next".
+  ![AIE Component Creation - Platform Selection](./images/2_2_Vitis.png)
+  > *Fig. 5*: AIE Component Creation - Platform Selection
+7. Select "Add folder" and import the `src` folder of this repository. Make sure that `fft1k_128_graph.cpp` is the top-level file and press "next", and then "finish".
+   ![AIE Component Creation - Source Files Selection](./images/2_3_Vitis.png)
+   > *Fig. 6*: AIE Component Creation - Source Files Selection
 8. Open the compiler configuration clicking on `aiecompiler.cfg` under the AI Engine Component's setting folder on the left hand side of the GUI, then click on AI Engine and set the PL frequency to 500MHz, as decided in the design phase of the tutorial.
    ![Selecting the Programmable Logic Frequency in the AI Engine Compile Settings](./images/2_4_Vitis.png)
    > *Fig. 7*: Selecting the Programmable Logic Frequency in the AI Engine Compile Settings
@@ -745,6 +745,6 @@ GitHub issues will be used for tracking requests and bugs. For questions, go to 
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2021–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2021–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
