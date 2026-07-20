@@ -45,14 +45,14 @@ If you are new to AI Engine, take these training courses to understand the archi
 
 ### Environment Settings
 
-**IMPORTANT**: Before starting any tutorial, read and follow the *Vitis Release Notes and Installation Guide* ([UG1742](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes)) (v2025.2) to set up software and install the VCK190 base platform.
+**IMPORTANT**: Before starting any tutorial, read and follow the *Vitis Release Notes and Installation Guide* ([UG1742](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes)) (v2026.1) to set up software.
 
 Follow these steps to set up your environment (do **not** apply to tutorials that do not use the VCK190 base platform):
 
-1. Set up your platform: Run the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script from the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2025.2/sdk.sh` command.
-2. Set the `ROOTFS` path: Point it to `xilinx-versal-common-v2025.2/rootfs.ext4`.
-3. Set the `IMAGE` path: Point it to `xilinx-versal-common-v2025.2/Image`.
-4. Set the `PLATFORM_REPO_PATHS` environment variable: Define it based on where you downloaded the platform.
+1. Set up your platform: Run the `xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux` script from the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2026.1/sdk.sh` command.
+2. Set the `ROOTFS` path: Point it to `xilinx-versal-common-v2026.1/rootfs.ext4`.
+3. Set the `IMAGE` path: Point it to `xilinx-versal-common-v2026.1/Image`.
+4. Set the `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/base-platforms`.
 
 ### Getting Started with AI Engine Development Using the AI Engine Tutorials
 
@@ -779,6 +779,6 @@ These tutorials target the **VCK190** board. The following table lists the tutor
  </table>
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
