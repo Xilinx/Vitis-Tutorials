@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-## Step 3: Software application development
+# Step 3: Software application development
 
 In this step, we will create a platform-based application for development. To make the flow easier to follow, especially for users working with both hardware and emulation, we will divide this section into two parts: Hardware Flow and Hardware Emulation Flow.
 

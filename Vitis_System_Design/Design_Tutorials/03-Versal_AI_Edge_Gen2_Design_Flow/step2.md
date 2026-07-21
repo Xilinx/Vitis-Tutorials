@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-## Step 2: Develop and Integrate Kernels to Generate the Final Hardware Design
+# Step 2: Develop and Integrate Kernels to Generate the Final Hardware Design
 
 In this step, you will create HLS and AI Engine components using pre-prepared kernel source files, and integrate them with the extensible hardware platform generated in Step 1.
 

@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-## Step 1: Create Vivado Design to generate extensible XSA
+# Step 1: Create Vivado Design to generate extensible XSA
 
 In this step, you will create an extensible hardware platform for the VEK385 board using the AMD **Versal Embedded Common Platform** example design. This example serves as a board support design for Versal adaptive SoCs and includes key platform components such as the Processing System (PS), NoC, DDR, AI Engine, and other essential IP blocks.
 

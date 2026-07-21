@@ -6,6 +6,8 @@
  </tr>
 </table>
 
+# Versal AI Edge Gen2 Design Flow with Vitis Unified IDE
+
 ***Version: Vitis 2025.2 and Vivado 2025.2***
 
 In this module, you will create an acceleration application for the VEK385 Evaluation board, starting from an extensible XSA instead of an extensible platform.
