@@ -64,8 +64,8 @@ In this step, we will create a platform-based application for development. To ma
 
 4. Run on VEK385 board
 
-    - Boot the board using the QSPI BIN file downloaded in the previous step, following the instructions outlined in chapter `How to boot a board using the pre-built Images: OSPI Boot` in  [AMD EDF Wiki Page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/AMD+EDF+Getting+started+-+Discovery+and+Evaluation+AMD+Versal+device+portfolio#AMDEDFGettingstarted-DiscoveryandEvaluationAMDVersaldeviceportfolio-How-to-boot-a-board-using-the-pre-built-Images%3A-OSPI-Boot).
-    - Program the `edf-linux-disk-image-amd-cortexa78-mali-common.rootfs-20250730090230.wic.xz` to a SD card. Refer to the chapter of `Writing the EDF Linux® disk image (wic) to the secondary boot media : SD card ` in  [AMD EDF Wiki Page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/AMD+EDF+Getting+started+-+Discovery+and+Evaluation+AMD+Versal+device+portfolio#AMDEDFGettingstarted-DiscoveryandEvaluationAMDVersaldeviceportfolio-How-to-boot-a-board-using-the-pre-built-Images%3A-OSPI-Boot).
+    - Boot the board using the QSPI BIN file downloaded in the previous step, following the instructions outlined in chapter `How to boot a board using the pre-built Images: OSPI Boot` in the [AMD EDF Documentation](https://edf.docs.amd.com/en/latest/) (the 2026.1 home for EDF documentation, superseding the legacy Confluence wiki).
+    - Program the `edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.xz` to a SD card. Refer to the chapter of `Writing the EDF Linux® disk image (wic) to the secondary boot media : SD card ` in the [AMD EDF Documentation](https://edf.docs.amd.com/en/latest/) (the 2026.1 home for EDF documentation, superseding the legacy Confluence wiki).
 
       > **NOTE:** Eject the SD card properly from the system after programming it.
 
@@ -230,16 +230,16 @@ In this step, we will create a platform-based application for development. To ma
         - Run the following command to extract the images for emulation.
 
         ```bash
-        tar -xvzf versal-2ve-2vm-vek385-sdt-qemu-prebuilt_11151020.tar.gz
-        cd versal-2ve-2vm-vek385-sdt-qemu-prebuilt_11151020/
+        tar -xvzf amd-cortexa78-mali-common_vek385_qemu_prebuilt.tar.gz
+        cd amd-cortexa78-mali-common_vek385_qemu_prebuilt/
         ls 
-        BOOT-versal-2ve-2vm-vek385-sdt-seg.bin
-        BOOT-versal-2ve-2vm-vek385-sdt-seg.qemuboot.conf
+        BOOT-versal-2ve-2vm-vek385-multidomain.bin
+        BOOT-versal-2ve-2vm-vek385-multidomain.qemuboot.conf
         combined.qemuboot.conf
-        edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.qemuboot.conf
-        edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs
+        edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.qemuboot.conf
+        edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs
         qemu-hw-devicetrees
-        qemu-ospi-versal-2ve-2vm-vek385-sdt-seg.bin
+        qemu-ospi.bin
         ```
 
         - Go to **Flow** Navigator, click **Update WIC image**. Folowing wizard would appear in the main view.
@@ -248,11 +248,11 @@ In this step, we will create a platform-based application for development. To ma
 
         >Note: The WIC Wizard can also be launched from menu **Vitis** → **Update WIC Image** in the top menu. When opened through the Flow Navigator, the required files (XCLBIN, PDI, ELF, and DTBO) are automatically populated. If you launch the wizard from the Vitis menu, you’ll need to manually provide the paths to these files.
 
-        - Click **Browse** in the pop-up wizard and navigate to the `amd-cortexa78-mali-common_vek385_qemu_prebuilt/` folder, which contains the hardware emulation image extracted earlier. Select the file named: `edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs`
+        - Click **Browse** in the pop-up wizard and navigate to the `amd-cortexa78-mali-common_vek385_qemu_prebuilt/` folder, which contains the hardware emulation image extracted earlier. Select the file named: `edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs`
         In the **Additional Files or Folders** section add run_app_hw_emu.sh script to run the binaries.
         - Click **Update** in the right bottom of this wizard. 
 
-        >Note: A notification confirming that the WIC image update is complete will appear in the bottom-right corner. The updated WIC image remains in the original `versal-2ve-2vm-vek385-sdt-qemu-prebuilt_05222340/` folder. The wizard simply inserts the specified files and replaces the existing image in place.
+        >Note: A notification confirming that the WIC image update is complete will appear in the bottom-right corner. The updated WIC image remains in the original `amd-cortexa78-mali-common_vek385_qemu_prebuilt/` folder. The wizard simply inserts the specified files and replaces the existing image in place.
 
 
     - Go to **Flow** Navigator, click **Start Emulator**, In the pop-up window, enter the following command in the **Additional Arguments** field, then click **Start**.
@@ -278,10 +278,10 @@ If you encounter any issues when creating the extensible platform or the validat
 
     ```bash
     cd ref_files
-    make all YOCTO_QEMU_ARTIFACTS=versal-2ve-2vm-vek385-sdt-qemu-prebuilt_11151020/ ##Extracted in previous step.
+    make all YOCTO_QEMU_ARTIFACTS=amd-cortexa78-mali-common_vek385_qemu_prebuilt/ ##Extracted in previous step.
     ```
 
-    `versal-2ve-2vm-vek385-sdt-qemu-prebuilt_11151020/` is a flag to specify the common WIC image path. Please contact your AMD FAE to download the common WIC image from the Xilinx secure website and provide the path to the flag.
+    `amd-cortexa78-mali-common_vek385_qemu_prebuilt/` is a flag to specify the common WIC image path. Download this artifact (EDF v26.06, matching Vitis 2026.1) from the [AMD account downloads portal](https://account.amd.com/en/forms/downloads/xef.html) and provide the extracted path to the flag.
 
 - Hardware run
 

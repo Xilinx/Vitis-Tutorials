@@ -5,7 +5,7 @@
 # Project Configuration
 # =============================================================================
 ROOT_DIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-VERSION := 2025.2
+VERSION := 2026.1
 TARGET = hw_emu
 MODE := hw_emu
 
@@ -13,7 +13,7 @@ MODE := hw_emu
 # Toolchain Configuration
 # =============================================================================
 
-SYSROOT := $(YOCTO_ARTIFACTS)/amd-cortexa78-common_meta-edf-app-sdk/sdk/sysroots/cortexa72-cortexa53-amd-linux/
+SYSROOT := $(YOCTO_ARTIFACTS)/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk/sysroots/cortexa72-cortexa53-amd-linux/
 
 # =============================================================================
 # Platform Configuration
@@ -34,11 +34,28 @@ HOST_SRC := $(ROOT_DIR)/../step2_vitis_integration/_aie/ps/c_rts/aie_control_xrt
 # =============================================================================
 export QEMU_COMBINED := edf_qemu_images
 export COMBINED := combined
-export WIC_PARTITION := edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs:2
+export WIC_FILE := edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs
+export WIC_PARTITION := $(WIC_FILE):2
 
 YOCTO_ARTIFACTS ?=
-DISK_IMAGES := amd-cortexa78-mali-common_edf-linux-disk-image
+DISK_IMAGES := amd-cortexa78-mali-common_edf-platform-disk-image
 QEMU_IMAGES	:= amd-cortexa78-mali-common_vek385_qemu_prebuilt
+
+# v++ packager emits a BOOT.bin that bundles bootloader + our design's PDI, but
+# only when the XSA carries a DTSI (it does not for this Integration-Project
+# flow, so package.$(TARGET)/BOOT.bin is normally absent). When present, we
+# swap the prebuilt's BOOT-versal-2ve-2vm-vek385-multidomain.bin with it and
+# patch the OSPI flash image (qemu-ospi.bin) so the PLM loads our PL/AIE2-PS
+# design during boot instead of the generic prebuilt base image.
+VPP_BOOT_BIN     := ../step2_vitis_integration/package.$(TARGET)/BOOT.bin
+BOOT_BIN_BOARD   := $(QEMU_COMBINED)/$(COMBINED)/BOOT-versal-2ve-2vm-vek385-multidomain.bin
+QEMU_OSPI_BIN    := $(QEMU_COMBINED)/$(COMBINED)/qemu-ospi.bin
+
+# emconfigutil emits emconfig.json alongside the host executable as part of the
+# `host` build (platform_creation.py --mode=app runs CMake, which regenerates
+# it automatically). XRT's hw_emu shim reads it from the working directory, so
+# it must ship alongside the host application in the guest rootfs.
+EMCONFIG := $(dir $(ELF))emconfig.json
 # =============================================================================
 # SoC Configuration
 # =============================================================================
@@ -55,7 +72,7 @@ CPY := cp -prf
 # =============================================================================
 # Build Rules
 # =============================================================================
-.PHONY: check-EDF-common-image all pfm host clean ultraclean help run_emu sd_card prepare_run_hw qemu_combined  insert_image
+.PHONY: check-EDF-common-image all pfm host clean ultraclean help run_emu sd_card prepare_run_hw qemu_combined copy_bin insert_image
 
 all: run_emu
 sd_card: prepare_run_hw
@@ -64,8 +81,8 @@ sd_card: prepare_run_hw
 #IMAGE1 flag is used for internal users.
 #IMAGE2 flag is used for external users.
 check-EDF-common-image:
-	@IMAGE1="$(YOCTO_ARTIFACTS)/$(QEMU_IMAGES)/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
-	IMAGE2="$(YOCTO_QEMU_ARTIFACTS)/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
+	@IMAGE1="$(YOCTO_ARTIFACTS)/$(QEMU_IMAGES)/edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
+	IMAGE2="$(YOCTO_QEMU_ARTIFACTS)/edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
 	if [ ! -f "$$IMAGE1" ] && [ ! -f "$$IMAGE2" ]; then \
 	    echo "Error: EDF image not found in either:"; \
 	    echo "  - $$IMAGE1"; \
@@ -124,11 +141,26 @@ qemu_combined:
 	fi
 
 
+copy_bin:
+	@if [ -f $(VPP_BOOT_BIN) ]; then \
+		echo "Replacing $(BOOT_BIN_BOARD) with locally-built $(VPP_BOOT_BIN)"; \
+		$(RM) $(BOOT_BIN_BOARD); \
+		cp $(VPP_BOOT_BIN) $(BOOT_BIN_BOARD); \
+		echo "Patching $(QEMU_OSPI_BIN) with $(VPP_BOOT_BIN) (OSPI boot image)"; \
+		dd if=$(BOOT_BIN_BOARD) of=$(QEMU_OSPI_BIN) conv=notrunc; \
+		echo "Refreshing boot.bin symlink so wic cp + runqemu pick up the new BOOT.bin"; \
+		$(RM) $(QEMU_COMBINED)/$(COMBINED)/boot.bin; \
+		ln -sf BOOT-versal-2ve-2vm-vek385-multidomain.bin $(QEMU_COMBINED)/$(COMBINED)/boot.bin; \
+	else \
+		echo "INFO: $(VPP_BOOT_BIN) not found; keeping prebuilt $(BOOT_BIN_BOARD)."; \
+		echo "      The design PL/AIE2-PS PDI is instead loaded at runtime via fpgautil (see run_app_hw_emu.sh)."; \
+	fi
+
 insert_image:
 	@echo "Inserting images into base camp WIC..."
 	@bash -c '\
 	unset LD_LIBRARY_PATH; \
-	source $(XILINX_VITIS)/data/emulation/qemu/comp/qemu/environment-setup-x86_64-petalinux-linux; \
+	source $(XILINX_VITIS)/data/emulation/qemu/comp/qemu_edf/environment-setup-x86_64-amdedfsdk-linux; \
 	echo "Sourced environment"; \
 	wic cp --sector-size=4096 run_app_hw_emu.sh ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
 	echo "Copied run_app_hw_emu.sh"; \
@@ -139,7 +171,13 @@ insert_image:
 	wic cp  --sector-size=4096 ../step2_vitis_integration/package.hw_emu/gm2aie.dtbo ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
 	echo "Copied dtbo"; \
 	wic cp --sector-size=4096 ../step2_vitis_integration/package.hw_emu/gm2aie.pdi ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
-	echo "Copied pdi"'
+	echo "Copied pdi"; \
+	if [ -f $(EMCONFIG) ]; then \
+	  wic cp --sector-size=4096 $(EMCONFIG) ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	  echo "Copied emconfig.json"; \
+	else \
+	  echo "WARNING: emconfig.json not found, skipping (XRT cosim may not find device)"; \
+	fi'
 
 run_emu:
 	@echo "Starting hardware emulation..."
@@ -148,6 +186,7 @@ run_emu:
 	$(MAKE) pfm MODE=hw_emu TARGET=hw_emu
 	$(MAKE) host
 	$(MAKE) qemu_combined
+	$(MAKE) copy_bin TARGET=hw_emu
 	$(MAKE) insert_image TARGET=hw_emu
 	$(MAKE) start_emu
 start_emu:

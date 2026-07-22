@@ -5,7 +5,7 @@
 # Project Configuration
 # =============================================================================
 ROOT_DIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-VERSION := 2025.2
+VERSION := 2026.1
 TARGET ?= hw_emu
 
 # =============================================================================
@@ -119,9 +119,9 @@ clean:
 
 ultraclean: clean
 	$(RM) package.* -rf *.link_summary *_x *.txt *.json *summary sysroots \
-		environment-setup-x86_64-petalinux-linux \
-		version-x86_64-petalinux-linux \
-		x86_64-qemu-xilinx-nativesdk-standalone-2025.2+release-stable.sh
+		environment-setup-x86_64-amdedfsdk-linux \
+		version-x86_64-amdedfsdk-linux \
+		x86_64-qemu-xilinx-nativesdk-standalone-2026.1+release-stable.sh
 
 # =============================================================================
 # Help

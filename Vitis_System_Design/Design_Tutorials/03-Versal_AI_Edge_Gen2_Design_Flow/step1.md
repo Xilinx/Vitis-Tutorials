@@ -116,7 +116,7 @@ Once you complete the necessary configuration—such as updating the PS settings
 
 6. Export hardware and hardware emulation platform with the following scripts:
 
-   This platform follows the segmented configuration method and is designed to work with the AMD Embedded Design Framework (EDF). To ensure the system boots correctly with EDF-provided images, the configuration of the processing system (PS) and the PS to NOC LPDDR must match the settings defined by EDF. See the [AMD EDF Wiki page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3250586438?atlOrigin=eyJpIjoiOGFjY2E4Zjk0ZjM2NDViMGFjYjU3NjQzYWRlYTZlZjAiLCJwIjoiYyJ9) for more details.
+   This platform follows the segmented configuration method and is designed to work with the AMD Embedded Design Framework (EDF). To ensure the system boots correctly with EDF-provided images, the configuration of the processing system (PS) and the PS to NOC LPDDR must match the settings defined by EDF. See the [AMD EDF Documentation](https://edf.docs.amd.com/en/latest/) (the 2026.1 home for EDF documentation, superseding the legacy Confluence wiki) for more details.
 
    Run the Export Platform wizard again, and export the XSA for hardware.
 

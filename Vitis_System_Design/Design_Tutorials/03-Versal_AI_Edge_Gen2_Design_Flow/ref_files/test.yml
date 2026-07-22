@@ -10,17 +10,17 @@ targets:
     timeout: 120m
     memory: 64GB
     run: make all TARGET=hw_emu EMU_CMD="./step2_vitis_integration/package.hw_emu/launch_hw_emu.sh -qemu-config ./step3_application/edf_qemu_images/combined/combined.qemuboot.conf
-      -login "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./step3_application/run_app_hw_emu.sh""
+      -login "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./run_app_hw_emu.sh""
       EMBEDDED_PACKAGE_OUT=./step2_vitis_integration/package.hw/ EMBEDDED_EXEC_SCRIPT=./step3_application/embedded_exec.sh
   vitis_hw_build:
     timeout: 300m
     memory: 64GB
     run: make all TARGET=hw EMU_CMD="./step2_vitis_integration/package.hw_emu/launch_hw_emu.sh -qemu-config ./step3_application/edf_qemu_images/combined/combined.qemuboot.conf
-      -login "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./step3_application/run_app_hw_emu.sh""
+      -login "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./run_app_hw_emu.sh""
       EMBEDDED_PACKAGE_OUT=./step2_vitis_integration/package.hw/ EMBEDDED_EXEC_SCRIPT=./step3_application/embedded_exec.sh
   vitis_hw_run:
     timeout: 30m
     memory: 64GB
     run: make run_test TARGET=hw EMU_CMD="./step2_vitis_integration/package.hw_emu/launch_hw_emu.sh -qemu-config ./step3_application/edf_qemu_images/combined/combined.qemuboot.conf
-      -login "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./step3_application/run_app_hw_emu.sh""
+      -login "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./run_app_hw_emu.sh""
       EMBEDDED_PACKAGE_OUT=./step2_vitis_integration/package.hw/ EMBEDDED_EXEC_SCRIPT=./step3_application/embedded_exec.sh

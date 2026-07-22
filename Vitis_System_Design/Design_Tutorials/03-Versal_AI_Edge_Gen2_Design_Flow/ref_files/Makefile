@@ -8,7 +8,7 @@ XSA := $(ROOT_DIR)/step1_vivado/build/vivado/project_1/vek385_$(TARGET).xsa
 FIXED_XSA_EMU := step2_vitis_integration/ys_gm2aie_hw_emu.xsa
 FIXED_XSA_HW := step2_vitis_integration/ys_gm2aie_hw.xsa
 YOCTO_ARTIFACTS ?= 
-DISK_IMAGES := amd-cortexa78-mali-common_edf-linux-disk-image/
+DISK_IMAGES := amd-cortexa78-mali-common_edf-platform-disk-image/
 YOCTO_QEMU_ARTIFACTS ?=
 QEMU_IMAGES	:= amd-cortexa78-mali-common_vek385_qemu_prebuilt
 .PHONY: all sd_card clean ultraclean help
@@ -24,8 +24,8 @@ sd_card: check-EDF-common-image step1 step2_hw step3_hw
 #IMAGE1 flag is used for internal users.
 #IMAGE2 flag is used for external users.
 check-EDF-common-image:
-	@IMAGE1="$(YOCTO_ARTIFACTS)/$(DISK_IMAGES)/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
-	IMAGE2="$(YOCTO_QEMU_ARTIFACTS)/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
+	@IMAGE1="$(YOCTO_ARTIFACTS)/$(DISK_IMAGES)/edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
+	IMAGE2="$(YOCTO_QEMU_ARTIFACTS)/edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
 	if [ ! -f "$$IMAGE1" ] && [ ! -f "$$IMAGE2" ]; then \
 	    echo "Error: EDF image not found in either:"; \
 	    echo "  - $$IMAGE1"; \

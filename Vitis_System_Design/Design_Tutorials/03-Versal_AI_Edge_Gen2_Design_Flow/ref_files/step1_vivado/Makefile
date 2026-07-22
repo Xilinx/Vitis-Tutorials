@@ -14,14 +14,14 @@ help:
 	@echo "make all 	## to generate hw platform and export XSA file"
 
 
-all: hw 
+all: hw
 sd_card :all
 #petalinuximage
 
-#generate the XSA file 
+#generate the XSA file
 hw:
 	mkdir -p $(ABS_HW_PATH)
-	cd $(ABS_HW_PATH) && vivado -mode batch -notrace -source $(ABS_BD_TCL) -source 
+	cd $(ABS_HW_PATH) && vivado -mode batch -notrace -source $(ABS_BD_TCL) -source
 #Generate petalinux image for validation
 
 clean:
