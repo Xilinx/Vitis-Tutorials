@@ -89,7 +89,7 @@ In the previous section chapter we created all the components required as a buil
 Vitis uses the Vivado generated extensible hardware platform (XSA) and add software (SW) components and create an embedded platform **XPFM**.  
 XPFM = XSA + SW platform (Linux/Baremetal + boot components)
 
-In this flow, the Vitis backend uses System Device Tree (SDT) generator, Yocto/PetaLinux and Lopper to deliver the SW compoenents.
+In this flow, the Vitis backend uses System Device Tree (SDT) generator, Yocto/PetaLinux and Lopper to deliver the SW components.
 
 ```mermaid
 graph TD;
@@ -155,7 +155,7 @@ Vitis Tool: Detailed summary of available Vitis tools and its usages
 | Vitis HLS            | &#x2612;                 | &#x2611;           | &#x2612;  | To create PL kernels using C/C++ files                |
 | AI Engine Tools      | &#x2612;                 | &#x2612;           | &#x2611;  | Vitis AIE compiler, x86sim, and aiesimulator for AI Engine designing. <br> **Vitis AIE compiler** uses AI Engine targeted C/C++ source files to output libadf.a (AIE Kernels). <br> **x86sim** is the functional simulator for AI Engines that helps to test, debug, and verify the functionality. <br> **aiesimulator** simulates a cycle approximate SystemC model of AI Engine. |
 | Vitis Linker         | &#x2612;                       | &#x2611;                | &#x2611;       | Works on existing platform and provides connection between AI Engine, PL and NoC. Also takes care of clock connections and data width conversions.               |
-| Vitis Packager       | &#x2611;                      | &#x2611;                 | &#x2611;      | Pack all necessaey hardware and software components and also to configure boot of the device              |
+| Vitis Packager       | &#x2611;                      | &#x2611;                 | &#x2611;      | Pack all necessary hardware and software components and also to configure boot of the device              |
 | Hardware Emulation   | &#x2611;                      | &#x2611;                 | &#x2611;      | To simulate the PS+PL+AIE, where PS gets simulated using QEMU and PL and AIE with simulators like XSIM             |
 | Vitis Analyzer               | &#x2612;                      | &#x2611;                 | &#x2611;      | Helps to review and debug the AI Engine and PL targetted output files              |
 
