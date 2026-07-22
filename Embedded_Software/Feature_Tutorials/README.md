@@ -45,4 +45,4 @@ These tutorials illustrate specific features of the Vitis Embedded Software deve
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020-2024, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: X11</sub></p>
 
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

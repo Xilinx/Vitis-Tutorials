@@ -203,4 +203,4 @@ You can either debug the FSBL like any other standalone application, or debug FS
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2024, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: X11</sub></p>
 
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

@@ -65,4 +65,4 @@ You can uild the multiple engine SAR design for the VCK190 board using the Makef
 The build process with generate the SD card image in the ```<path-to-design>/21-Back-Projection-SAR/package8/sd_card``` folder.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc</sub></p>
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

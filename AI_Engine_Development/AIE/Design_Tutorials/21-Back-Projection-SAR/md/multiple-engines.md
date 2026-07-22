@@ -70,4 +70,4 @@ In this tutorial, the 8-engine design was achieved by repeatedly instantiating t
 * You can, in principle, remove the PL URAM portion of the design by partitioning these image buffers to DDR instead of the PL. In this case, the radar processing requires eight GMIO pairs, one pair for each engine. The data flow proceeds from DDR, streaming the input image to each engine over the NoC to the AIE array, updating each image segment by its engine, then streaming the output image back to DDR over the NoC. This removes all PL resources from the design—a significant saving and simplification. You need to optimize the DDR buffer design to maximize the burst bandwidth available to each engine. AMD is currently exploring this variant of the design.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc</sub></p>
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>
