@@ -460,6 +460,17 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
             <td>
             </td>            
         </tr>   
+        <tr>
+            <td height="24">
+                <a href="./Vitis_System_Design/Feature_Tutorials/03-Vitis_Hardware_in_the_Loop/">Vitis Hardware in the Loop :new: </a>     
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>            
+        </tr>   
     </tbody>
 </table>
 
