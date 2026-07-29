@@ -24,14 +24,18 @@ Feature tutorials illustrate specific features of Vitis development flow, some f
  </tr>
  <tr>
  <td align="center"><a href="./01-Vitis_Functional_Simulation/"> Vitis Functional Simulation </a></td>
- <td>This tutorial introduces Vitis Functional Simulation (VFS), a new feature that allows user to functionally simulate AI Engine graphs and/or HLS kernels in both MATLAB® and Python™ environments on Linux. Simple examples are provided to show users how to get started. For more information on Vitis Functional Simulation, refer to Chapter 6 of <a href="https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Functional-Simulation-and-Verification-in-Vitis">Embedded Design Development Using Vitis User Guide (UG1701)</a> . </td>
+ <td>This tutorial introduces Vitis Functional Simulation (VFS), a new feature that allows you to functionally simulate AI Engine graphs and/or HLS kernels in both MATLAB® and Python™ environments on Linux. Simple examples are provided to show users how to get started. For more information on Vitis Functional Simulation, refer to Chapter 6 of <a href="https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Functional-Simulation-and-Verification-in-Vitis">Embedded Design Development Using Vitis User Guide (UG1701)</a> . </td>
  </tr> 
  <tr>
  <td align="center"><a href="./02-Vitis_Subsystem_Simulation/"> Vitis Subsystem Simulation </a></td>
- <td>This tutorial demostrates a new feature Vitis Subsystem Simulation, which enables user to simulate AI Engine + PL designs in a RTL testbench environment. By running the AI Engine simulation encapsulated in a VSS component, the interaction between AI Engine PLIO and custom RTL can be analyzed and verified without having to go through the full system emulation flow. </td>
+ <td>This tutorial demontrates a new feature, Vitis Subsystem Simulation, which enables you to simulate AI Engine + PL designs in a RTL testbench environment. By running the AI Engine simulation encapsulated in a VSS component, the interaction between AI Engine PLIO and custom RTL can be analyzed and verified without having to go through the full system emulation flow. </td>
+ </tr> 
+ <tr>
+ <td align="center"><a href="./03-Vitis_Hardware_in_the_Loop/"> Vitis Hardware in the Loop</a></td>
+ <td>This tutorial demonstrates Vitis Hardware in the Loop (HIL), which enables real-time verification of DSP-based systems by executing the actual design on a development board equipped with a Versal™ adaptive SoC. It demonstrates a complete Vitis HIL workflow using a polyphase channelizer as the design under test.</td>
  </tr> 
  </table>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

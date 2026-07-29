@@ -1,0 +1,9 @@
+name: VSD_F_03-Vitis_Hardware_in_the_Loop
+category: canary
+platform: [xilinx_vck190_base]
+flow: versal
+targets:
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make all
