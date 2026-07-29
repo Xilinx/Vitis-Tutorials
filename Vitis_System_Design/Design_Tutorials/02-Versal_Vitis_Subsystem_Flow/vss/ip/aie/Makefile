@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2020-2022, Xilinx, Inc. All rights reserved.
-# Copyright (C) 2022-2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2022-2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 # Author Derek Hagen
@@ -78,6 +78,7 @@ help::
 	$(ECHO) "      Command to remove all the generated files."
 
 all          : ${AIE_OUTPUT}
+.PHONY: allx86
 allx86       : clean x86compile x86sim
 
 #${AIE_OUTPUT}: ${AIE_SRC}/* ${AIE_GRAPHS}/* ${AIE_KERNELS}/*
@@ -120,21 +121,26 @@ ${AIE_OUTPUT}: ${AIE_WS} ${AIE_SRC}/* ${AIE_GRAPHS}/* ${AIE_KERNELS}/*
 		|& tee ${LOG_FILE}
 
 
+.PHONY: sim
 sim:
 	aiesimulator --pkg-dir=$(WORK_DIR) -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(SIM_LOG_FILE)
 
+.PHONY: sim_analyzer
 sim_analyzer:
 	aiesimulator --pkg-dir=$(WORK_DIR) --profile --online -wdb -text -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(SIM_LOG_FILE)
 
+.PHONY: analyze
 analyze:
 	vitis_analyzer -report system.wdb
 
+.PHONY: get_op
 get_op:
 	grep -v T ${SIM_OUTPUT}/data/output0.txt > ${SIM_OUTPUT}/data/output0_raw.txt
 	grep -v T ${SIM_OUTPUT}/data/output1.txt > ${SIM_OUTPUT}/data/output1_raw.txt
 	grep -v T ${SIM_OUTPUT}/data/output2.txt > ${SIM_OUTPUT}/data/output2_raw.txt
 	grep -v T ${SIM_OUTPUT}/data/output3.txt > ${SIM_OUTPUT}/data/output3_raw.txt
 
+.PHONY: x86sim
 x86sim:
 	x86simulator --pkg-dir=$(WORK_DIR) |& tee -a $(SIM_LOG_FILE)
 
@@ -147,6 +153,7 @@ clean:
 	rm -rf log log* $(LOG_FILE)
 	rm -rf ${AIE_OUTPUT} *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.wdb *.wcfg
 
+.PHONY: timestamp
 timestamp:
 	@echo TIME: >> $(TIME_LOG);\
 	date +%s >> $(TIME_LOG)

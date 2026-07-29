@@ -1,6 +1,6 @@
 //
 // Copyright (C) 2021-2022, Xilinx, Inc. All rights reserved.
-// Copyright (C) 2022-2025, Advanced Micro Devices, Inc. All rights reserved.
+// Copyright (C) 2022-2026, Advanced Micro Devices, Inc. All rights reserved.
 // SPDX-License-Identifier: X11
 //
 // Author Derek Hagen
@@ -125,9 +125,10 @@ module subtractor
   wire [DWIDTH/4-1:0]   diff3_q;
   reg                   tvalid;
   reg                   tlast;
-  reg                   s00_axi_aclk_d;
-  reg                   s00_axi_aclk_d2;
-  wire                  s00_axi_aclk_posedge;
+  reg                   my_strobe;
+  reg                   my_strobe_d;
+  reg                   my_strobe_d2;
+  wire                  my_strobe_edge;
 
   // Tie off tready
   assign s00_axis_tready   = true_c;
@@ -216,22 +217,34 @@ module subtractor
     .res        (diff3_q)
   );
 
-  // Buffer clock for edge detect
+  always @(posedge s00_axi_aclk)
+  begin
+    if (!aresetn)
+    begin
+      my_strobe  <= false_c;
+    end
+    else
+    begin
+      my_strobe  <= !my_strobe;
+    end
+  end
+
+  // Buffer in aclk to detect strobe edges
   always @(posedge aclk)
   begin
     if (!aresetn)
     begin
-      s00_axi_aclk_d  <= false_c;
-      s00_axi_aclk_d2 <= false_c;
+      my_strobe_d  <= false_c;
+      my_strobe_d2 <= false_c;
     end
     else
     begin
-      s00_axi_aclk_d  <= s00_axi_aclk;
-      s00_axi_aclk_d2 <= s00_axi_aclk_d;
+      my_strobe_d  <= my_strobe;
+      my_strobe_d2 <= my_strobe_d;
     end
   end
 
-  assign s00_axi_aclk_posedge = s00_axi_aclk_d & !s00_axi_aclk_d2;
+  assign my_strobe_edge = my_strobe_d ^ my_strobe_d2;
 
 
   // Simple hold circuit
@@ -248,7 +261,7 @@ module subtractor
       buf3_i      <= 0;
       buf3_q      <= 0;
     end
-    else if (s00_axi_aclk_posedge) begin
+    else if (my_strobe_edge) begin
       buf0_i      <= diff0_i;
       buf0_q      <= diff0_q;
       buf1_i      <= diff1_i;

@@ -20,21 +20,21 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2025.2
-set current_vivado_version [version -short]
-
-if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
-   puts ""
-   if { [string compare $scripts_vivado_version $current_vivado_version] > 0 } {
-      catch {common::send_gid_msg -ssname BD::TCL -id 2042 -severity "ERROR" " This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Sourcing the script failed since it was created with a future version of Vivado."}
-
-   } else {
-     catch {common::send_gid_msg -ssname BD::TCL -id 2041 -severity "ERROR" "This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Please run the script in Vivado <$scripts_vivado_version> then open the design in Vivado <$current_vivado_version>. Upgrade the design by running \"Tools => Report => Report IP Status...\", then run write_bd_tcl to create an updated script."}
-
-   }
-
-   return 1
-}
+#set scripts_vivado_version 2026.1
+#set current_vivado_version [version -short]
+#
+#if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
+#   puts ""
+#   if { [string compare $scripts_vivado_version $current_vivado_version] > 0 } {
+#      catch {common::send_gid_msg -ssname BD::TCL -id 2042 -severity "ERROR" " This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Sourcing the script failed since it was created with a future version of Vivado."}
+#
+#   } else {
+#     catch {common::send_gid_msg -ssname BD::TCL -id 2041 -severity "ERROR" "This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Please run the script in Vivado <$scripts_vivado_version> then open the design in Vivado <$current_vivado_version>. Upgrade the design by running \"Tools => Report => Report IP Status...\", then run write_bd_tcl to create an updated script."}
+#
+#   }
+#
+#   return 1
+#}
 
 ################################################################
 # START
@@ -314,6 +314,8 @@ proc create_root_design { parentCell } {
   ] $CIPS_0
 
 
+  set_property SELECTED_SIM_MODEL tlm  $CIPS_0
+
   # Create instance: axi_intc_0, and set properties
   set axi_intc_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_intc:4.1 axi_intc_0 ]
   set_property -dict [list \
@@ -346,146 +348,148 @@ proc create_root_design { parentCell } {
   # Create instance: cips_noc, and set properties
   set cips_noc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 cips_noc ]
   set_property -dict [list \
+    CONFIG.MI_SIDEBAND_PINS {} \
     CONFIG.NUM_CLKS {10} \
     CONFIG.NUM_MI {1} \
-    CONFIG.NUM_NMI {2} \
+    CONFIG.NUM_NMI {8} \
     CONFIG.NUM_NSI {0} \
     CONFIG.NUM_SI {8} \
+    CONFIG.SI_SIDEBAND_PINS {} \
   ] $cips_noc
 
 
+  set_property SELECTED_SIM_MODEL tlm  $cips_noc
+
   set_property -dict [ list \
    CONFIG.CATEGORY {aie} \
- ] [get_bd_intf_pins /cips_noc/M00_AXI]
+ ] [get_bd_intf_pins $cips_noc/M00_AXI]
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
+   CONFIG.CONNECTIONS {M04_INI {read_bw {128} write_bw {128}} M00_AXI {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI {read_bw {128} write_bw {128}}} \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
    CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_cci} \
- ] [get_bd_intf_pins /cips_noc/S00_AXI]
+ ] [get_bd_intf_pins $cips_noc/S00_AXI]
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
+   CONFIG.CONNECTIONS {M01_INI {read_bw {128} write_bw {128}} M05_INI {read_bw {128} write_bw {128}} M00_AXI {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
    CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_cci} \
- ] [get_bd_intf_pins /cips_noc/S01_AXI]
+ ] [get_bd_intf_pins $cips_noc/S01_AXI]
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
+   CONFIG.CONNECTIONS {M02_INI {read_bw {128} write_bw {128}} M06_INI {read_bw {128} write_bw {128}} M00_AXI {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
    CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_cci} \
- ] [get_bd_intf_pins /cips_noc/S02_AXI]
+ ] [get_bd_intf_pins $cips_noc/S02_AXI]
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
+   CONFIG.CONNECTIONS {M07_INI {read_bw {128} write_bw {128}} M03_INI {read_bw {128} write_bw {128}} M00_AXI {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
    CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_cci} \
- ] [get_bd_intf_pins /cips_noc/S03_AXI]
+ ] [get_bd_intf_pins $cips_noc/S03_AXI]
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_INI { read_bw {128} write_bw {128}} } \
+   CONFIG.CONNECTIONS {M00_INI {read_bw {5} write_bw {5}}} \
    CONFIG.DEST_IDS {} \
    CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_nci} \
- ] [get_bd_intf_pins /cips_noc/S04_AXI]
+ ] [get_bd_intf_pins $cips_noc/S04_AXI]
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_INI { read_bw {128} write_bw {128}} } \
+   CONFIG.CONNECTIONS {M00_INI {read_bw {5} write_bw {5}}} \
    CONFIG.DEST_IDS {} \
    CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_nci} \
- ] [get_bd_intf_pins /cips_noc/S05_AXI]
+ ] [get_bd_intf_pins $cips_noc/S05_AXI]
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_INI { read_bw {128} write_bw {128}} } \
+   CONFIG.CONNECTIONS {M00_INI {read_bw {5} write_bw {5}}} \
    CONFIG.DEST_IDS {} \
    CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_rpu} \
- ] [get_bd_intf_pins /cips_noc/S06_AXI]
+ ] [get_bd_intf_pins $cips_noc/S06_AXI]
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
+   CONFIG.CONNECTIONS {M04_INI {read_bw {5} write_bw {5}} M00_AXI {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI {read_bw {5} write_bw {5}}} \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
    CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_pmc} \
- ] [get_bd_intf_pins /cips_noc/S07_AXI]
+ ] [get_bd_intf_pins $cips_noc/S07_AXI]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {} \
- ] [get_bd_pins /cips_noc/aclk0]
+ ] [get_bd_pins $cips_noc/aclk0]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {S00_AXI} \
- ] [get_bd_pins /cips_noc/aclk1]
+ ] [get_bd_pins $cips_noc/aclk1]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {S01_AXI} \
- ] [get_bd_pins /cips_noc/aclk2]
+ ] [get_bd_pins $cips_noc/aclk2]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {S02_AXI} \
- ] [get_bd_pins /cips_noc/aclk3]
+ ] [get_bd_pins $cips_noc/aclk3]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {S03_AXI} \
- ] [get_bd_pins /cips_noc/aclk4]
+ ] [get_bd_pins $cips_noc/aclk4]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {S04_AXI} \
- ] [get_bd_pins /cips_noc/aclk5]
+ ] [get_bd_pins $cips_noc/aclk5]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {S05_AXI} \
- ] [get_bd_pins /cips_noc/aclk6]
+ ] [get_bd_pins $cips_noc/aclk6]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {S06_AXI} \
- ] [get_bd_pins /cips_noc/aclk7]
+ ] [get_bd_pins $cips_noc/aclk7]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {S07_AXI} \
- ] [get_bd_pins /cips_noc/aclk8]
+ ] [get_bd_pins $cips_noc/aclk8]
 
   set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {M00_AXI} \
- ] [get_bd_pins /cips_noc/aclk9]
+ ] [get_bd_pins $cips_noc/aclk9]
 
   # Create instance: noc_ddr4, and set properties
   set noc_ddr4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 noc_ddr4 ]
   set_property -dict [list \
     CONFIG.CH0_DDR4_0_BOARD_INTERFACE {ddr4_dimm1} \
-    CONFIG.MC1_CONFIG_NUM {config17} \
-    CONFIG.MC2_CONFIG_NUM {config17} \
-    CONFIG.MC3_CONFIG_NUM {config17} \
-    CONFIG.MC_BOARD_INTRF_EN {true} \
-    CONFIG.MC_CASLATENCY {22} \
     CONFIG.MC_CHAN_REGION1 {DDR_LOW1} \
-    CONFIG.MC_DDR4_2T {Disable} \
-    CONFIG.MC_F1_TRCD {13750} \
-    CONFIG.MC_F1_TRCDMIN {13750} \
-    CONFIG.MC_TRC {45750} \
-    CONFIG.MC_TRCD {13750} \
-    CONFIG.MC_TRCDMIN {13750} \
-    CONFIG.MC_TRCMIN {45750} \
-    CONFIG.MC_TRP {13750} \
-    CONFIG.MC_TRPMIN {13750} \
-    CONFIG.NUM_CLKS {0} \
-    CONFIG.NUM_MC {1} \
     CONFIG.NUM_MCP {4} \
     CONFIG.NUM_MI {0} \
-    CONFIG.NUM_NSI {1} \
+    CONFIG.NUM_NSI {4} \
     CONFIG.NUM_SI {0} \
     CONFIG.sys_clk0_BOARD_INTERFACE {ddr4_dimm1_sma_clk} \
   ] $noc_ddr4
 
 
+  set_property SELECTED_SIM_MODEL tlm  $noc_ddr4
+
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {MC_0 { read_bw {128} write_bw {128} read_avg_burst {4} write_avg_burst {4}} } \
- ] [get_bd_intf_pins /noc_ddr4/S00_INI]
+   CONFIG.CONNECTIONS {MC_0 {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
+ ] [get_bd_intf_pins $noc_ddr4/S00_INI]
+
+  set_property -dict [ list \
+   CONFIG.CONNECTIONS {MC_1 {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
+ ] [get_bd_intf_pins $noc_ddr4/S01_INI]
+
+  set_property -dict [ list \
+   CONFIG.CONNECTIONS {MC_2 {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
+ ] [get_bd_intf_pins $noc_ddr4/S02_INI]
+
+  set_property -dict [ list \
+   CONFIG.CONNECTIONS {MC_3 {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
+ ] [get_bd_intf_pins $noc_ddr4/S03_INI]
 
   # Create instance: proc_sys_reset_0, and set properties
   set proc_sys_reset_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_0 ]
@@ -520,7 +524,7 @@ proc create_root_design { parentCell } {
 
   set_property -dict [ list \
    CONFIG.CATEGORY {NOC} \
- ] [get_bd_intf_pins /ai_engine_0/S00_AXI]
+ ] [get_bd_intf_pins $ai_engine_0/S00_AXI]
 
   # Create instance: noc_lpddr4, and set properties
   set noc_lpddr4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 noc_lpddr4 ]
@@ -530,19 +534,32 @@ proc create_root_design { parentCell } {
     CONFIG.CH1_LPDDR4_0_BOARD_INTERFACE {ch1_lpddr4_c0} \
     CONFIG.CH1_LPDDR4_1_BOARD_INTERFACE {ch1_lpddr4_c1} \
     CONFIG.MC_CHAN_REGION0 {DDR_CH1} \
-    CONFIG.NUM_CLKS {0} \
+    CONFIG.NUM_MCP {4} \
     CONFIG.NUM_MI {0} \
-    CONFIG.NUM_NSI {1} \
+    CONFIG.NUM_NSI {4} \
     CONFIG.NUM_SI {0} \
     CONFIG.sys_clk0_BOARD_INTERFACE {lpddr4_sma_clk1} \
     CONFIG.sys_clk1_BOARD_INTERFACE {lpddr4_sma_clk2} \
   ] $noc_lpddr4
 
 
+  set_property SELECTED_SIM_MODEL tlm  $noc_lpddr4
 
   set_property -dict [ list \
-   CONFIG.CONNECTIONS {MC_0 { read_bw {1720} write_bw {1720} read_avg_burst {4} write_avg_burst {4}} } \
- ] [get_bd_intf_pins /noc_lpddr4/S00_INI]
+   CONFIG.CONNECTIONS {MC_0 {read_bw {128} write_bw {128} read_avg_burst {4} write_avg_burst {4}}} \
+ ] [get_bd_intf_pins $noc_lpddr4/S00_INI]
+
+  set_property -dict [ list \
+   CONFIG.CONNECTIONS {MC_1 {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
+ ] [get_bd_intf_pins $noc_lpddr4/S01_INI]
+
+  set_property -dict [ list \
+   CONFIG.CONNECTIONS {MC_2 {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
+ ] [get_bd_intf_pins $noc_lpddr4/S02_INI]
+
+  set_property -dict [ list \
+   CONFIG.CONNECTIONS {MC_3 {read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}}} \
+ ] [get_bd_intf_pins $noc_lpddr4/S03_INI]
 
   # Create interface connections
   connect_bd_intf_net -intf_net CIPS_0_FPD_AXI_NOC_0 [get_bd_intf_pins CIPS_0/FPD_AXI_NOC_0] [get_bd_intf_pins cips_noc/S04_AXI]
@@ -556,7 +573,13 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net CIPS_0_PMC_NOC_AXI_0 [get_bd_intf_pins CIPS_0/PMC_NOC_AXI_0] [get_bd_intf_pins cips_noc/S07_AXI]
   connect_bd_intf_net -intf_net cips_noc_M00_AXI [get_bd_intf_pins cips_noc/M00_AXI] [get_bd_intf_pins ai_engine_0/S00_AXI]
   connect_bd_intf_net -intf_net cips_noc_M00_INI [get_bd_intf_pins cips_noc/M00_INI] [get_bd_intf_pins noc_ddr4/S00_INI]
-  connect_bd_intf_net -intf_net cips_noc_M01_INI [get_bd_intf_pins cips_noc/M01_INI] [get_bd_intf_pins noc_lpddr4/S00_INI]
+  connect_bd_intf_net -intf_net cips_noc_M01_INI [get_bd_intf_pins cips_noc/M01_INI] [get_bd_intf_pins noc_ddr4/S01_INI]
+  connect_bd_intf_net -intf_net cips_noc_M02_INI [get_bd_intf_pins cips_noc/M02_INI] [get_bd_intf_pins noc_ddr4/S02_INI]
+  connect_bd_intf_net -intf_net cips_noc_M03_INI [get_bd_intf_pins cips_noc/M03_INI] [get_bd_intf_pins noc_ddr4/S03_INI]
+  connect_bd_intf_net -intf_net cips_noc_M04_INI [get_bd_intf_pins cips_noc/M04_INI] [get_bd_intf_pins noc_lpddr4/S00_INI]
+  connect_bd_intf_net -intf_net cips_noc_M05_INI [get_bd_intf_pins cips_noc/M05_INI] [get_bd_intf_pins noc_lpddr4/S01_INI]
+  connect_bd_intf_net -intf_net cips_noc_M06_INI [get_bd_intf_pins cips_noc/M06_INI] [get_bd_intf_pins noc_lpddr4/S02_INI]
+  connect_bd_intf_net -intf_net cips_noc_M07_INI [get_bd_intf_pins cips_noc/M07_INI] [get_bd_intf_pins noc_lpddr4/S03_INI]
   connect_bd_intf_net -intf_net ddr4_dimm1_sma_clk_1 [get_bd_intf_ports ddr4_dimm1_sma_clk] [get_bd_intf_pins noc_ddr4/sys_clk0]
   connect_bd_intf_net -intf_net smc_0_M00_AXI [get_bd_intf_pins axi_intc_0/s_axi] [get_bd_intf_pins smc_0/M00_AXI]
   connect_bd_intf_net -intf_net lpddr4_sma_clk1_1 [get_bd_intf_ports lpddr4_sma_clk1] [get_bd_intf_pins noc_lpddr4/sys_clk0]
@@ -591,29 +614,26 @@ proc create_root_design { parentCell } {
   # Create address segments
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_AXI_NOC_0] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force
   assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_AXI_NOC_0] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW1] -force
-  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_AXI_NOC_0] [get_bd_addr_segs noc_lpddr4/S00_INI/C0_DDR_CH1x2] -force
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_AXI_NOC_1] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force
   assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_AXI_NOC_1] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW1] -force
-  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_AXI_NOC_1] [get_bd_addr_segs noc_lpddr4/S00_INI/C0_DDR_CH1x2] -force
   assign_bd_address -offset 0x020000000000 -range 0x000100000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_0] [get_bd_addr_segs ai_engine_0/S00_AXI/AIE_ARRAY_0] -force
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_0] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force
   assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_0] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW1] -force
   assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_0] [get_bd_addr_segs noc_lpddr4/S00_INI/C0_DDR_CH1x2] -force
   assign_bd_address -offset 0x020000000000 -range 0x000100000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_1] [get_bd_addr_segs ai_engine_0/S00_AXI/AIE_ARRAY_0] -force
-  assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_1] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force
-  assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_1] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW1] -force
-  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_1] [get_bd_addr_segs noc_lpddr4/S00_INI/C0_DDR_CH1x2] -force
+  assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_1] [get_bd_addr_segs noc_ddr4/S01_INI/C1_DDR_LOW0] -force
+  assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_1] [get_bd_addr_segs noc_ddr4/S01_INI/C1_DDR_LOW1] -force
+  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_1] [get_bd_addr_segs noc_lpddr4/S01_INI/C1_DDR_CH1x2] -force
   assign_bd_address -offset 0x020000000000 -range 0x000100000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_2] [get_bd_addr_segs ai_engine_0/S00_AXI/AIE_ARRAY_0] -force
-  assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_2] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force
-  assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_2] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW1] -force
-  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_2] [get_bd_addr_segs noc_lpddr4/S00_INI/C0_DDR_CH1x2] -force
+  assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_2] [get_bd_addr_segs noc_ddr4/S02_INI/C2_DDR_LOW0] -force
+  assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_2] [get_bd_addr_segs noc_ddr4/S02_INI/C2_DDR_LOW1] -force
+  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_2] [get_bd_addr_segs noc_lpddr4/S02_INI/C2_DDR_CH1x2] -force
   assign_bd_address -offset 0x020000000000 -range 0x000100000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_3] [get_bd_addr_segs ai_engine_0/S00_AXI/AIE_ARRAY_0] -force
-  assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_3] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force
-  assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_3] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW1] -force
-  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_3] [get_bd_addr_segs noc_lpddr4/S00_INI/C0_DDR_CH1x2] -force
+  assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_3] [get_bd_addr_segs noc_ddr4/S03_INI/C3_DDR_LOW0] -force
+  assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_3] [get_bd_addr_segs noc_ddr4/S03_INI/C3_DDR_LOW1] -force
+  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_CCI_NOC_3] [get_bd_addr_segs noc_lpddr4/S03_INI/C3_DDR_CH1x2] -force
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/LPD_AXI_NOC_0] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force
   assign_bd_address -offset 0x000800000000 -range 0x000180000000 -target_address_space [get_bd_addr_spaces CIPS_0/LPD_AXI_NOC_0] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW1] -force
-  assign_bd_address -offset 0x050000000000 -range 0x000200000000 -target_address_space [get_bd_addr_spaces CIPS_0/LPD_AXI_NOC_0] [get_bd_addr_segs noc_lpddr4/S00_INI/C0_DDR_CH1x2] -force
   assign_bd_address -offset 0xA4000000 -range 0x00010000 -target_address_space [get_bd_addr_spaces CIPS_0/M_AXI_FPD] [get_bd_addr_segs axi_intc_0/S_AXI/Reg] -force
   assign_bd_address -offset 0x020000000000 -range 0x000100000000 -target_address_space [get_bd_addr_spaces CIPS_0/PMC_NOC_AXI_0] [get_bd_addr_segs ai_engine_0/S00_AXI/AIE_ARRAY_0] -force
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/PMC_NOC_AXI_0] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force

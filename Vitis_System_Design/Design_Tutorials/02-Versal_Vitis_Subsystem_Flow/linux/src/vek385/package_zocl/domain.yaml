@@ -1,0 +1,56 @@
+# Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+#
+
+reserved-memory:
+  ranges: true
+  "#size-cells": 2
+  "#address-cells": 2
+
+  plm_reserved_memory@00000000:
+    label: plm_reserved_memory
+    no-map: true
+    start: 0x00000000
+    size: 16M
+  tfa_reserved_memory@1000000:
+    label: tfa_reserved_memory
+    no-map: true
+    start: 0x01000000
+    size: 6M
+  cma_reserved@0840000000:
+    label: cma_reserved_0840000000
+    start: 0x0840000000
+    size: 1G
+    compatible: "shared-dma-pool"
+    reusable: true
+    linux,cma-default: true
+  cma_reserved@50000000000:
+    label: cma_reserved_50000000000
+    start: 0x50000000000
+    size: 4G
+    compatible: "shared-dma-pool"
+    reusable: true
+  cma_reserved@60000000000:
+    label: cma_reserved_60000000000
+    start: 0x60000000000
+    size: 2G
+    compatible: "shared-dma-pool"
+    reusable: true
+
+domains:
+  APU_Linux:
+    compatible: openamp,domain-v1
+    cpus:
+      - cluster: cpus_a78
+        cpumask: 0xff
+        mode:
+          secure: false
+          el: 0x3
+    os,type: linux
+    reserved-memory:
+      - plm_reserved_memory@00000000
+      - tfa_reserved_memory@1000000
+      - cma_reserved@0840000000
+      - cma_reserved@50000000000
+      - cma_reserved@60000000000
+

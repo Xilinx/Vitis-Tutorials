@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
@@ -24,6 +24,7 @@ BUILD_DIR             := build
 
 .PHONY: clean all
 
+.PHONY: help
 help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make all"
@@ -35,10 +36,12 @@ help::
 ${BUILD_DIR}:
 	mkdir ${BUILD_DIR}
 
+.PHONY: vss_ip
 vss_ip:
 	$(MAKE) all -C ${IP_DIR} PART=${PART} 
 
 #vss_link: vitis_ip ${BUILD_DIR} ${BUILD_DIR}/${VSS}
+.PHONY: vss_link
 vss_link: ${BUILD_DIR} ${BUILD_DIR}/${VSS}
 
 ${BUILD_DIR}/${VSS}: ${VSS_CFG}
@@ -51,13 +54,14 @@ ${BUILD_DIR}/${VSS}: ${VSS_CFG}
 			--out_dir ${VSS} \
 			|& tee vss_link.log
 
+.PHONY: crts
 crts:
 	$(MAKE) crts -C cosim AIE_WORK=$(AIE_WORK)
 
+.PHONY: vss_cosim
 vss_cosim:  ${BUILD_DIR} ${BUILD_DIR}/${VSS}
 	$(MAKE) cosim_vss -C cosim AIE_WORK=$(AIE_WORK)
 
 clean:
 	$(MAKE) clean -C ip
 	rm -rf ${BUILD_DIR}
-

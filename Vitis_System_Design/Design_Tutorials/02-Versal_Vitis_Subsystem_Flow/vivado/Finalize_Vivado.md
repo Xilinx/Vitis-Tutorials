@@ -15,7 +15,7 @@
 # Part 4. Import VMA and finalize the design in Vivado
 
 ### Background for finalizing the design in Vivado
-Import the VMA file into the Vivado project and continue the further development in Vivado to finalize the design in Vivado and export fixed XSA from Vivado. If you come across any synthesis or implementation violation, you can resolve that in Vivado. This flow is very helpful to continue the hardware development in Vivado. Earlier, for any change in the Vivado design you have to export the extensible XSA and sometimes it was challenging to investigate and resolve the sysnthesis or implementation failures during v++ linking stage.
+Import the VMA file into the Vivado project and continue the further development in Vivado to finalize the design in Vivado and export fixed XSA from Vivado. If you come across any synthesis or implementation violation, you can resolve that in Vivado. This flow is very helpful to continue the hardware development in Vivado. Earlier, for any change in the Vivado design you have to export the extensible XSA and sometimes it was challenging to investigate and resolve the synthesis or implementation failures during v++ linking stage.
 
 ### Overview
 This section focus on importing the VMC Subsystem into the Vivado Extensible Platform.
@@ -46,17 +46,14 @@ vivado build/vck190_thin_vivado/vck190_thin.xpr
 ::vitis::import_archive ../vitis/build_hw/vck190_thin.vma
 ```
 #### 4. Inspect the design by opening the `vck190_thin_vma` block design and expand the `VitisRegion` block.
-  This figure show the expected result after VMA import. To emphasize the connections added by Vitis, these have been highlighted using light coloring for inputs to AI Engine and darker coloring for outputs AI Engine. **Note** the green path connected via the HLS_passthrough_0 HLS IP.
-![](Images/vivado_after_vma_import.png)
 
-  
   - **Important!** If you need to change interfaces or update the VMA it first need to be removed from the project.
   - This is done with
 ```
 ::vitis::remove_archive_hierarchy
 ```
-  - Once the VMA is updated using [Part 3 steps](../vitis/README.md#step-3-build-the-system-project-and-generate-vma) repeat importing VMA described in previous step.
-  - **Important!** If your modifications require new SPTAG, i.e. for new RTL IPs, It's required to re-export the platform as when [adding RTL Source code to BD](Vivado.md##Vivado.md#refining-the-example-extensible-platform-and-adding-rtl-modules)
+  - Once the VMA is updated using [Vitis hardware integration](../vitis/README.md#1.-Hardware-integration) repeat importing VMA described in previous step.
+  - **Important!** If your modifications require new SPTAG, i.e. for new RTL IPs, It's required to re-export the platform as when [adding RTL Source code to BD](Vivado.md)
 
 #### 5. **Optional** Modify the BD.
  - Add a AXI4-Stream Register Slice into BD. Configure Register Pipeline type to `fully registered`.
@@ -92,7 +89,13 @@ puts "Implementation done!"
   write_hw_platform -fixed -force build/xsa_platform/vck190_fixed.xsa
   validate_hw_platform build/xsa_platform/vck190_fixed.xsa
 ```
+## Navigation helper
+ - [Next step - Setup devicetree and extract processor domains](../linux/sdtgen/README.md)
+ - [Previous step - Link design with Vitis and export VMA](../vitis/README.md)
+ - [Linux overview](../linux/README.md)
+ - [Return to top](../README.md)
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

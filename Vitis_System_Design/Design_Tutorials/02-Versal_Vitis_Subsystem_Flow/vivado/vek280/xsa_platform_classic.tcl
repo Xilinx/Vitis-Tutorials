@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
@@ -22,19 +22,33 @@ set script_folder [_tcl::get_script_folder]
 
 #set_param board.repoPaths ../board_repo/boards/Xilinx/vck190
 
-## WORKAROUND - Hardcode platform and device name as tcl arguments is not passed properly to Vitis
 set BOARD_NAME    [lindex $argv 0]
 set PLATFORM_NAME [lindex $argv 1]
-set PLATFORM_TYPE ${PLATFORM_NAME}_custom
-set VER "1.0"
 puts "Creating HW Platform project for : \"$PLATFORM_NAME\""
 set DEVICE_NAME [lindex $argv 2]
 puts "Using : \"$DEVICE_NAME\""
-set BOARD_LABEL [lindex $argv 4]
-set BOARD_VER [lindex $argv 5]
+set BOARD_LABEL [lindex $argv 5]
+set BOARD_VER [lindex $argv 6]
 set BUILD_DIR build
 
-create_project -f ${PLATFORM_NAME} ${BUILD_DIR}/${PLATFORM_NAME}_vivado -part $DEVICE_NAME
+variable prebuild_embedded
+set prebuild_embedded ""
+variable pre_synth
+set pre_synth ""
+
+if { $argc > 1} {
+  set prebuild_embedded [lindex $argv 3]
+  set pre_synth [lindex $argv 4]
+}
+
+
+variable BASE_EXT
+set BASE_EXT ""
+if {$prebuild_embedded && !$pre_synth} {
+  set BASE_EXT "_base"
+}
+
+create_project -f ${PLATFORM_NAME} ${BUILD_DIR}/${PLATFORM_NAME}${BASE_EXT}_vivado -part $DEVICE_NAME
 
 # set board part 
 set_property BOARD_PART xilinx.com:${BOARD_LABEL}:part0:${BOARD_VER} [current_project]
@@ -60,10 +74,19 @@ source ./${BOARD_NAME}/dr.bd.tcl
 #add_files -fileset constrs_1 -norecurse src/ddr4_dmc_3200_triplet_1.xdc
 
 ## ===================================================================================
+## Import zocl.dtsi, a zipped file containing domains.yaml, board and user DTSI, and BOOT.bin-extracted.
+## These are used later by v++ package to create BOOT.bin for flat design flow and HW Emulation.
+## Omitted when building a new base XSA to be used by EDF.
+## ===================================================================================
+if {$prebuild_embedded && $pre_synth} {
+  import_files -norecurse ${BUILD_DIR}/xsa_platform/zocl.dtsi
+}
+
+## ===================================================================================
 ## Create a wrapper for block design. Set the block design as top-level wrapper.
 ## ===================================================================================
-make_wrapper -files [get_files ${BUILD_DIR}/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd] -top
-add_files -norecurse ${BUILD_DIR}/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/hdl/${PLATFORM_NAME}_wrapper.v
+make_wrapper -files [get_files ${BUILD_DIR}/${PLATFORM_NAME}${BASE_EXT}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd] -top
+add_files -norecurse ${BUILD_DIR}/${PLATFORM_NAME}${BASE_EXT}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/hdl/${PLATFORM_NAME}_wrapper.v
 update_compile_order -fileset sources_1
 
 ## ===================================================================================
@@ -99,6 +122,7 @@ set_property platform.design_intent.external_host   "false"   [current_project]
 set_property platform.design_intent.embedded        "true"    [current_project]
 set_property platform.design_intent.datacenter      "false"   [current_project]
 set_property platform.extensible                    "true"    [current_project]
+set_property segmented_configuration                "false"    [current_project]
 
 ## ===================================================================================
 ## Add hardware emulation support
@@ -122,14 +146,8 @@ import_files
 ## ===================================================================================
 ## Generate files necessary to support block design through design flow
 ## ===================================================================================
-generate_target all [get_files ${BUILD_DIR}/${PLATFORM_NAME}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd]
+generate_target all [get_files ${BUILD_DIR}/${PLATFORM_NAME}${BASE_EXT}_vivado/${PLATFORM_NAME}.srcs/sources_1/bd/${PLATFORM_NAME}/${PLATFORM_NAME}.bd]
 
-variable pre_synth
-set pre_synth ""
-
-if { $argc > 1} {
-  set pre_synth [lindex $argv 3]
-}
 #Pre_synth Platform Flow
 if {$pre_synth} {
   set_property platform.platform_state "pre_synth" [current_project]
@@ -153,7 +171,7 @@ if {$pre_synth} {
   # Write the XSA for current design for use as a hardware platform
   # ===================================================================================
   open_run impl_1
-  write_hw_platform -unified -include_bit -force ${BUILD_DIR}/xsa_platform/${PLATFORM_NAME}.xsa
-  validate_hw_platform ${BUILD_DIR}/xsa_platform/${PLATFORM_NAME}.xsa
+  write_hw_platform -unified -include_bit -force ${BUILD_DIR}/xsa_platform/${PLATFORM_NAME}${BASE_EXT}.xsa
+  validate_hw_platform ${BUILD_DIR}/xsa_platform/${PLATFORM_NAME}${BASE_EXT}.xsa
 }
 

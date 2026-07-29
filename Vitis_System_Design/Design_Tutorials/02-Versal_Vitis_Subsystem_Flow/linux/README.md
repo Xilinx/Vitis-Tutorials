@@ -12,45 +12,56 @@
 </table>
 
 
-# Preparing a custom Linux environment
+# Creating a Linux image with custom machine
 
 This section setup and builds a Linux environment using the fixed XSA from:
 [4. Import VMA and finalize the design in Vivado](../vivado/Finalize_Vivado.md)
 
-## Principles for building Linux with Petalinux
+## Principles for building Linux
 The makefile is prepared to step by step download and configure the linux environment.
 
- - Create a petalinux project for versal.
- - Update the project with the fixed XSA as hardware description.
+ - Generate devicetree overlays with SDTGen and extract a processor domain with Lopper using the fixed XSA.
+ - Create a Linux project for Versal using either Yocto/EDF or Petalinux, downloading the tools to temporary drive.
+ - Create a custom machine based on the device hardware description from SDTGen/Lopper.
  - Copy custom user overlay for device tree to the project specification.
  - Enable/Disable which drivers and libraries to use.
  - If static IP address is used, copy the ethernet settings to the project specification, otherwise use DHCP assigned IP addresses.
- - Build the petalinux project.
- - Create boot artifacts using petalinux package.
- - Download and configure sysroot.
- - Dump system device tree blob to human readable dts format.
+ - Build the Linux project.
+ - **Petalinux only:** Create boot artifacts using Petalinux package.
+ - Download and configure SDK for host applications, then install it to `sysroot` folder.
 
+***Note:*** The tutorial is currently setup to use EDF as default option.
+The legacy Petalinux build option has not yet been aligned with the SDTGen/Lopper stand alone approach.
+It uses Vitis Platform component to do that, but with EDF and custom machine it fits better to use SDTGen/Lopper from command line.
+
+
+### Choosing optional packages for Petalinux
 By updating the configuration, a user can pick and choose which drivers and packages to install to the linux file system.
 See the [petalinux/Makefile](./petalinux/Makefile) rule `update_config` which ones are added.
+
+
 
 ### Description of file structure
 
 | Folder                           | Type   | Description
 | ---------------------------------|--------|-------------------------------------------------
-| [dtg](./dtg/)                    | Source | System Devicetree and Lopper tools for testing/debugging.
+| [sdtgen](./sdtgen/)              | Source | System Devicetree and Lopper tools.
 | [petalinux](./petalinux/)        | Source | Recipe and build scripts for Petalinux flow.
-| [src](./src/)                    | Source | Custom user overlays. (bif, bsp, and core recipes)
-| [yocto](./yocto/)                | Source | Recipe and build scripts for Yocto flow.
+| [src](./src/)                    | Source | Custom user overlays organized per board. (bif, bsp, and core recipes)
+| [yocto](./yocto/)                | Source | Recipe and build scripts for Yocto/EDF flow.
+| my-<board_name>-versal                 | Generated | Image deploy folder containing rootfs and boot files.
+| my-<board_name>-versal-meta            | Generated | Optional custom layers used by Yocto.
 | sysroot                          | Generated | Crosscompiler tools.
-| vck190-versal                    | Generated | Image, rootfs, boot files, and devicetree overlays.
 
 ## Navigation helper
- - [Next step - pdate system device tree with Vitis platform component](../vitis/Platform.md)
+ - [Running SDTgen](./sdtgen/README.md)
+ - [Custom user overlays](./src/README.md)
+ - [Yocto/EDF Flow](./yocto/README.md)
  - [Previous step - Import VMA and finalize the design in Vivado](../vivado/Finalize_Vivado.md)
  - [Return to top](../README.md)
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2022 Xilinx, Inc</sub></p>
-<p class="sphinxhide" align="center"><sub>Copyright © 2022–2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2022–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

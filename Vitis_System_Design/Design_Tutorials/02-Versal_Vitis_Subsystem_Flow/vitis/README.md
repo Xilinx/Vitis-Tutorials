@@ -20,11 +20,8 @@ Vitis serves both hardware and software activities. To guide through the design 
 1. Hardware integration
     1. [Compile additional Vitis kernels](./ip/README.md).
     2. Integrating [VSS component](../vss/README.md) and Vitis kernels to a [custom extensible platform](../vivado/README.md) and export to a VMA.
-2. [Prepate Software / Embedded platform](./Platform.md)
-    1. Generate board support package / drivers.
-    2. Apply device tree overlays.
 3. Packaging to delivery container
-    1. [Vitis Packaging](./Packaging.md) collect binaries, boot artifacts, OS and host applications and deploy on a SD card.
+    1. [Vitis Package](./Package.md) collect binaries, boot artifacts and apply device tree overlays.
 
 
 ## 1. Hardware integration
@@ -33,7 +30,7 @@ Vitis serves both hardware and software activities. To guide through the design 
 
 This part of the tutorial demonstrates adding a Vitis Subsystem component and additional Vitis PL components to demonstrate integrating both VSS and Vitis kernels onto an extensible platform.
     - [Add RTL Subtractor and HLS mm2s and s2mm Components](./ip/README.md)
-    - Declare connections between VSS Component, Vitis compnents and extensible platform.
+    - Declare connections between VSS Component, Vitis components and extensible platform.
       [Inspect the config file for the example](./src/system.cfg)
     - Build System Component and export Vitis Managed Archive (VMA)
 
@@ -43,7 +40,7 @@ v++ --link --target <hw|hw_emu> --export -save-temps --platform <platform_name> 
 ```
 
 Makefiles are provided to build everything from the tutorial top folder. It will automatically compile RTL and HLS components from the [`ip` folder](./ip/README.md) as required by Vitis during linking.<br>
-**Note** The VSS component need to be compiled as described in [Using VSS to develop AIE+PL Subsystem](./vss/README.md).
+**Note** The VSS component need to be compiled as described in [Using VSS to develop AIE+PL Subsystem](../vss/README.md).
 
 From top folder, run:
 ```
@@ -58,7 +55,7 @@ After the VMA export, the design is synthesized and implemented in Vivado:
 After building the fixed Vivado platform and prepared [Linux build tools (sysroot), Image and filesystem](../linux/README.md), the device tree overlay is applied and BSP/drivers is generated. See [creating Vitis Platform component](./Platform.md)
 
 ## 3. Package to delivery container
-Last step in the flow is to package the design to a suitable container. This tutorial use [Vitis Package](./Packaging.md) to create a SD card folder.
+Last step in the flow is to package the design to a suitable container, see [Vitis Package](./Package.md) for details.
 
 ## Navigation helper
  - [Return to top](../README.md)
@@ -67,13 +64,13 @@ Last step in the flow is to package the design to a suitable container. This tut
  - [Prepare Linux](../linux/README.md)
  - [Host applications](../ps_apps/README.md)
  - [Vitis sw platform](./Platform.md)
- - [Vitis Package](./Packaging.md)
+ - [Vitis Package](./Package.md)
 
 
 
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2022 Xilinx, Inc</sub></p>
-<p class="sphinxhide" align="center"><sub>Copyright © 2022–2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2022–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

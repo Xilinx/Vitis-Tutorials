@@ -1,0 +1,43 @@
+# Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+#
+
+reserved-memory:
+  ranges: true
+  "#size-cells": 2
+  "#address-cells": 2
+
+    #  ddr_memory@800000000:
+    #    label: my_ddr_reserved_0
+    #    start: 0x800000000
+    #    size: 6G
+    #    compatible: "shared-dma-pool"
+    #    reusable: true
+    #    linux,cma-default: true
+
+  lpddr_memory@50000000000:
+    label: my_lpddr_reserved_0
+    start: 0x50000000000
+    size: 8G
+    compatible: "shared-dma-pool"
+    reusable: true
+    linux,cma-default: true
+
+domains:
+  APU_Linux:
+    compatible:
+      - "openamp,domain-v1"
+        #    chosen:
+        #      bootargs: "console=ttyAMA0  earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk0p3 rw rootwait cma=512M";
+        #      stdout-path: "serial0:115200n8"
+    cpus:
+      - cluster: cpus_a72
+        cpumask: 0xf
+        mode:
+          secure: true
+          el: 0x3
+    os,type: linux
+    reserved-memory:
+      # - ddr_memory@800000000
+      - lpddr_memory@50000000000
+

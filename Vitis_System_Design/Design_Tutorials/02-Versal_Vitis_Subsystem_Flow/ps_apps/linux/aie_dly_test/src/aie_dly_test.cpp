@@ -1,6 +1,6 @@
 //
 // Copyright (C) 2020-2022, Xilinx, Inc. All rights reserved.
-// Copyright (C) 2022-2025, Advanced Micro Devices, Inc. All rights reserved.
+// Copyright (C) 2022-2026, Advanced Micro Devices, Inc. All rights reserved.
 // SPDX-License-Identifier: X11
 //
 
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
 
   if (in_file.is_open()){
     TYPE_DATA input_tmp = 0;
-    for(int j =0; j<=samples; j++){
+    for(int j =0; j<samples; j++){
       if (in_file.peek() !=EOF){
         in_file >> std::dec >> input_tmp;
         in_ref[j] = input_tmp;
@@ -138,7 +138,7 @@ int main(int argc, char* argv[]) {
 //  }
 
   // Prepare input signal for DMA transfer
-  for(int j =0; j<=samples; j++){
+  for(int j =0; j<samples; j++){
     in_0_bo_mapped[2*j]   = (TYPE_DATA) in_ref[2*j];     // Real data in
     in_0_bo_mapped[2*j+1] = (TYPE_DATA) in_ref[2*j+1];   // Imag data in
     // Print first 20 input samples

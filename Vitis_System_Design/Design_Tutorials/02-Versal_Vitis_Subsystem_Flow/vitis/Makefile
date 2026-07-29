@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2021-2022, Xilinx, Inc. All rights reserved.
-# Copyright (C) 2022-2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2022-2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
@@ -9,32 +9,32 @@ ECHO                  := @echo
 TARGET                ?= hw
 BOARD_NAME            ?= vck190
 export PLATFORM_CUSTOM       ?= ${BOARD_NAME}_thin
-LINUX_PRE_BUILDS      ?= false
 
 XSA_PLATFORM          := ../vivado/build/xsa_platform/${PLATFORM_CUSTOM}.xsa
 export XSA_FIXED      := ../vivado/build/xsa_platform/${PLATFORM_CUSTOM}_fixed.xsa
 
-#XPFM_VIVADO_EXPORT    := $(abspath ../vitis/xpfm_export/build/platform/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM})
 PFM_EXPORT            := ./build_pfm/pfm/export/pfm
 XPFM                  := ${PFM_EXPORT}/pfm.xpfm
 XPFM_XSA              := ${PFM_EXPORT}/hw/${PLATFORM_CUSTOM}_fixed.xsa
 
-LINUX_ABS_PATH        := $(abspath ../linux/${LINUX_MACHINE}/images/linux)
 LINUX_PATH            := ../linux/${LINUX_MACHINE}/images/linux
 LINUX_KERNEL          := ${LINUX_PATH}/Image
 LINUX_DTB             := ${LINUX_PATH}/system.dtb
-PFM_DTB               := ${PFM_EXPORT}/sw/boot/system.dtb
 #LINUX_DTB             := ${PFM_EXPORT}/hw/sdt/system.dtb
-LINUX_BL31            := ${LINUX_PATH}/bl31.elf
-LINUX_UBOOT           := ${LINUX_PATH}/u-boot.elf
-#LINUX_BOOTSCR         := ${LINUX_ABS_PATH}/${PLATFORM_FIXED}/xrt/image/boot.scr
 LINUX_BOOTSCR         := ${LINUX_PATH}/boot.scr
 
-ifeq (${LINUX_PRE_BUILDS}, false)
+ifeq (${SW_BUILD_TOOL}, petalinux)
+PFM_DTB               := ${PFM_EXPORT}/sw/boot/system.dtb
+LINUX_UBOOT           := ${LINUX_PATH}/u-boot.elf
+LINUX_BL31            := ${LINUX_PATH}/bl31.elf
 LINUX_ROOTFS          := ${LINUX_PATH}/rootfs.cpio.gz.u-boot
 LINUX_ROOTFS_TYPE     := fat32
 else
-LINUX_ROOTFS          := ${LINUX_PATH}/rootfs.ext4
+PFM_DTB               := ../linux/sdtgen/build/system.dtb
+LINUX_DEPLOY          := ${LINUX_TMP_DIR}/deploy/images/${LINUX_MACHINE}
+LINUX_UBOOT           := ${LINUX_DEPLOY}/u-boot.elf
+LINUX_BL31            := ${LINUX_DEPLOY}/arm-trusted-firmware.elf
+BOOTBIN_EXT           := boot.bin-extracted
 LINUX_ROOTFS_TYPE     := ext4
 endif
 
@@ -52,6 +52,10 @@ PS_LINUX_EXE          := $(wildcard ${PS_APPS_LINUX_DIR}/exe/*.exe)
 
 SD_CARD_LINUX         := ../package_linux_${TARGET}
 BUILD_DIR             := build_${TARGET}
+ZOCL                  := zocl.dtsi
+ZOCL_ABS              := $(abspath ${BUILD_DIR}/${ZOCL})
+ZOCL_SRC              := ../linux/src/${BOARD_NAME}/package_zocl
+USER_DTS              := $(abspath ../linux/src/${BOARD_NAME}/recipes-bsp/device-tree/files/system-user.dtsi)
 
 ILA_LTX               := ${BUILD_DIR}/_x/link/vivado/vpl/prj/probe_0.ltx
 
@@ -62,7 +66,7 @@ else
     ILA_EN ?= 0
 endif
 
-ifeq (${ILA_EN}, 1)  
+ifeq (${ILA_EN}, 1)
     SYSTEM_CFG := $(wildcard ./src/*.cfg)
 else 
     SYSTEM_CFG := ./src/system.cfg
@@ -70,6 +74,7 @@ endif
 
 .PHONY: clean all vitis_ip platform
 
+.PHONY: help
 help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make vitis_ip"
@@ -87,6 +92,9 @@ help::
 	$(ECHO) "  make package_linux"
 	$(ECHO) "      Package the design and generate SD Card for Linux application"
 	$(ECHO) ""
+	$(ECHO) "  make package_edf"
+	$(ECHO) "      Package the design for EDF, updates BOOT.bin and collect host apps and xclbin files to be inserted in wic image."
+	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
@@ -97,10 +105,12 @@ vitis_ip:
 	$(MAKE) all -C ${IP_DIR}
 
 platform:
-	vitis -s vitis_platform.py |& tee vitis_pfm.log
+	vitis -s vitis_platform.py 2>&1 | tee vitis_pfm.log
 
+.PHONY: link
 link: ${BUILD_DIR} ${BUILD_DIR}/${XSA}
 
+.PHONY: vma_link
 vma_link: ${BUILD_DIR} ${BUILD_DIR}/${VMA}
 
 ${BUILD_DIR}/${VMA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
@@ -113,7 +123,7 @@ ${BUILD_DIR}/${VMA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 			$(addprefix ../, ${VSSFILE}) \
 			--export_archive \
 			--output ${VMA} \
-			|& tee vpp_link.log
+			2>&1 | tee vpp_link.log
 
 ${BUILD_DIR}/${XSA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && \
@@ -124,12 +134,58 @@ ${BUILD_DIR}/${XSA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 			$(addprefix ../, ${XO}) \
 			$(addprefix ../, ${VSSFILE}) \
 			--export_archive \
-			--output ${VMA} \
-			|& tee vpp_link.log
+			--output ${XSA} \
+			2>&1 | tee vpp_link.log
 
+.PHONY: package_linux
 package_linux: ${SD_CARD_LINUX}
 
-## Package the XCLBIN
+${BUILD_DIR}/${ZOCL}: ${BUILD_DIR} ${LINUX_DEPLOY}/${BOOTBIN_EXT}
+	cd ${BUILD_DIR} && \
+	(cd ${LINUX_DEPLOY} && zip -r ${ZOCL_ABS} ${BOOTBIN_EXT}) && \
+	(cd ../${ZOCL_SRC} && zip -r ${ZOCL_ABS} .)
+
+.PHONY: package_zocl
+package_zocl: ${BUILD_DIR} ${BUILD_DIR}/${ZOCL}
+	cd ${BUILD_DIR} && \
+		v++ --package --debug --save-temps \
+			--target ${TARGET} \
+			--platform ../${XSA_FIXED} \
+			--package.defer_aie_run \
+			--package.out_dir $(addprefix ../,${SD_CARD_LINUX}) \
+			--advanced.param package.apuLinuxEdfMetadata=${ZOCL} \
+			--advanced.param package.userDtsPath=${USER_DTS} \
+			$(addprefix ../, ${LIBADF}) \
+			-o ${XCLBIN} \
+			2>&1 | tee vpp_pack_sd.log
+
+.PHONY: package_edf
+package_edf: ${BUILD_DIR}
+	cd ${BUILD_DIR} && \
+		v++ --package --debug --save-temps \
+			--target ${TARGET} \
+			--platform ../${XSA_FIXED} \
+			--package.out_dir $(addprefix ../,${SD_CARD_LINUX}) \
+			$(addprefix ../, ${LIBADF}) \
+			-o ${XCLBIN} \
+			2>&1 | tee vpp_pack_sd.log
+
+.PHONY: package_seg
+package_seg: ${BUILD_DIR}
+	cd ${BUILD_DIR} && \
+		v++ --package --debug --save-temps \
+			--target ${TARGET} \
+			--platform ../${XSA_FIXED} \
+			--package.out_dir $(addprefix ../,${SD_CARD_LINUX}) \
+			--advanced.param package.apuLinuxEdfMetadata=${ZOCL} \
+			--advanced.param package.userDtsPath=${USER_DTS} \
+			$(addprefix ../, ${LIBADF}) \
+			-o ${XCLBIN} \
+			2>&1 | tee vpp_pack_sd.log
+
+#			--package.aie_overlay \
+
+## Package the XCLBIN - Recipe for debug only
 ${BUILD_DIR}/${XCLBIN}: ${LIBADF}
 	cd ${BUILD_DIR} && \
 		v++ --package \
@@ -137,12 +193,12 @@ ${BUILD_DIR}/${XCLBIN}: ${LIBADF}
 			--platform $(addprefix ../, ${XPFM}) \
 			--package.defer_aie_run \
 			$(addprefix ../, ${LIBADF}) \
-			-o ${XCLBIN}
-			|& tee vpp_pack_xclbin.log
+			-o ${XCLBIN} \
+			2>&1 | tee vpp_pack_xclbin.log
 #	make update_ila
 
 #${SD_CARD_LINUX}: ${BUILD_DIR}/${XSA} ${PS_LINUX_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${LINUX_DTB}
-${SD_CARD_LINUX}: ${LIBADF} ${PS_LINUX_EXE} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${PFM_DTB} ${LINUX_BL31} ${LINUX_UBOOT} ${LINUX_BOOTSCR}
+${SD_CARD_LINUX}: ${LIBADF} ${PS_LINUX_EXE} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${LINUX_DTB} ${LINUX_BL31} ${LINUX_UBOOT} ${LINUX_BOOTSCR}
 	cd ${BUILD_DIR} && \
 		v++ --package --debug --save-temps \
 			--target ${TARGET} \
@@ -150,7 +206,6 @@ ${SD_CARD_LINUX}: ${LIBADF} ${PS_LINUX_EXE} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${PF
 			--package.defer_aie_run \
 			--package.out_dir $(addprefix ../,${SD_CARD_LINUX}) \
 			--package.boot_mode=sd \
-			--package.generate_sdcard \
 			--package.no_image \
 			--package.image_format=${LINUX_ROOTFS_TYPE} \
 			--package.sd_file=$(addprefix ../, ${LINUX_KERNEL}) \
@@ -162,16 +217,17 @@ ${SD_CARD_LINUX}: ${LIBADF} ${PS_LINUX_EXE} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${PF
 			$(addprefix --package.sd_file=../, ${PS_LINUX_EXE}) \
 			$(addprefix --package.sd_file=../, ${LINUX_BOOTSCR}) \
 			-o ${XCLBIN} \
-			|& tee vpp_pack_sd.log
+			2>&1 | tee vpp_pack_sd.log
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD_LINUX}/sd_card/platform_desc.txt
 #	make update_ila
 
 
 
+.PHONY: update_ila
 update_ila:
 ifeq (${TARGET}, hw)
 	if [ -e ${ILA_LTX} ] ; \
-		then cp -f ${ILA_LTX} $(SD_CARD)/ ; \
+		then cp -f ${ILA_LTX} $(SD_CARD_LINUX)/ ; \
 		else echo "no probe_0 ltx file" ; \
 	fi 
 endif

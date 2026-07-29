@@ -1,0 +1,352 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * dts file for AMD VEK385 revA
+ *
+ * Copyright (C) 2024 - 2026, Advanced Micro Devices, Inc.
+ *
+ * Michal Simek <michal.simek@amd.com>
+ */
+
+#include "include/gpio/gpio.h"
+#include "include/net/ti-dp83867.h"
+
+/ {
+	compatible = "amd,versal2-vek385-revA", "amd,versal2-vek385", "amd,versal2";
+	model = "AMD Versal VEK385 revA";
+
+	chosen {
+		bootargs = "earlycon=pl011,mmio32,0xf1930000 console=ttyAMA1,115200";
+		stdout-path = "serial1:115200n8";
+	};
+
+	aliases {
+		nvmem0 = &eeprom;
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		/* TF-A, TEE, RPUs */
+		/* FIXME Uncomment after VNC */
+		/* res: memory@0 {
+			no-map;
+			reg = <0 0 0 0x20000000>;
+		};
+		*/
+	};
+
+	pwm-fan {
+		compatible = "pwm-fan";
+		pwms = <&ttc0 2 40000 1>;
+	};
+
+	usb_hub_delay: enable-delay {
+		compatible = "gpio-delay";
+		#gpio-cells = <3>;
+		gpio-controller;
+		gpios = <&gpio0 14 GPIO_ACTIVE_LOW>;
+	};
+
+	vdd_usb_hub: regulator-vdd-usb-hub {
+		compatible = "regulator-fixed";
+		regulator-name = "vdd_usb_hub";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+		regulator-boot-on;
+	};
+
+	vdd2_usb_hub: regulator-vdd2-usb-hub {
+		compatible = "regulator-fixed";
+		regulator-name = "vdd2_usb_hub";
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+		regulator-always-on;
+		regulator-boot-on;
+	};
+
+	/* CLK95314 OUT3 provides a dedicated 24 MHz LVDS reference clock to the USB3 PHY */
+	usb3_dp_phy_ref_clk: usb3-phy-ref-clk {
+		bootph-all;
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <24000000>;
+	};
+};
+
+/* u272 - TPS66993BAR usb, i2c, DP */
+/* CAN at LPD_MIO12-13 FIXME */
+/* CAN at LPD_MIO21-22 FIXME */
+
+&ospi { /* PMC_MIO0-10, MIO12 */
+	reset-names = "qspi";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	spi_flash: flash@0 {
+		compatible = "jedec,spi-nor"; /* u25 */
+		spi-max-frequency = <20000000>; /* FIXME maybe wrong */
+		spi-rx-bus-width = <8>;
+		spi-tx-bus-width = <8>;
+		cdns,tslch-ns = <1>;
+		cdns,tchsh-ns = <1>;
+		cdns,tsd2d-ns = <0>;
+		cdns,tshsl-ns = <0>;
+		cdns,read-delay = <0>;
+		reg = <0>;
+		no-wp;
+
+		partitions {
+			#size-cells = <1>;
+			#address-cells = <1>;
+			compatible = "fixed-partitions";
+
+			partition@0 {
+				reg = <0x0 0x200000>;
+				label = "ospi-flash0";
+			};
+
+			partition@1 {
+				reg = <0x200000 0x3e00000>;
+				label = "ospi-flash1";
+			};
+		};
+	};
+};
+
+&ufshc { /* PMC_MIO24-25 */
+	dma-coherent;
+};
+
+&usb1 {
+	dma-coherent;
+};
+
+&dwc3_1 {
+	dr_mode = "host";
+	maximum-speed = "high-speed";
+	dma-coherent;
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	/* 2.0 hub on port 1 */
+	hub_2_0: hub@1 {
+		compatible = "usb424,2744";
+		reg = <1>;
+		i2c-bus = <&hub>;
+		reset-gpios = <&usb_hub_delay 0 10000 10000>;
+		vdd-supply = <&vdd_usb_hub>;
+		vdd2-supply = <&vdd2_usb_hub>;
+	};
+	/* USB 3.0 is not connected */
+	/* port 0 u109 USB-SD converter */
+	/* port 1/2 to connector */
+};
+
+&i2c0 { /* PMC_MIO42-43 */
+	/* board_i2c0 - FMC */
+};
+
+&i2c1 { /* PMC_MIO44-45 */
+	#address-cells = <1>;
+	#size-cells = <0>;
+	bootph-all;
+	clock-frequency = <400000>;
+
+	i2c-arbitrator@72 { /* u161 */
+		compatible = "nxp,pca9541";
+		bootph-all;
+		reg = <0x72>;
+
+		/* board_i2c1 */
+		i2c-arb {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			/*
+			 * WARNING: Potential Conflict!
+			 * The TCA6416 GPIO expander device is currently owned by SC as well.
+			 * This design results in two software components potentially conflicting
+			 * over control of the device. While no immediate issues are observed
+			 * due to limited interactions.
+			 * FIXME - The schematics should be revised to avoid conflicts.
+			 */
+			tca6416_u37: gpio@20 {
+				compatible = "ti,tca6416";
+				reg = <0x20>;
+				#gpio-cells = <0x02>;
+				gpio-controller;
+			};
+			eeprom: eeprom@54 { /* u35 - also at address 0x5C */
+				compatible = "atmel,24c128";
+				label = "eeprom_vek385a";
+				bootph-all;
+				reg = <0x54>;
+				/* wp via SC */
+			};
+
+			i2c-mux@77 { /* u253 */
+				compatible = "nxp,pca9548";
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <0x77>;
+				i2c-mux-idle-disconnect;
+				i2c@0 {
+					#address-cells = <1>;
+					#size-cells = <0>;
+					reg = <0>;
+					/* qsfp1 */
+				};
+				i2c@1 {
+					#address-cells = <1>;
+					#size-cells = <0>;
+					reg = <1>;
+					/* sfp */
+				};
+				i2c@3 {
+					#address-cells = <1>;
+					#size-cells = <0>;
+					reg = <3>;
+					/* pcie_rp */
+				};
+				i2c@4 {
+					#address-cells = <1>;
+					#size-cells = <0>;
+					reg = <4>;
+					/* usb0_hub */
+					hub: usb-hub@2d { /* u111 */
+						compatible = "microchip,usb5744";
+						reg = <0x2d>;
+					};
+
+				};
+				/* 5 - 7 not connected */
+			};
+		};
+	};
+};
+
+&ttc0 { /* PMC_MIO49 FAN_PWM */
+	#pwm-cells = <3>;
+};
+
+&adma0 {
+	dma-coherent;
+};
+
+&adma1 {
+	dma-coherent;
+};
+
+&adma2 {
+	dma-coherent;
+};
+
+&adma3 {
+	dma-coherent;
+};
+
+&adma4 {
+	dma-coherent;
+};
+
+&adma5 {
+	dma-coherent;
+};
+
+&adma6 {
+	dma-coherent;
+};
+
+&adma7 {
+	dma-coherent;
+};
+
+&gem0 { /* MDIO PMC_MIO50/51, MIO0-11 */
+	phy-handle = <&phy0>;
+	phy-mode = "rgmii-id";
+	dma-coherent;
+
+	mdio: mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		phy0: ethernet-phy@1 { /* u112 */
+			#phy-cells = <1>;
+			reg = <1>;
+			compatible = "ethernet-phy-id2000.a231";
+			ti,rx-internal-delay = <DP83867_RGMIIDCTL_2_25_NS>;
+			ti,tx-internal-delay = <DP83867_RGMIIDCTL_2_75_NS>;
+			ti,fifo-depth = <DP83867_PHYCR_FIFO_DEPTH_4_B_NIB>;
+			ti,dp83867-rxctrl-strap-quirk;
+			reset-assert-us = <100>;
+			reset-deassert-us = <280>;
+			reset-gpios = <&gpio0 25 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&mdb_pcie0 {
+	pcie@0,0 {
+		device_type = "pci";
+		reg = <0x0 0x0 0x0 0x0 0x0>;
+		reset-gpios = <&tca6416_u37 7 GPIO_ACTIVE_LOW>;
+		#address-cells = <3>;
+		#size-cells = <2>;
+		ranges;
+	};
+};
+
+&mmi_10gbe {
+	phy-mode = "10gbase-r";
+	fixed-link {
+		speed = <10000>;
+		full-duplex;
+	};
+};
+
+/* TI USB-C PD (TPS6699x) on PMC I2C + Versal combo USB-C / DP TX PHY. */
+&i2c8 {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	clock-frequency = <400000>;
+
+	usb_pd: usb-pd@22 {
+		compatible = "ti,tps6699x";
+		reg = <0x22>;
+
+		connector {
+			compatible = "usb-c-connector";
+			label = "USB-C";
+			data-role = "dual";
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				port@1 {
+					reg = <1>;
+
+					tipd_connector_ep: endpoint {
+						remote-endpoint = <&usb3_dp_phy_ep>;
+					};
+				};
+			};
+		};
+	};
+};
+
+&usb3_dp_phy {
+	status = "okay";
+	clocks = <&usb3_dp_phy_ref_clk>;
+
+	port {
+		usb3_dp_phy_ep: endpoint {
+			remote-endpoint = <&tipd_connector_ep>;
+		};
+	};
+};
+
+

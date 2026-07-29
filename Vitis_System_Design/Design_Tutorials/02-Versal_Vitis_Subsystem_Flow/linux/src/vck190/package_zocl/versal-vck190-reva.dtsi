@@ -1,0 +1,16 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * dts file for Xilinx Versal vck190 revA
+ *
+ * (C) Copyright 2019-2022 Xilinx, Inc.
+ * (C) Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+ *
+ * Michal Simek <michal.simek@amd.com>
+ */
+
+#include "include/versal-vmk180-reva.dtsi"
+
+/ {
+	compatible = "xlnx,versal-vck190-revA", "xlnx,versal";
+	model = "Xilinx Versal vck190 Eval board revA";
+};

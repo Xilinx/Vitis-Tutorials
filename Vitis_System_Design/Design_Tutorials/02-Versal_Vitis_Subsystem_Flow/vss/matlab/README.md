@@ -13,17 +13,17 @@
 
 # Using Matlab to develop AIE Subsystem
 
-In this example, we will show how to functionally verify AIE Subsystem using the new Matlab x86sim features. 
+In this example, we will show how to functionally verify AIE Subsystem using the new Matlab x86sim features.
 
-In the early stages of the development cycle, it is critical to verify 
-the functional behavior of the AI Engine kernels and graph before integrating them with Vivado or Vitis PL IPs. Many DSP designers use Matlab to model their system and with it toolboxes or plain Matlab modelling is an ideal choice for testing and equivalence testing a AI Engine design.
+In the early stages of the development cycle, it is critical to verify the functional behavior of the AI Engine kernels and graph before integrating them with Vivado or Vitis PL IPs.
+Many DSP designers use Matlab to model their system and with it toolboxes or plain Matlab modelling is an ideal choice for testing and equivalence testing a AI Engine design.
 The functional simulation speed of design iteration and the high level of data creation and visualization 
 provides the designer valuable tools of the trade.
 
 
 ## Starting Matlab
 
-Plese install and setup the Matlab R2023b.
+Check version and install MATLAB according to [Supported Python and MATLAB Versions](https://docs.amd.com/r/en-US/ug1864-vitis-functional-simulation/Supported-Python-and-MATLAB-Versions)
 
 Launch tool from the matlab folder with:
 ```
@@ -75,7 +75,7 @@ Each section can be executed step by step by pressing `ctrl+shift+enter` to walk
 Alternatively run through the whole script using the run button in Matlab.
 
 Both files have a section preparing basic setup and creating an input stimuli consisting of three sine waves and noise.
-This helps visualize the filter supressing one of the sine waves and the noise floor outside the bands of the lowpass and high pass filters.
+This helps visualize the filter suppressing one of the sine waves and the noise floor outside the bands of the lowpass and high pass filters.
 By adding the output vectors together, the combined result will suppress the middle sine wave. This represents the VSS FIR+HLS example design.
 The data movers have been omitted from simulation as the lab only simulates the tb_fir graph.
 
@@ -102,7 +102,7 @@ Once done proceed with next part of the lab.
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2022–2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2022–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>
 

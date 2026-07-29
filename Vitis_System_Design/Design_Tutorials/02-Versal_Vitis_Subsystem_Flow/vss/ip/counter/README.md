@@ -11,7 +11,7 @@
   </tr>
 </table>
 
-# RTL Subtractor
+# RTL Counter
 
 This counter example demonstrate how to use Vivado to create a packaged RTL kernel in `xo` format which can be integrated to a system with Vitis.<br>
 It also serve the purpose of creating input data stimuli to measure the propagation delay in clock cycles for
@@ -24,12 +24,12 @@ When used in the tutorial, the first AXI Stream is connected to a [subtractor](.
 
 
 As the paths are measured independently of each other, the counter disregard any `tready` backpressure from receiving blocks.<br>
-This helps to analyze and identify the occurence of backpressure by identifying gaps in the counter sequence for respective data paths.
+This helps to analyze and identify the occurrence of backpressure by identifying gaps in the counter sequence for respective data paths.
 
 ### Files used for this IP
 | File                        | Type   | Description
 | ---------------------------------|--------|-------------------------------------------------
-| [counter.sv](./src/counter.sv)| RTL kernel    | Freerunning counter that disregard df backpressure.
+| [counter.v](./src/counter.v)| RTL kernel    | Freerunning counter that disregard df backpressure.
 | [pack_kernel.tcl](./pack_kernel.tcl)| Project tcl    | Setup a simple Vivado IP project to manage compilation to packaged `.xo` file.
 | [counter.xdc](./counter.xdc)| Constraints file    | Placeholder file for constraints. Currently no constraints used.
 
@@ -43,6 +43,6 @@ For real designs, the synthesis step should be replaced with traditional RTL ver
 [Return to VSS IP](../README.md)
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2022 Xilinx, Inc</sub></p>
-<p class="sphinxhide" align="center"><sub>Copyright © 2022–2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2022–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

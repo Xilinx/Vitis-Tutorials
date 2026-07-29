@@ -1,0 +1,13 @@
+//
+// Copyright (C) 2022-2026, Advanced Micro Devices, Inc. All rights reserved.
+// SPDX-License-Identifier: X11
+//
+
+&amba_pl {
+        zyxclmm_drm {
+                compatible = "xlnx,zocl-versal";
+                memory-region = <&my_ddr_reserved_0>,<&my_lpddr_reserved_0>;
+                interrupts-extended = <&axi_intc_0 0 4>,<&axi_intc_0 1 4>,<&axi_intc_0 2 4>,<&axi_intc_0 3 4>,<&axi_intc_0 4 4>,<&axi_intc_0 5 4>,<&axi_intc_0 6 4>,<&axi_intc_0 7 4>,<&axi_intc_0 8 4>,<&axi_intc_0 9 4>,<&axi_intc_0 10 4>,<&axi_intc_0 11 4>,<&axi_intc_0 12 4>,<&axi_intc_0 13 4>,<&axi_intc_0 14 4>,<&axi_intc_0 15 4>,<&axi_intc_0 16 4>,<&axi_intc_0 17 4>,<&axi_intc_0 18 4>,<&axi_intc_0 19 4>,<&axi_intc_0 20 4><&axi_intc_0 21 4>,<&axi_intc_0 22 4>,<&axi_intc_0 23 4>,<&axi_intc_0 24 4>,<&axi_intc_0 25 4>,<&axi_intc_0 26 4>,<&axi_intc_0 27 4>,<&axi_intc_0 28 4>,<&axi_intc_0 29 4>,<&axi_intc_0 30 4>,<&axi_intc_0 31 4>;
+        };
+};
+

@@ -36,7 +36,7 @@ The purpose for this is to:
 | ---------------------------------|--------|-------------------------------------------------
 | [datamove_app.cpp](./src/datamove_app.cpp)| Top graph    | Top graph and testbench for AIE sim.
 | [tb_fir.cpp](./src/tb_fir.cpp)| Top graph    | Top graph dummy for testing the FIR subgraph.
-| [my_graph2.h](./src/graphs/my_graph2.h)| graph    | Integration graph with PLIO declarations.
+| [my_graph2.h](./src/graphs/mygraph2.h)| graph    | Integration graph with PLIO declarations.
 | [dm_graph.h](./src/graphs/dm_graph.h)| graph    | Subgraph for the data mover kernels.
 | [fir_graph.h](./src/graphs/fir_graph.h)| graph    | Subgraph for the FIR filter kernels.
 | [kernels.hpp](./src/kernels/kernels.hpp)| header    | Header file for C++ kernels.
@@ -63,7 +63,7 @@ The following steps describe is used to verify AIE kernels and graphs:
 | Step  | Details     | Description
 | -------------|-----------|-----------
 | 1. Functional verification (AIE Graph/Kernel)  | [VFS MATLAB](../../matlab/README.md) | MATLAB and it's toolboxes are helpful to create input stimuli, coefficients and check results
-| 2. Performance verification with AIE Simulator  | [AIE Simulator and Vitis Analzyer](./README_AIESIM.md) | Analyze and verify loop efficiency, throughput and stalls imposed by the kernel code. Stimuli and coefficients can be reused from step 1. Functional Verification.
+| 2. Performance verification with AIE Simulator  | [AIE Simulator and Vitis Analyzer](./README_AIESIM.md) | Analyze and verify loop efficiency, throughput and stalls imposed by the kernel code. Stimuli and coefficients can be reused from step 1. Functional Verification.
 | 3. Functional verification of subsystem (AIE+HLS)   | [VFS MATLAB](../../matlab/README.md)  | Analyze and verify loop efficiency, throughput and stalls imposed by the kernel code.
 
 <br>
@@ -125,7 +125,7 @@ Parameters for the sliding multiplication operations:
 | Property     | Type      | Buffer size | Target sample rate  | Description
 | -------------|-----------|-------------|---------------------|---------------------------------------------------------
 | Input data   | cint16    | 256         | 250 Msps            | Modestly set to match the MM2S/S2MM HLS blocks feeding the data.
-| Coefficients | int16     | 16          | -                   | Assymmetric filter. Configurable by PS using RTP.
+| Coefficients | int16     | 16          | -                   | Asymmetric filter. Configurable by PS using RTP.
 | Output data  | cint16    | 256         | 250 Msps            | Single rate filter, same as input.
 
 #### Designing the FIR filter kernel
@@ -141,7 +141,7 @@ Simplified, the throughput degradation can be estimated as:
 Where ***f<sub>aie_clk</sub>*** is the AIE clock frequency, ***t<sub>operations</sub>*** the time spent on performing algorithmic computes.  
 The ***t<sub>function</sub>*** is the time of all activities done by function call iteration like:
   - Lock management.
-  - Initalize LUTs and parameters.
+  - Initialize LUTs and parameters.
   - React and recover on stalls.
   - Replay margin overlap.
   - Treat conditional statements.
@@ -153,7 +153,7 @@ In practice this means the following coding techniques need to be used:
 | Optimization technique     | Description
 | -------------|-----------
 | Zero overhead loop counter   | Is used on innermost loop and it automatically checks the loop exit conditions
-| chess_prepare_for_piplining | Tells compiler to schedule instructions and have intermediate results be *in flight* in the pipeline registers
+| chess_prepare_for_pipelining | Tells compiler to schedule instructions and have intermediate results be *in flight* in the pipeline registers
 | Preamble the loop | Prepare the loop for uninterrupted execution by setting configurations and preloading vectors so the vector processor can start on first clock cycle in the loop.
 | Software loop unrolling  | Manually replicate code patterns to avoid conditional statements and irregular jumps. This helps to get better utilization of the inner loop.
 
@@ -166,7 +166,7 @@ For ***Software loop unrolling*** see details in [FIR Filter loop unrolling](./R
 ## Navigation helper
 
  - [Optimizing AIE loops](./README_AIE_OPTIMIZATIONS.md)
- - [AIE Simulator and Vitis Analzyer](./README_AIESIM.md)
+ - [AIE Simulator and Vitis Analyzer](./README_AIESIM.md)
  - [Continue creating VSS Component](../../README.md)
  - [Creating RTL counter](../counter/README.md)
  - [Creating HLS AXI Stream splitter](../axis1to2/README.md)
@@ -174,6 +174,6 @@ For ***Software loop unrolling*** see details in [FIR Filter loop unrolling](./R
  - [Return to top](../../../README.md)
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

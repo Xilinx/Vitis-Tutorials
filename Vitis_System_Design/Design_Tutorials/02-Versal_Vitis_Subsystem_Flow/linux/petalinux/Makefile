@@ -1,19 +1,21 @@
 #
 # Copyright (C) 2021-2022, Xilinx, Inc. All rights reserved.
-# Copyright (C) 2022-2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2022-2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
 ECHO                       := @echo
 
+REQUIRED_VERSION           ?= 2026.1
 BOARD_NAME                 ?= vck190
 PLATFORM_CUSTOM            ?= ${BOARD_NAME}_thin
-LINUX_MACHINE              ?= ${BOARD_NAME}-versal
+LINUX_MACHINE              ?= my-${BOARD_NAME}-versal
 LINUX_ETH_CONFIG           ?= DHCP
 LINUX_BUILD_SOURCES        ?= network
-LINUX_LOCAL_DOWNLOADS_DIR  ?= /tmp/${USER}/2025.2/${BOARD_NAME}/plnx-workspace/downloads
-LINUX_LOCAL_SSTATE_DIR     ?= /tmp/${USER}/2025.2/${BOARD_NAME}/plnx-workspace/sstate_aarch64_2025.2/aarch64
-LINUX_TMP_DIR              ?= /tmp/${USER}/2025.2/${BOARD_NAME}/petalinux
+TMP_DIR                   ?= tmp
+LINUX_LOCAL_DOWNLOADS_DIR  ?= /${TMP_DIR}/${USER}/${REQUIRED_VERSION}/${BOARD_NAME}/plnx-workspace/downloads
+LINUX_LOCAL_SSTATE_DIR     ?= /${TMP_DIR}/${USER}/${REQUIRED_VERSION}/${BOARD_NAME}/plnx-workspace/sstate_aarch64_2026.1/aarch64
+LINUX_TMP_DIR              ?= /${TMP_DIR}/${USER}/${REQUIRED_VERSION}/${BOARD_NAME}/petalinux
 
 CURR_DIR                   := $(shell pwd)
 PROJ_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}
@@ -30,10 +32,10 @@ FILE_MAIN_CFG              := ${PROJ_DIR}/project-spec/configs/config
 FILE_ROOT_FS_CFG           := ${PROJ_DIR}/project-spec/configs/rootfs_config
 FILE_BSP_CFG               := ${PROJ_DIR}/project-spec/meta-user/conf/petalinuxbsp.conf
 
-SRC_DIR_DEVICE_TREE        := ../src/recipes-bsp/device-tree/files
+SRC_DIR_DEVICE_TREE        := ../src/${BOARD_NAME}/recipes-bsp/device-tree/files
 DEST_DIR_DEVICE_TREE       := ${PROJ_DIR}/project-spec/meta-user/recipes-bsp/device-tree/files
 
-SRC_DIR_ETH_STATIC         := ../src/recipes-bsp/init-ifupdown/files
+SRC_DIR_ETH_STATIC         := ../src/${BOARD_NAME}/recipes-bsp/init-ifupdown/files
 DEST_DIR_ETH_STATIC        := ${PROJ_DIR}/project-spec/configs/init-ifupdown
 
 .PHONY: help all clean
@@ -54,6 +56,7 @@ ${PROJ_DIR}: ${XSA_FILE}
 	make update_sysroot
 	make dump_dts
 
+.PHONY: create
 create:
 	cd ../ && petalinux-create project --template versal -n ${LINUX_MACHINE} --tmpdir ${LINUX_TMP_DIR}
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable  CONFIG_YOCTO_BUILDTOOLS_EXTENDED
@@ -64,12 +67,15 @@ ifeq (${LINUX_BUILD_SOURCES}, local)
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_PRE_MIRROR_URL "file\:\/\/"${LINUX_LOCAL_DOWNLOADS_DIR}
 endif
 
+.PHONY: update_hw
 update_hw:
 	cd ${PROJ_DIR} && petalinux-config --get-hw-description=${XSA_FILE} --silentconfig
 
+.PHONY: update_device_tree
 update_device_tree:
 	cp -r ${SRC_DIR_DEVICE_TREE}/* ${DEST_DIR_DEVICE_TREE}/
 
+.PHONY: update_config
 update_config:
 	chmod 777 ${CFG}
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_SUBSYSTEM_RFS_FORMATS "cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"
@@ -100,12 +106,15 @@ ifeq (${LINUX_ETH_CONFIG}, STATIC)
 	cp -r ${SRC_DIR_ETH_STATIC}/* ${DEST_DIR_ETH_STATIC}/
 endif
       
+.PHONY: update_build
 update_build:
 	cd ${PROJ_DIR} && petalinux-build
 
+.PHONY: update_bootimage
 update_bootimage:
 	cd ${PROJ_DIR} && petalinux-package boot --plm --psmfw --u-boot --dtb --force
 
+.PHONY: update_sysroot
 update_sysroot:
 ifeq (${LINUX_BUILD_SOURCES}, local)
 # Turn Network Access ON here, since it's not included in the MIRROR
@@ -121,6 +130,7 @@ ifeq (${LINUX_BUILD_SOURCES}, local)
 	cd ${PROJ_DIR} && petalinux-config  --silentconfig
 endif
 
+.PHONY: dump_dts
 dump_dts:
 	cd ${PROJ_DIR}/images/linux && dtc -I dtb -O dts -o dump.dts system.dtb
 
@@ -129,4 +139,3 @@ clean:
 	rm -rf ${META_DIR}
 	rm -rf ${SYSROOT_DIR}
 	rm -rf ${LINUX_TMP_DIR}
-

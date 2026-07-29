@@ -43,14 +43,14 @@ Advanced testbench design and automatic checkers is up to the user to adapt to b
 | ---------------------------------|--------|-------------------------------------------------
 | [cosim_proj.tcl](./src/cosim_proj.tcl)        |  TCL    | Vivado simulation project script
 | [testbench.sv](./src/testbench.sv)            |  RTL    | Testbench
-| [driver_axis.sv](./src/driver_axis.sv)        |  RTL    | Simple driver for AXI Stream testbench stimuli, creates an impulse respone
+| [driver_axis.sv](./src/driver_axis.sv)        |  RTL    | Simple driver for AXI Stream testbench stimuli, creates an impulse response
 | [monitor_axis.sv](./src/monitor_axis.sv)      |  RTL    | Simple monitor terminating AXI Stream traffic
 | [my_diff.v](./src/my_diff.v)                  |  RTL    | Code to infer DSP58 subtraction borrowed from [vitis/ip/subtractor](../../vitis/ip/subtractor/src/my_diff.v)
 | [my_sub.v](./src/my_sub.v)                    |  RTL    | Model to mimic the subtractor from [vitis/ip/subtractor](../../vitis/ip/subtractor)
 | [tb_top_behav.wcfg](./src/tb_top_behav.wcfg)  |  Config | Xsim waveform configuration
 | [datamovers.wcfg](./src/datamovers.wcfg)      |  Config | Xsim waveform configuration
 | [datamovers2.wcfg](./src/datamovers2.wcfg)    |  Config | Xsim waveform configuration
-| [subtractors.wcfg](./src/subtractors.wcfg)    |  Config | Xsim waveform configuration
+| [subtractor.wcfg](./src/subtractor.wcfg)      |  Config | Xsim waveform configuration
 | [fir_filters.wcfg](./src/fir_filters.wcfg)    |  Config | Xsim waveform configuration
 | [aiesim.txt](./src/aiesim.txt)                |  Config | Enable VCD dump from connected AIE Simulator.
 
@@ -111,7 +111,7 @@ At the start of the datamover processing, the receiving kernels signal when they
 **Note:** The counter values will be sampled by the datamover only when `TREADY` is high.<br>
 
 To highlight the startup effects, the screenshots below show waveforms zoomed to interesting events in the simulation.
-Notice there are two stall events occuring for the vector multiplication datamover and three stalls for the stream based datamovers.
+Notice there are two stall events occurring for the vector multiplication datamover and three stalls for the stream based datamovers.
 Pay attention to the counter values when the TREADY signals toggle as this will be reflected by the datamovers sampling the signal.<br>
 **Note:** Initially the pipeline registers in respective data paths are filled with incoming samples.
 During this sequence the values will be continuous until the design starts throttling due to the rate difference between the counter clock and AI Engine clock.<br>
@@ -144,7 +144,7 @@ Notice the filter coefficient values in the output data for the filters:
 
 
 ### Check AI Engine VCD dump using Vitis Analyzer
-When the simulation is finished, Vitis Analyzer can reveal signal propagating throught the AIE array.<br>
+When the simulation is finished, Vitis Analyzer can reveal signal propagating through the AIE array.<br>
 Launch Vitis Analyzer using:
 ```
 vitis_analyzer ./vss/cosim/build/vss_top_cosim/vss_top.sim/sim_1/behav/xsim/default.aierun_summary
@@ -196,7 +196,7 @@ When finished with simulation, return to [VSS component creation](../README.md) 
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>
 

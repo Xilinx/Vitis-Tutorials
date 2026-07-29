@@ -14,7 +14,7 @@
 # Simulating and analyzing AI Engine graphs and kernels
 
 This part describe how to use AI Engine simulator in cycle approximate mode and analyze the output with Vitis Analyzer.<br>
-The simulator use the `main` function in the top aie graph as testbench. It will take input stimuli from the [data folder](./data/) as specified with the PLIO statements in [src/graph/my_graph2.h](src/graph/my_graph2.h).
+The simulator use the `main` function in the top aie graph as testbench. It will take input stimuli from the [data folder](./data/) as specified with the PLIO statements in [src/graphs/mygraph2.h](src/graphs/mygraph2.h).
 
 ### Files relevant to this part
 
@@ -110,6 +110,6 @@ Return to [AI Engine graphs and kernels](./README.md)<br>
 [^3]: [VFS with MATLAB](../../matlab/README.md)<br>
 [^4]: [VSS simulation](../../cosim/README.md)<br>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/legal/copyright.html">Terms and Conditions</a></sup></p>

@@ -1,0 +1,96 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * dts file for Xilinx Versal vmk180 revA
+ *
+ * (C) Copyright 2019-2022 Xilinx, Inc.
+ * (C) Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+ *
+ * Michal Simek <michal.simek@amd.com>
+ */
+
+#include "include/gpio/gpio.h"
+
+/ {
+	compatible = "xlnx,versal-vmk180-revA", "xlnx,versal";
+	model = "Xilinx Versal vmk180 Eval board revA";
+
+
+	chosen {
+		bootargs = "console=ttyAMA0 earlycon=pl011,mmio32,0xFF000000,115200n8";
+		stdout-path = "serial0:115200";
+	};
+
+	aliases {
+		serial0 = &serial0;
+		serial2 = &dcc;
+		ethernet0 = &gem0;
+		ethernet1 = &gem1;
+		i2c0 = &i2c0;
+		i2c1 = &i2c1;
+		mmc0 = &sdhci1;
+		spi0 = &qspi;
+		usb0 = &usb0;
+		rtc0 = &rtc;
+	};
+};
+
+/* PMC_MIO 0 -12 - configuration header QSPI/OSPI/EMMC */
+/* FIXME PMC_MIO37 ZU4_TRIGGER/PMC_MIO37/38 PCIE */
+&cpm_pciea {
+	reset-gpios = <&gpio1 38 GPIO_ACTIVE_LOW>;
+};
+
+
+&sdhci1 { /* PMC_MIO26-36/51 */
+	xlnx,mio-bank = <1>;
+	no-1-8-v;
+};
+
+
+&gem0 { /* PMC_MIO_48, LPD_MIO0-11/24/25 */
+	phy-handle = <&phy1>; /* u198 */
+	phy-mode = "rgmii-id";
+	mdio: mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		phy1: ethernet-phy@1 { /* u198 */
+			#phy-cells = <1>;
+			compatible = "ethernet-phy-id2000.a231";
+			reg = <1>;
+			ti,rx-internal-delay = <0xb>;
+			ti,tx-internal-delay = <0xa>;
+			ti,fifo-depth = <1>;
+			ti,dp83867-rxctrl-strap-quirk;
+			reset-assert-us = <100>;
+			reset-deassert-us = <280>;
+			reset-gpios = <&gpio1 48 GPIO_ACTIVE_LOW>;
+		};
+		phy2: ethernet-phy@2 { /* u134 */
+			#phy-cells = <1>;
+			compatible = "ethernet-phy-id2000.a231";
+			reg = <2>;
+			ti,rx-internal-delay = <0xb>;
+			ti,tx-internal-delay = <0xa>;
+			ti,fifo-depth = <1>;
+			ti,dp83867-rxctrl-strap-quirk;
+			reset-assert-us = <100>;
+			reset-deassert-us = <280>;
+			reset-gpios = <&gpio1 49 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&gem1 { /* PMC_MIO_49, LPD_MIO12-23 */
+	phy-handle = <&phy2>; /* u134 */
+	phy-mode = "rgmii-id";
+};
+
+
+&dwc3_0 { /* USB 2.0 host */
+	dr_mode = "host";
+	maximum-speed = "high-speed";
+	snps,dis_u2_susphy_quirk;
+	snps,dis_u3_susphy_quirk;
+	snps,usb3_lpm_capable;
+};
