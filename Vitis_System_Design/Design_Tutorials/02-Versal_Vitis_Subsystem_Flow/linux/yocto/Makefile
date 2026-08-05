@@ -27,6 +27,9 @@ SEG_CONF                  ?= false
 ifeq (${BOARD_NAME}, vck190)
   SOC_FAMILY                         := versal
   GEN_MACHINE_OPT                    :=
+else ifeq (${BOARD_NAME}, vek280)
+  SOC_FAMILY                         := versal
+  GEN_MACHINE_OPT                    :=
 else ifeq (${BOARD_NAME}, vck190seg)
   SOC_FAMILY                         := versal
   GEN_MACHINE_OPT                    := -g full

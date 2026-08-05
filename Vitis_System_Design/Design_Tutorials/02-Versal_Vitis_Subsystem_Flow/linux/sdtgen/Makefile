@@ -21,7 +21,7 @@ else ifeq (${BOARD_NAME}, vck190seg)
   PS_DOMAIN                          := psv_cortexa72_0
   LOP_FILE                           := lop-a72-imux.dts
 else ifeq (${BOARD_NAME}, vek280)
-  BOARD_DTS                          := versal-vek280-rev1.1
+  BOARD_DTS                          := versal-vek280-revb
   PS_DOMAIN                          := psv_cortexa72_0
   LOP_FILE                           := lop-a72-imux.dts
 else ifeq (${BOARD_NAME}, vek385)

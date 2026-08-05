@@ -1,28 +1,28 @@
 //
 // Copyright (C) 2021-2022, Xilinx, Inc. All rights reserved.
-// Copyright (C) 2022-2025, Advanced Micro Devices, Inc. All rights reserved.
+// Copyright (C) 2022-2026, Advanced Micro Devices, Inc. All rights reserved.
 // SPDX-License-Identifier: X11
 //
 
 //include/ "system-conf.dtsi"
 / {
   chosen {
-    bootargs = "console=ttyAMA0  earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M";
+    bootargs = "console=ttyAMA0  earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk0p3 rw rootwait cma=512M";
     stdout-path = "serial0:115200n8";
   };
 };
 
-/ {
-  reserved-memory {
-    #address-cells = <2>;
-    #size-cells = <2>;
-    ranges;
-    lpddr_memory: buffer@0 {
-      no-map;
-      reg = <0x500 0x0 0x2 0x0>;
-    };
-  };
-};
+// / {
+//   reserved-memory {
+//     #address-cells = <2>;
+//     #size-cells = <2>;
+//     ranges;
+//     lpddr_memory: buffer@0 {
+//       no-map;
+//       reg = <0x500 0x0 0x2 0x0>;
+//     };
+//   };
+// };
 
 &sdhci1{
   no-1-8-v;

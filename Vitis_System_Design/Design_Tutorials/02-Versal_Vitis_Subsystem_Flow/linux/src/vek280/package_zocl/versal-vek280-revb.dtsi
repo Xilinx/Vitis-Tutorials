@@ -1,0 +1,133 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * dts file for Xilinx Versal VEK280 revB
+ *
+ * (C) Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+ *
+ * Michal Simek <michal.simek@amd.com>
+ */
+
+#include "include/gpio/gpio.h"
+
+/ {
+  compatible = "xlnx,versal-vek280-revB", "xlnx,versal-vek280",
+         "xlnx,versal";
+  model = "Xilinx Versal vek280 Eval board revB";
+
+
+  chosen {
+    bootargs = "console=ttyAMA0 earlycon=pl011,mmio32,0xFF000000,115200n8";
+    stdout-path = "serial0:115200";
+  };
+
+  aliases {
+    serial0 = &serial0;
+    serial2 = &dcc;
+    i2c0 = &i2c0;
+    i2c1 = &i2c1;
+    mmc0 = &sdhci1;
+    spi0 = &ospi;
+    usb0 = &usb0;
+    rtc0 = &rtc;
+    nvmem0 = &eeprom;
+  };
+};
+
+/* VADJ_FMC_EN - LPD MIO23 */
+/* FAN - LPD MIO21/22 */
+/* VCC_PL_EN - LPD MIO20 */
+/* PCIE_PERST - LPD MIO18/19 */
+/* SD_BUSPWR - PMC MIO51 */
+/* PCIE_WAKE - PMC MIO50 */
+/* VCCPSLP_EN - PMC MIO49 */
+/* I2C SYSMON - PMC MIO39 - 41 */
+/* PCIE_PWRBRK - PMC MIO38 */
+/* ZU4_TRIGGER - PMC MIO37 */
+/* VCC_AUX_1V2 - MIO11 */
+
+
+&ospi { /* PMC MIO0-10, 12, U297 MT35XU02G */
+  bus-num = <2>;
+  num-cs = <1>;
+  #stream-id-cells = <1>;
+  #address-cells = <1>;
+  #size-cells = <0>;
+
+  spi_flash: flash@0 {
+    compatible = "mt35xu02g", "micron,m25p80", "jedec,spi-nor";
+    reg = <0>;
+    #address-cells = <1>;
+    #size-cells = <1>;
+    cdns,read-delay = <0>;
+    cdns,tshsl-ns = <0>;
+    cdns,tsd2d-ns = <0>;
+    cdns,tchsh-ns = <1>;
+    cdns,tslch-ns = <1>;
+    spi-tx-bus-width = <8>;
+    spi-rx-bus-width = <8>;
+    spi-max-frequency = <20000000>;
+    no-wp;
+    reset-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
+    partition@0 {
+      compatible = "fixed-partitions";
+      #address-cells = <1>;
+      #size-cells = <1>;
+
+      partition@0 {
+        label = "spi0-flash0";
+        reg = <0 0x10000000>;
+      };
+    };
+  };
+};
+
+
+&dwc3_0 { /* USB 2.0 host */
+  dr_mode = "host";
+  maximum-speed = "high-speed";
+  snps,dis_u2_susphy_quirk;
+  snps,dis_u3_susphy_quirk;
+  snps,usb3_lpm_capable;
+};
+
+&sdhci1 { /* PMC_MIO26-36/51 */
+  xlnx,mio-bank = <1>;
+  no-1-8-v;
+};
+
+
+&i2c1 { /* PMC_MIO44/45 */
+  bootph-all;
+  clock-frequency = <100000>;
+
+  /* Use for storing information about SC board */
+  eeprom: eeprom@54 { /* u34 - m24128 16kB */
+    compatible = "st,24c128", "atmel,24c128";
+    label = "eeprom_vek280b";
+    reg = <0x54>; /* & 0x5c */
+    bootph-all;
+  };
+};
+
+
+&gem0 { /* PMC_MIO_48, LPD_MIO0-11/24/25 */
+  phy-handle = <&phy0>;
+  phy-mode = "rgmii-id";
+  mdio: mdio {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    phy0: ethernet-phy@1 { /* u198 - ADI1300 */
+      #phy-cells = <1>;
+      compatible = "ethernet-phy-id0283.bc30";
+      reg = <1>;
+      adi,rx-internal-delay-ps = <2000>;
+      adi,tx-internal-delay-ps = <2000>;
+      adi,fifo-depth-bits = <8>;
+      reset-gpios = <&gpio1 48 GPIO_ACTIVE_LOW>;
+      reset-assert-us = <10>;
+      reset-deassert-us = <5000>;
+    };
+  };
+};
+
+
