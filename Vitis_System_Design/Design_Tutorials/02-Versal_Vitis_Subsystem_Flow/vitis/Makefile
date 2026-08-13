@@ -43,7 +43,7 @@ XO                    := $(wildcard ${IP_DIR}/xo_hw/*.xo)
 VSS                   ?= vss_top
 VSSFILE               ?= ../vss/build/${VSS}/${VSS}.vss
 XCLBIN                := my.xclbin
-XSA                   := ${PLATFORM_CUSTOM}.xsa
+XSA_FIXED             ?= ../vivado/build/xsa_platform/${PLATFORM_CUSTOM}_fixed.xsa
 VMA                   := ${PLATFORM_CUSTOM}.vma
 LIBADF                := $(wildcard ../vss/${IP_DIR}/aie/*_libadf.a)
 
@@ -108,7 +108,7 @@ platform:
 	vitis -s vitis_platform.py 2>&1 | tee vitis_pfm.log
 
 .PHONY: link
-link: ${BUILD_DIR} ${BUILD_DIR}/${XSA}
+link: ${BUILD_DIR} ${XSA_FIXED}
 
 .PHONY: vma_link
 vma_link: ${BUILD_DIR} ${BUILD_DIR}/${VMA}
@@ -125,7 +125,7 @@ ${BUILD_DIR}/${VMA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 			--output ${VMA} \
 			2>&1 | tee vpp_link.log
 
-${BUILD_DIR}/${XSA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
+${XSA_FIXED}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && \
 		v++ --link --debug --save-temps \
 			--target ${TARGET} \
@@ -133,8 +133,7 @@ ${BUILD_DIR}/${XSA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 			$(addprefix --config ../, ${SYSTEM_CFG}) \
 			$(addprefix ../, ${XO}) \
 			$(addprefix ../, ${VSSFILE}) \
-			--export_archive \
-			--output ${XSA} \
+			--output ../${XSA_FIXED} \
 			2>&1 | tee vpp_link.log
 
 .PHONY: package_linux

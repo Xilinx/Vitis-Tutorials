@@ -25,6 +25,8 @@ REQUIRED_VERSION                   := 2026.1
 
 # TARGET = hw or hw_emu
 export TARGET                     := hw
+# Vitis Flow
+export VITIS_FLOW                 := vma
 
 # SW_BUILD_TOOL = petalinux or yocto
 export SW_BUILD_TOOL              := yocto
@@ -180,9 +182,12 @@ ifeq (${PREBUILD_EMBEDDED}, true)
 	$(MAKE) zocl_dtsi
 endif
 	$(MAKE) vivado_platform
-	$(MAKE) vitis_ip
+ifeq (${VITIS_FLOW}, vma)
 	$(MAKE) vma_export
 	$(MAKE) vivado_fixed
+else
+	$(MAKE) vitis_flow_impl
+endif
 ifeq (${PREBUILD_EMBEDDED}, false)
 	$(MAKE) sdtgen
 	$(MAKE) linux

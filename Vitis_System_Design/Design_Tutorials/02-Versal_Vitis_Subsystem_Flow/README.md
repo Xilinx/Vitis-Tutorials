@@ -145,9 +145,11 @@ Makefiles are provided to build everything from the lab top folder. It will auto
 
 From top folder, run:
 ```
-make all XILINX_VITIS=<Vitis_Install_Path> BOARD_NAME=<vck190 | vek280 | vck190seg | vek385 >
+make all XILINX_VITIS=<Vitis_Install_Path> BOARD_NAME=<vck190 | vek280 | vck190seg | vek385 > VITIS_FLOW=<vma | vitis>
 ```
 If BOARD_NAME is omitted, the build default to vck190.
+If VITIS_FLOW is omitted, the build use vma = Vitis Export to Vivado.
+All other values to `VITIS_FLOW` will pick Vitis Integrated flow which use v++ link to implement the fixed XSA.
 
 
 Alternatively run step by step, by choosing from the following:
