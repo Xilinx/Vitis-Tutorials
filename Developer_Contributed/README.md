@@ -41,11 +41,17 @@
 <td align="center"><a href="./01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
 <td>Versal VCK190 System Example Design based on a thin custom platform (Minimal clocks and AXI exposed to PL) including HLS/RTL kernels and AI Engine kernel using a full Makefile build-flow.</td>
 </tr>
+<tr>
 <td align="center"><a href="./02-AIE_DSP_with_Makefile_and_GUI/">DSP Design on AI Engine with GUI and Makefile Flows</a></td>
 <td>This tutorial implements a FIR filter from the Vitis DSP Library into the AI Engine domain, either with Makefile or GUI based flows. The design runs on the VCK190 board. The host application applies XRT APIs and Petalinux.</td>
 </tr>
+<tr>
 <td align="center"><a href="./03-HLS_Code_Optimization/">Vitis HLS Optimization Techniques on Embedded Boards</a></td>
 <td>This tutorial illustrates some C/C++ code optimization techniques for high performance with Vitis HLS. Some HLS are also implemented into ZCU102 or VCK190 target boards with the Vitis HW Acceleration flow. </td>
+</tr>
+<tr>
+<td align="center"><a href="./04-Complex_FIR_on_Ryzen_AI_NPU_with_IRON/">Complex FIR on the AMD Ryzen AI NPU with IRON</a></td>
+<td>This tutorial implements an 8-tap causal complex FIR on a Phoenix XDNA1 NPU using the open-source IRON/MLIR-AIE Python flow and validates the silicon output against a NumPy reference.</td>
 </tr>
 </table>
 
