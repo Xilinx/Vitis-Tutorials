@@ -12,7 +12,7 @@
 
 # Walkthrough — Bit-exact Complex FIR on the Phoenix NPU
 
-This walkthrough moves from the mathematical statement of the complex FIR filter to a passing silicon test in four stages: **math**, **kernel**, **host**, **verify**. It is written to be readable end-to-end in one sitting; the code files it references are `src/fir_complex_kernel.cc` (AIE2 tile kernel, 132 lines) and `src/test_fir_complex_m19.py` (IRON host + NumPy reference + `main()`-driven silicon test, 384 lines).
+This walkthrough moves from the mathematical statement of the complex FIR filter to a passing silicon test in four stages: **math**, **kernel**, **host**, **verify**. It is written to be readable end-to-end in one sitting; the code files it references are `src/fir_complex_kernel.cc` (AIE2 tile kernel) and `src/test_fir_complex_m19.py` (IRON host + NumPy reference + `main()`-driven silicon test).
 
 ## 1. Math
 

@@ -1,9 +1,9 @@
 # Purpose: One-command runner for the Developer Contributed tutorial
 #          "Bit-Exact Complex FIR on the AMD Ryzen AI NPU using IRON / MLIR-AIE".
 # Target operating system: Windows 11 Pro 25H2, PowerShell 5.1 or 7+.
-# Prerequisite: MLIR-AIE ironenv must be activated in the current shell,
-#               or IRONENV_ROOT must point at the ironenv root
-#               (see doc/SETUP.md).
+# Prerequisite: The MLIR-AIE ironenv virtual environment must be activated in
+#               the current shell (see doc/SETUP.md) so that `python`, `aie`,
+#               and `pyxrt` are all resolved from ironenv.
 # Test harness: The M19 test is a self-contained main()-driven script that
 #               prints "PASS!" on success. Any per-check reference failure or
 #               silicon comparison mismatch raises a Python exception, which

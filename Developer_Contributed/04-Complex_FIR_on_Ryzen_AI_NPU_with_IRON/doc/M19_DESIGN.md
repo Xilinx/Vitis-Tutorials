@@ -7,7 +7,7 @@ Status: shipped and silicon-verified in the upstream [`phoenix-sdr-dsp`](https:/
 **In scope.**
 
 - Direct-form complex FIR filter of length `L = 8`, complex taps `h[k] = Ih[k] + j·Qh[k]`, applied to an interleaved bfloat16 I/Q input vector of `N = 4096` bfloat16 elements (= 2048 complex I/Q samples), producing an interleaved bfloat16 I/Q output vector of the same shape.
-- Bit-accurate host verification: a NumPy reference that performs each multiply and add in the same order as the kernel, with operands cast through [`ml_dtypes.bfloat16`](https://github.com/jax-ml/ml_dtypes) then `float32`, matching the M5/M6 rounding contract.
+- Bit-accurate host verification: a NumPy reference that performs each multiply and add in the same order as the kernel, with I/Q input operands cast through [`ml_dtypes.bfloat16`](https://github.com/jax-ml/ml_dtypes) then `float32` (matching the kernel's `bfloat16 -> float` promote), taps held in `float32` (matching the kernel's `const float` taps), and a single `bfloat16` truncation on the final store.
 - Standard positive-test coverage: unit impulse, DC constant, pure complex tone, random I/Q. Plus one contract test: with `Qh[k] = 0` and `Qx = 0`, the I-path output must match M5's real 8-tap FIR arithmetic.
 - Silicon dispatch on AMD Phoenix NPU1 (XDNA1 / AIE2) via the mlir-aie v1.4.1 `iron.Runtime` sequence-function API pinned at commit [`3ca0193`](https://github.com/Xilinx/mlir-aie/commit/3ca0193), identical to M5/M6 host structure.
 
@@ -61,7 +61,7 @@ The taps we use for M19 v1 are constructed to satisfy three constraints simultan
 2. **Non-trivial imaginary parts** to actually exercise the four-term complex multiply. We use a Hilbert-transformer-flavoured antisymmetric imaginary sequence `Qh[0..7] = [+0.05, +0.10, +0.20, +0.30, −0.30, −0.20, −0.10, −0.05]`. This is a length-8 antisymmetric FIR shape with zero DC response — the classical starting point for a discrete Hilbert transformer per [Oppenheim & Schafer §12.4](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003286/9780137348244) and [Kaiser's Hilbert FIR design](https://ieeexplore.ieee.org/document/1163214). We do not claim this is a spec-compliant Hilbert filter — we only need well-defined complex arithmetic. It is a valid complex FIR that changes the imaginary path materially.
 3. **Small magnitudes** so intermediate `float32` sums stay well inside bfloat16 range for the unit-scale test vectors used in §6.
 
-Both `Ih` and `Qh` are cast through `bfloat16` then back to `float32` on the host to construct the reference, matching the M5 convention ([`test_fir_m5.py` lines 104–105](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/test_fir_m5.py)).
+Both `Ih` and `Qh` are held in `float32` on the host reference — the same operand precision the C++ kernel uses (`const float` taps loaded straight into the multiply-accumulate unit, see [`fir_complex_kernel.cc` lines 66–82](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m19_complex_fir/fir_complex_kernel.cc)). No `bfloat16` round-trip on the taps; the reference and the silicon compute with the same tap values element-for-element.
 
 ## 4. Reference implementation (host, NumPy)
 
@@ -69,9 +69,10 @@ The reference performs the same operation the kernel does, in the same order, wi
 
     coeffs_I_f  = [0.05, 0.10, 0.20, 0.30, 0.30, 0.20, 0.10, 0.05]
     coeffs_Q_f  = [0.05, 0.10, 0.20, 0.30, -0.30, -0.20, -0.10, -0.05]
+    # Taps stay in float32 to match the kernel's `const float` slots exactly.
 
-    Ih = np.array([float(bfloat16(c)) for c in coeffs_I_f], dtype=np.float32)
-    Qh = np.array([float(bfloat16(c)) for c in coeffs_Q_f], dtype=np.float32)
+    Ih = np.array(coeffs_I_f, dtype=np.float32)
+    Qh = np.array(coeffs_Q_f, dtype=np.float32)
 
     in_bf16 = np_input_iq.astype(bfloat16)          # 4096 bf16
     in_f    = in_bf16.astype(np.float32)            # 4096 f32
@@ -106,7 +107,7 @@ The reference performs the same operation the kernel does, in the same order, wi
 
 Every load from `in_bf16` is a bfloat16 value; every multiply and add is in `float32`; the final `bfloat16` truncation happens once per output element in `astype(bfloat16)` on the store. This mirrors the M5/M6 pattern exactly and is what "bit-accurate vs the reference" means for this milestone.
 
-Because M5's coefficients happen to be exactly representable in bfloat16 (each is a sum of at most two powers of two through the exponent of 0.05 ≈ 1.638×10⁻²), the `float(bfloat16(c))` cast is idempotent on our tap set — but we keep the cast to preserve the M5 contract shape for future tap sets that are not exact.
+M19 v1's C++ kernel loads its taps as `const float` (see [`fir_complex_kernel.cc` lines 66–82](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m19_complex_fir/fir_complex_kernel.cc)) and feeds them directly into the multiply-accumulate unit; there is no `bfloat16` truncation on the tap path in silicon. The reference therefore mirrors that operand contract exactly by keeping `Ih` and `Qh` in `float32`. This is a deliberate departure from the earlier `float(bfloat16(c))` round-trip that shipped in M5's reference — for the M5 tap set (each a small sum of powers of two down to `0.05 ≈ 1.638×10⁻²`) that round-trip happens to be idempotent, but for the M19 Q-taps it introduces a max `7.8×10⁻⁴` drift on `±0.30`, which is small but no longer bit-exact against the kernel's operand contract.
 
 ## 5. Kernel implementation (`fir_complex_kernel.cc`)
 

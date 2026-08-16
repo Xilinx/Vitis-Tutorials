@@ -122,6 +122,17 @@ def complex_fir(
     N: CompileTime[int],
     element_type: CompileTime[type],
 ):
+    # The C++ kernel body in fir_complex_kernel.cc iterates i < 2048 as a
+    # hard-coded loop bound (4096 bfloat16 elements = 2048 complex I/Q pairs).
+    # If a caller passes any other N the host types would compile fine but
+    # the kernel would read or write past the logical buffer bounds, or
+    # leave part of the output uncomputed. Fail loudly at JIT-time instead.
+    if N != 4096:
+        raise ValueError(
+            f"complex_fir M19 v1 requires N=4096 (2048 complex I/Q pairs); got N={N}. "
+            "The kernel loop bound in fir_complex_kernel.cc is hard-coded to "
+            "2048; changing N without editing the kernel would corrupt output."
+        )
     in_ty = np.ndarray[(N,), np.dtype[element_type]]
     out_ty = np.ndarray[(N,), np.dtype[element_type]]
 
