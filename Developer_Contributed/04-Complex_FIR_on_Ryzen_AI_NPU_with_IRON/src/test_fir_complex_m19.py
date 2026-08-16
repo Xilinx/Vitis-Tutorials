@@ -63,15 +63,29 @@ COEFFS_Q_F = [0.05, 0.10, 0.20, 0.30, -0.30, -0.20, -0.10, -0.05]
 L = 8
 
 
-def _f32_coeffs():
+def _f32_coeffs(Ih_list=None, Qh_list=None):
     """Return the tap arrays as float32, matching the `const float` taps
-    baked into fir_complex_kernel.cc (see kernel lines 66-82)."""
-    Ih = np.array(COEFFS_I_F, dtype=np.float32)
-    Qh = np.array(COEFFS_Q_F, dtype=np.float32)
+    baked into fir_complex_kernel.cc (see kernel lines 66-82).
+
+    Parameters
+    ----------
+    Ih_list : sequence of float, optional
+        Real-part tap coefficients. Defaults to the module-level COEFFS_I_F,
+        which matches the taps baked into the C++ kernel.
+    Qh_list : sequence of float, optional
+        Imaginary-part tap coefficients. Defaults to the module-level
+        COEFFS_Q_F, which matches the taps baked into the C++ kernel.
+    """
+    if Ih_list is None:
+        Ih_list = COEFFS_I_F
+    if Qh_list is None:
+        Qh_list = COEFFS_Q_F
+    Ih = np.array(Ih_list, dtype=np.float32)
+    Qh = np.array(Qh_list, dtype=np.float32)
     return Ih, Qh
 
 
-def complex_fir_reference(in_bf16):
+def complex_fir_reference(in_bf16, Ih=None, Qh=None):
     """NumPy reference that performs the same operation the kernel does,
     in the same order, with the same operand types. Textbook direct-form
     convolution with zero-history warmup, matching the M8 shift-and-ingest
@@ -82,12 +96,24 @@ def complex_fir_reference(in_bf16):
     Inputs
     ------
     in_bf16 : np.ndarray of dtype bfloat16, shape (2 * M,), interleaved I/Q.
+    Ih : np.ndarray of dtype float32, shape (L,), optional
+        Real-part tap coefficients. Defaults to the module-level COEFFS_I_F,
+        which matches the taps baked into the C++ kernel. Pass a caller
+        array to exercise a hypothetical tap set without mutating the
+        module globals (used by the M5-degeneracy check with Qh=0).
+    Qh : np.ndarray of dtype float32, shape (L,), optional
+        Imaginary-part tap coefficients. See Ih for the override contract.
 
     Returns
     -------
     ref_bf16 : np.ndarray of dtype bfloat16, shape (2 * M,), interleaved I/Q.
     """
-    Ih, Qh = _f32_coeffs()
+    if Ih is None or Qh is None:
+        Ih_default, Qh_default = _f32_coeffs()
+        if Ih is None:
+            Ih = Ih_default
+        if Qh is None:
+            Qh = Qh_default
 
     in_f = in_bf16.astype(np.float32)
     Ix = in_f[0::2]
@@ -188,6 +214,35 @@ def complex_fir(
 # These run before silicon dispatch. Any mismatch surfaces as AssertionError
 # before we build the xclbin.
 
+def _read_silicon_output(tensor):
+    """Return the silicon output buffer of an IRON XRTTensor as a numpy
+    array, preferring public accessors and falling back to the private
+    attribute only if the current IRON version exposes no public one.
+
+    Rationale
+    ---------
+    XRTTensor(np_buffer, ...) COPIES the numpy data into a device-owned
+    buffer at construction time; it does not alias the caller's numpy
+    array. After tensor.to("cpu") the silicon output lives on the tensor's
+    internal buffer, so the original numpy buffer passed to the
+    constructor still holds zeros. In mlir-aie v1.4.1 (pin 3ca0193) IRON
+    exposes no public accessor for that internal buffer; the only correct
+    way to read the silicon output is the tensor._data attribute (see
+    https://github.com/Xilinx/mlir-aie/blob/3ca0193/python/iron/utils/hostruntime/xrtruntime/tensor.py).
+
+    This helper tries a small ordered list of public accessors first, so
+    that later IRON versions which do add such an accessor (e.g. .numpy()
+    or .to_numpy()) automatically pick it up without a code change. If
+    none of the public accessors is present, it falls back to _data,
+    documenting the fallback with a pylint suppression at that call site.
+    """
+    for accessor in ("numpy", "to_numpy", "asnumpy"):
+        fn = getattr(tensor, accessor, None)
+        if callable(fn):
+            return fn()
+    return tensor._data  # pylint: disable=protected-access
+
+
 def _pack_iq(Ix_f, Qx_f, N):
     iq_f = np.zeros(N, dtype=np.float32)
     iq_f[0::2] = Ix_f
@@ -279,7 +334,13 @@ def _local_tone_check(N):
     steady = slice(L - 1, M)
     ratio = ref_cplx[steady] / x_cplx[steady]
     mag_err = float(np.max(np.abs(np.abs(ratio) - np.abs(H))))
-    phase_err = float(np.max(np.abs(np.angle(ratio) - np.angle(H))))
+    # Phase error via the argument of the complex ratio ratio/H rather than
+    # subtracting two wrapped angles. Subtracting np.angle(ratio) and
+    # np.angle(H) can spuriously report ~2*pi when a small true phase
+    # error crosses the branch cut at +/- pi. np.angle(ratio / H) always
+    # returns the principal value of the true relative phase in
+    # (-pi, pi], so it is the correct branch-cut-safe error measure.
+    phase_err = float(np.max(np.abs(np.angle(ratio / H))))
     assert mag_err < 0.02, f"Tone magnitude drift {mag_err:.4f}"
     assert phase_err < 0.02, f"Tone phase drift {phase_err:.4f} rad"
     print(
@@ -303,15 +364,12 @@ def _local_m5_degeneracy_check(N):
 
     Ih, _ = _f32_coeffs()
 
-    # Reference under this kernel's convention with Qh=0.
-    Qh_saved = COEFFS_Q_F.copy()
-    try:
-        for k in range(L):
-            COEFFS_Q_F[k] = 0.0
-        ref = complex_fir_reference(in_bf16).astype(np.float32)
-    finally:
-        for k in range(L):
-            COEFFS_Q_F[k] = Qh_saved[k]
+    # Reference under this kernel's convention with Qh=0 forced.
+    # We pass Qh explicitly as a zero vector to complex_fir_reference so
+    # that the M5-degeneracy check is a self-contained pure function of its
+    # inputs, without mutating the module-level COEFFS_Q_F global.
+    Qh_zero = np.zeros(L, dtype=np.float32)
+    ref = complex_fir_reference(in_bf16, Ih=Ih, Qh=Qh_zero).astype(np.float32)
 
     m19_I_bf = ref[0::2]
 
@@ -381,15 +439,7 @@ def main():
     print("Execution complete. Inspecting Complex FIR output vs reference...")
 
     ref_out_bf16 = complex_fir_reference(np_in_bf16)
-    # XRTTensor(np_out_iq, ...) copies the numpy buffer into a device-owned
-    # buffer object; it does NOT alias np_out_iq. After out_tensor.to("cpu")
-    # the silicon output lives on the tensor's internal buffer, which IRON
-    # v1.4.1 exposes only through the _data attribute (see
-    # https://github.com/Xilinx/mlir-aie/blob/3ca0193/python/iron/utils/hostruntime/xrtruntime/tensor.py).
-    # Reading np_out_iq at this point returns zeros; only ._data returns the
-    # silicon output. If IRON adds a public accessor (e.g. .numpy() or
-    # .to_numpy()) in a later version, switch to it here.
-    out_np = out_tensor._data  # pylint: disable=protected-access
+    out_np = _read_silicon_output(out_tensor)
 
     print(f"Input I/Q sample [0..4]:  {np_in_bf16[:4]}")
     print(f"Ref Out sample [0..4]:    {ref_out_bf16[:4]}")

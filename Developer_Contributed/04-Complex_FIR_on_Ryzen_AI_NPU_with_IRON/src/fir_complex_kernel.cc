@@ -55,7 +55,7 @@
 extern "C" {
 
 void fir_complex_kernel(
-    bfloat16 *__restrict in_iq,
+    const bfloat16 *__restrict in_iq,
     bfloat16 *__restrict out_iq
 ) {
     event0();

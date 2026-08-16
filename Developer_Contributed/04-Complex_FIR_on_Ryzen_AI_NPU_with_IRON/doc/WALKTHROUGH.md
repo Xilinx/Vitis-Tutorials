@@ -52,9 +52,11 @@ Every convolution product h[k] · x[n-k] is a complex multiplication
 Open `src/fir_complex_kernel.cc`. The kernel signature is
 
 ```cpp
-void fir_complex_kernel(bfloat16 *__restrict in_iq,
+void fir_complex_kernel(const bfloat16 *__restrict in_iq,
                         bfloat16 *__restrict out_iq);
 ```
+
+The input pointer is `const` to document that the kernel does not modify the input buffer; the output pointer is not `const`.
 
 Both buffers are 4096 `bfloat16` elements, interpreted as 2048 interleaved (I, Q) pairs.
 
@@ -146,8 +148,8 @@ Vector Length: 4096 elements (2048 complex I/Q pairs) of bfloat16
 Taps L = 8, complex (Ih and Qh baked into kernel)
 Running host-side reference checks before silicon dispatch...
 [reference] Test 1 impulse at index 0: PASS
-[reference] Test 2 DC: PASS (sum Ih = 1.304688, sum Qh = 0.000000)
-[reference] Test 3 pure complex tone: PASS (|H| = 1.2750, arg H = -0.0537 rad, mag_err = 0.004828, phase_err = 0.003143 rad)
+[reference] Test 2 DC: PASS (sum Ih = 1.296875, sum Qh = 0.000000)
+[reference] Test 3 pure complex tone: PASS (|H| = 1.2727, arg H = -0.0537 rad, mag_err = 0.005482, phase_err = 0.00343 rad)
 [reference] Test 5 real-taps degeneration (I path == M5-style): PASS (max_err = 0.000000)
 Compiling 8-Tap Complex FIR with Peano and dispatching to Phoenix NPU...
 Execution complete. Inspecting Complex FIR output vs reference...
