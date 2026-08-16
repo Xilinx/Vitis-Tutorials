@@ -47,6 +47,10 @@
 <td align="center"><a href="./03-HLS_Code_Optimization/">Vitis HLS Optimization Techniques on Embedded Boards</a></td>
 <td>This tutorial illustrates some C/C++ code optimization techniques for high performance with Vitis HLS. Some HLS are also implemented into ZCU102 or VCK190 target boards with the Vitis HW Acceleration flow. </td>
 </tr>
+<tr>
+<td align="center"><a href="./04-Complex_FIR_on_Ryzen_AI_NPU_with_IRON/">Bit-Exact Complex FIR on the AMD Ryzen AI NPU using IRON / MLIR-AIE</a></td>
+<td>End-to-end tutorial for building and validating an 8-tap complex FIR filter (complex taps &times; complex I/Q) on the AMD Phoenix NPU (XDNA1 / AIE2) from a Windows 11 host using the IRON Python eDSL. Covers the mathematical statement, the AIE2 tile kernel (bfloat16 operands, fp32 MAC, single truncation), the IRON host program, and a bit-exact / one-ULP silicon verification against a NumPy reference. Target: Ryzen AI 7040 / 8040 series laptops with the XDNA driver installed.</td>
+</tr>
 </table>
 
 
