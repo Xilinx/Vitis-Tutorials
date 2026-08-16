@@ -20,9 +20,10 @@
 //
 // Design note: shift-and-ingest organization (M8 convention).
 //
-// This kernel follows tests/m8_pipeline/pipeline_kernel.cc line-for-line
-// in loop shape - a single 2048-iteration flat loop, no separate prime or
-// tail phase. At the start of the loop hist_i and hist_q are zero, and
+// This kernel follows the M8 pipeline convention from the upstream project
+// (https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m8_pipeline/pipeline_kernel.cc)
+// line-for-line in loop shape: a single 2048-iteration flat loop, no separate
+// prime or tail phase. At the start of the loop hist_i and hist_q are zero, and
 // each iteration:
 //   1. reads one (I, Q) pair from in_iq into scalars ii, qq;
 //   2. shifts hist_i and hist_q left by one slot;
@@ -60,7 +61,8 @@ void fir_complex_kernel(
     event0();
 
     // 8 complex taps h[k] = Ih[k] + j*Qh[k].
-    // Ih matches tests/m5_fir/fir_kernel.cc exactly.
+    // Ih matches the upstream project's M5 real FIR taps exactly:
+    //   https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/fir_kernel.cc
     // Qh is an antisymmetric Hilbert-transformer-flavoured sequence
     // chosen to exercise all four terms of the complex multiply.
     const float cI0 =  0.05f;
@@ -93,7 +95,8 @@ void fir_complex_kernel(
         float qq = (float)in_iq[2 * i + 1];
 
         // Shift the window left by one, ingesting the new sample at slot 7.
-        // This exactly mirrors tests/m8_pipeline/pipeline_kernel.cc lines 52-56.
+        // This exactly mirrors the upstream M8 pipeline kernel lines 52-56:
+        //   https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m8_pipeline/pipeline_kernel.cc
         hist_i[0] = hist_i[1]; hist_i[1] = hist_i[2]; hist_i[2] = hist_i[3]; hist_i[3] = hist_i[4];
         hist_i[4] = hist_i[5]; hist_i[5] = hist_i[6]; hist_i[6] = hist_i[7]; hist_i[7] = ii;
 

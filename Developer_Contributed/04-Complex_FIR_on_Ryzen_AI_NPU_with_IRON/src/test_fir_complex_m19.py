@@ -14,14 +14,19 @@
 # State requirements: device 0 (NPU Phoenix).
 # Error handling: Bit-accurate tolerance check against reference complex FIR.
 #
-# Design: docs/M19_DESIGN.md
+# Design: doc/M19_DESIGN.md
 # Host API pin: mlir-aie v1.4.1 iron.Runtime sequence-function API
 #   https://github.com/Xilinx/mlir-aie/blob/3ca0193/python/iron/runtime/runtime.py
 # Direct-form FIR (Oppenheim and Schafer, DTSP 3e, section 5.2):
 #   y[n] = sum_{k=0..L-1} h[k] * x[n - k],  x[n] = 0 for n < 0
-# This matches the kernel's shift-and-ingest schedule
-# (tests/m8_pipeline/pipeline_kernel.cc lines 34-63).
-# Complex multiply (NIST DLMF section 1.9; matches tests/m6_mixer/mixer_kernel.cc):
+# This matches the kernel's shift-and-ingest schedule in the sibling
+# src/fir_complex_kernel.cc (see doc/M19_DESIGN.md section 4). The pattern
+# is imported verbatim from the upstream project's M8 pipeline kernel
+# https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m8_pipeline/pipeline_kernel.cc
+# lines 34-63.
+# Complex multiply (NIST DLMF section 1.9; same identity used by the upstream
+# M6 mixer kernel
+# https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m6_mixer/mixer_kernel.cc):
 #   (Ix + j Qx) * (Ih + j Qh) = (Ix*Ih - Qx*Qh) + j*(Ix*Qh + Qx*Ih)
 
 from pathlib import Path
@@ -43,9 +48,10 @@ from aie.utils.hostruntime.xrtruntime.tensor import XRTTensor
 from aie.utils.verify import assert_pass
 from ml_dtypes import bfloat16
 
-# Taps hard-coded to match tests/m19_complex_fir/fir_complex_kernel.cc.
-# Ih matches tests/m5_fir/fir_kernel.cc exactly so the M5-degeneracy check
-# is a real check of the I path.
+# Taps hard-coded to match the sibling src/fir_complex_kernel.cc.
+# Ih matches the upstream project's M5 real FIR taps exactly
+# (https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/fir_kernel.cc)
+# so the M5-degeneracy check is a real check of the I path.
 # Tap constants are stored as `const float` in fir_complex_kernel.cc. The kernel
 # loads them directly into the float32 multiply-accumulate unit; only the input
 # I/Q samples and the output word are bfloat16. The reference below therefore
@@ -69,7 +75,7 @@ def complex_fir_reference(in_bf16):
     """NumPy reference that performs the same operation the kernel does,
     in the same order, with the same operand types. Textbook direct-form
     convolution with zero-history warmup, matching the M8 shift-and-ingest
-    schedule used by tests/m19_complex_fir/fir_complex_kernel.cc:
+    schedule used by the sibling src/fir_complex_kernel.cc:
 
         out[i] = sum_{k=0..L-1} h[k] * x[i - k],  x[n] = 0 for n < 0.
 
@@ -155,7 +161,8 @@ def complex_fir(
         of_in.release(1)
         of_out.release(1)
 
-    # stack_size mirrors tests/m17_radix2_fft/test_fft_m17_v3.py line 76.
+    # stack_size mirrors the upstream project's M17 radix-2 FFT test
+    # https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m17_radix2_fft/test_fft_m17_v3.py line 76.
     # AIE2 core stack default was observed to be too small for local
     # 8-float shift-register arrays plus the unrolled dot product
     # temporaries; the default hangs with ERT_CMD_STATE_TIMEOUT.
@@ -177,7 +184,7 @@ def complex_fir(
     return my_program.resolve_program()
 
 
-# --- Host-side reference-only sanity checks (Section 6 of docs/M19_DESIGN.md).
+# --- Host-side reference-only sanity checks (Section 6 of doc/M19_DESIGN.md).
 # These run before silicon dispatch. Any mismatch surfaces as AssertionError
 # before we build the xclbin.
 
@@ -288,7 +295,8 @@ def _local_m5_degeneracy_check(N):
     same input under textbook direct-form (matching this kernel's shape),
     accepting M5/M6 tolerance atol=0.01."""
     M = N // 2
-    np.random.seed(123)  # match tests/m5_fir/test_fir_m5.py seed
+    np.random.seed(123)  # match upstream M5 test seed:
+    # https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/test_fir_m5.py
     Ix = np.random.uniform(0.1, 1.0, M).astype(np.float32)
     Qx = np.zeros(M, dtype=np.float32)
     in_bf16 = _pack_iq(Ix, Qx, N)
@@ -373,7 +381,15 @@ def main():
     print("Execution complete. Inspecting Complex FIR output vs reference...")
 
     ref_out_bf16 = complex_fir_reference(np_in_bf16)
-    out_np = out_tensor._data
+    # XRTTensor(np_out_iq, ...) copies the numpy buffer into a device-owned
+    # buffer object; it does NOT alias np_out_iq. After out_tensor.to("cpu")
+    # the silicon output lives on the tensor's internal buffer, which IRON
+    # v1.4.1 exposes only through the _data attribute (see
+    # https://github.com/Xilinx/mlir-aie/blob/3ca0193/python/iron/utils/hostruntime/xrtruntime/tensor.py).
+    # Reading np_out_iq at this point returns zeros; only ._data returns the
+    # silicon output. If IRON adds a public accessor (e.g. .numpy() or
+    # .to_numpy()) in a later version, switch to it here.
+    out_np = out_tensor._data  # pylint: disable=protected-access
 
     print(f"Input I/Q sample [0..4]:  {np_in_bf16[:4]}")
     print(f"Ref Out sample [0..4]:    {ref_out_bf16[:4]}")
