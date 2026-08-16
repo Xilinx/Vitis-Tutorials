@@ -50,7 +50,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <aie_api/aie.hpp>
-#include "sdr_dsp_common.hpp"
 
 extern "C" {
 

@@ -121,13 +121,12 @@ def complex_fir(
     of_out = ObjectFifo(out_ty, name="out_iq")
 
     current_dir = Path(__file__).parent.resolve()
-    include_sdr_dir = Path(__file__).resolve().parents[2] / "include" / "sdr_dsp"
 
     fir_func = ExternalFunction(
         "fir_complex_kernel",
         source_file=str(current_dir / "fir_complex_kernel.cc"),
         arg_types=[in_ty, out_ty],
-        include_dirs=[cxx_header_path(), str(include_sdr_dir)],
+        include_dirs=[cxx_header_path()],
     )
 
     def core_body(of_in, of_out, fir_func):

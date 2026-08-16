@@ -35,7 +35,7 @@ The tutorial covers:
 3. The Python IRON `Runtime` sequence-function host program that instantiates the tile, wires up the buffers, and runs the design on real silicon.
 4. A NumPy reference that implements the same operand and rounding contract element-for-element, used as the bit-exact acceptance oracle.
 
-The resulting test is bit-accurate against the reference on real silicon — every output `bfloat16` byte matches the NumPy oracle, on every one of a hundred randomized seeds. This is the same M19 milestone that ships in the upstream [`phoenix-sdr-dsp`](https://github.com/midhatn/phoenix-sdr-dsp) v1.0.0 release, extracted here as a stand-alone tutorial.
+The resulting test compares silicon output to the NumPy oracle within one bfloat16 ULP (`atol = 0.01`) on a fixed, seeded random I/Q input vector (NumPy `seed = 456`, 2048 complex samples). The four host-side reference checks (impulse, DC, complex tone, real-taps degeneration) run before silicon dispatch and are bit-exact — a single non-zero deviation aborts the run. This is the same M19 milestone that ships in the upstream [`phoenix-sdr-dsp`](https://github.com/midhatn/phoenix-sdr-dsp) v1.0.0 release, extracted here as a stand-alone tutorial.
 
 ## Why complex FIR, why Ryzen AI, why IRON
 

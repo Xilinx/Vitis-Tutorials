@@ -5,8 +5,9 @@
 #               or IRONENV_ROOT must point at the ironenv root
 #               (see doc/SETUP.md).
 # Test harness: The M19 test is a self-contained main()-driven script that
-#               prints [ PASS ] / [ FAIL ] and exits with a non-zero status
-#               on any bit-exact mismatch. It is not a pytest suite.
+#               prints "PASS!" on success. Any per-check reference failure or
+#               silicon comparison mismatch raises a Python exception, which
+#               propagates as a non-zero exit status. It is not a pytest suite.
 # Exit code: 0 on test pass, non-zero on any failure.
 
 $ErrorActionPreference = "Stop"

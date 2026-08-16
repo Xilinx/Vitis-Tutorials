@@ -1,6 +1,6 @@
 # M19 — Complex FIR filter (complex taps × complex I/Q input)
 
-Status: **DESIGN** — canonical §16 M19 gap identified in [`docs/ROADMAP.md`](ROADMAP.md#filtering--resampling-canonical-16-m19m23) where M19 is marked ✅ (partial) because the shipped M5 kernel is a real-valued 8-tap FIR on bfloat16, not the complex-taps × complex-I/Q variant §16 M19 asks for. This document specifies the additive M19 kernel, host driver, and NumPy reference. The shipped `tests/m5_fir/` real FIR is not modified. New artifact tree is `tests/m19_complex_fir/`.
+Status: shipped and silicon-verified in the upstream [`phoenix-sdr-dsp`](https://github.com/midhatn/phoenix-sdr-dsp) v1.0.0 release ([roadmap entry](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/docs/ROADMAP.md#filtering--resampling-canonical-16-m19m23)). The complex-taps × complex-I/Q FIR is an additive kernel to the upstream project's real-valued 8-tap FIR ([`tests/m5_fir/`](https://github.com/midhatn/phoenix-sdr-dsp/tree/main/tests/m5_fir)); the real FIR is not modified. In the upstream project this tutorial's kernel and host live at [`tests/m19_complex_fir/`](https://github.com/midhatn/phoenix-sdr-dsp/tree/main/tests/m19_complex_fir); here they are extracted to this tutorial's `src/` directory.
 
 ## 1. Scope and non-goals
 
@@ -28,7 +28,7 @@ For a length-`L` FIR with taps `h[0..L-1]` acting on input `x[n]`, the direct-fo
 y[n] \;=\; \sum_{k=0}^{L-1} h[k]\,x[n-k].
 \]
 
-For the M19 kernel we adopt the causal-forward tap indexing already used by `tests/m5_fir/` — i.e. `out[i] = sum_{k=0}^{L-1} h[k] * in[i + k]`, `L = 8`, zero-pad past the buffer end. This is a phase-shifted (by `L-1` samples) direct form of the same filter and is the M5 convention we must degenerate to when `Qh = 0` and `Qx = 0`, so we keep it.
+For the M19 kernel we adopt the causal-forward tap indexing already used by [`tests/m5_fir/`](https://github.com/midhatn/phoenix-sdr-dsp/tree/main/tests/m5_fir) in the upstream project — i.e. `out[i] = sum_{k=0}^{L-1} h[k] * in[i + k]`, `L = 8`, zero-pad past the buffer end. This is the same filter as the direct-form definition above, phase-shifted by `L-1` samples (a relabelling of the output sample index, not a different computation). We keep this convention because it is the one M5 uses, so the complex-taps kernel here degenerates cleanly to the M5 real-taps kernel when `Qh = 0` and `Qx = 0`.
 
 ### 2.2 Complex multiply
 
@@ -38,30 +38,30 @@ With `x = Ix + j·Qx` and `h = Ih + j·Qh`,
 (Ix + jQx)\,(Ih + jQh) \;=\; (Ix\,Ih - Qx\,Qh) \;+\; j\,(Ix\,Qh + Qx\,Ih),
 \]
 
-which is the same identity M6 uses for `(I + jQ)·(cos + j·sin)` in [`tests/m6_mixer/mixer_kernel.cc`](../tests/m6_mixer/mixer_kernel.cc) (lines 41–42) and is a textbook complex product ([NIST Digital Library of Mathematical Functions §1.9](https://dlmf.nist.gov/1.9); [Oppenheim & Schafer §2.2](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003286/9780137348244)).
+which is the same identity M6 uses for `(I + jQ)·(cos + j·sin)` in the upstream mixer kernel ([`tests/m6_mixer/mixer_kernel.cc`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m6_mixer/mixer_kernel.cc), lines 41–42) and is a textbook complex product ([NIST Digital Library of Mathematical Functions §1.9](https://dlmf.nist.gov/1.9); [Oppenheim & Schafer §2.2](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003286/9780137348244)).
 
 The bit-accurate expansion of a single M19 output pair `(I_out[i], Q_out[i])` is therefore
 
     I_out[i] = sum_{k=0..L-1} ( Ix[i+k] * Ih[k]  -  Qx[i+k] * Qh[k] )
     Q_out[i] = sum_{k=0..L-1} ( Ix[i+k] * Qh[k]  +  Qx[i+k] * Ih[k] )
 
-evaluated left-to-right with `float32` accumulation, `bfloat16` operand rounding, and a single `bfloat16` truncation on the final store — exactly matching M5's scalar chain (M5 accumulates into a `float sum` and truncates once via `(bfloat16)sum`, [`fir_kernel.cc` lines 39–48](../tests/m5_fir/fir_kernel.cc)). The reference in §4 evaluates the same expression in the same order.
+evaluated left-to-right with `float32` accumulation, `bfloat16` operand rounding, and a single `bfloat16` truncation on the final store — exactly matching M5's scalar chain (M5 accumulates into a `float sum` and truncates once via `(bfloat16)sum`, [`fir_kernel.cc` lines 39–48](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/fir_kernel.cc)). The reference in §4 evaluates the same expression in the same order.
 
 ### 2.3 Interleaved I/Q layout
 
-Input, output, and (later, if promoted to a coefficient buffer) tap arrays are stored as bfloat16 arrays of length `2·M`, with `M = 2048` complex samples, laid out as `[I0, Q0, I1, Q1, …, I_{M−1}, Q_{M−1}]`. This is the same layout M6 uses ([`mixer_kernel.cc` lines 30–46](../tests/m6_mixer/mixer_kernel.cc)) — index `2i` is the real part of the `i`-th complex sample, index `2i+1` is the imaginary part.
+Input, output, and (later, if promoted to a coefficient buffer) tap arrays are stored as bfloat16 arrays of length `2·M`, with `M = 2048` complex samples, laid out as `[I0, Q0, I1, Q1, …, I_{M−1}, Q_{M−1}]`. This is the same layout M6 uses ([`mixer_kernel.cc` lines 30–46](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m6_mixer/mixer_kernel.cc)) — index `2i` is the real part of the `i`-th complex sample, index `2i+1` is the imaginary part.
 
-For M19 v1 we bake the 8 complex taps as compile-time float constants inside the kernel, exactly as M5 bakes its 8 real coefficients as float constants ([`fir_kernel.cc` lines 28–35](../tests/m5_fir/fir_kernel.cc)). This keeps the M19 v1 host signature at two buffers `(in_iq, out_iq)`, identical to M5, and defers the coefficient-as-buffer refactor to M19 v2 (which is where it will be needed anyway for M20 polyphase and M21 DDC).
+For M19 v1 we bake the 8 complex taps as compile-time float constants inside the kernel, exactly as M5 bakes its 8 real coefficients as float constants ([`fir_kernel.cc` lines 28–35](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/fir_kernel.cc)). This keeps the M19 v1 host signature at two buffers `(in_iq, out_iq)`, identical to M5, and defers the coefficient-as-buffer refactor to M19 v2 (which is where it will be needed anyway for M20 polyphase and M21 DDC).
 
 ## 3. Tap selection
 
 The taps we use for M19 v1 are constructed to satisfy three constraints simultaneously:
 
-1. **Degenerate to M5 when Q-components are zero.** The eight I-components `Ih[0..7]` must be `[0.05, 0.10, 0.20, 0.30, 0.30, 0.20, 0.10, 0.05]`, matching the M5 real coefficients ([`fir_kernel.cc` lines 28–35](../tests/m5_fir/fir_kernel.cc)) exactly. This makes the "real-taps degeneration" contract test in §6 mechanically bit-exact.
+1. **Degenerate to M5 when Q-components are zero.** The eight I-components `Ih[0..7]` must be `[0.05, 0.10, 0.20, 0.30, 0.30, 0.20, 0.10, 0.05]`, matching the M5 real coefficients ([`fir_kernel.cc` lines 28–35](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/fir_kernel.cc)) exactly. This makes the "real-taps degeneration" contract test in §6 mechanically bit-exact.
 2. **Non-trivial imaginary parts** to actually exercise the four-term complex multiply. We use a Hilbert-transformer-flavoured antisymmetric imaginary sequence `Qh[0..7] = [+0.05, +0.10, +0.20, +0.30, −0.30, −0.20, −0.10, −0.05]`. This is a length-8 antisymmetric FIR shape with zero DC response — the classical starting point for a discrete Hilbert transformer per [Oppenheim & Schafer §12.4](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003286/9780137348244) and [Kaiser's Hilbert FIR design](https://ieeexplore.ieee.org/document/1163214). We do not claim this is a spec-compliant Hilbert filter — we only need well-defined complex arithmetic. It is a valid complex FIR that changes the imaginary path materially.
 3. **Small magnitudes** so intermediate `float32` sums stay well inside bfloat16 range for the unit-scale test vectors used in §6.
 
-Both `Ih` and `Qh` are cast through `bfloat16` then back to `float32` on the host to construct the reference, matching the M5 convention ([`test_fir_m5.py` lines 104–105](../tests/m5_fir/test_fir_m5.py)).
+Both `Ih` and `Qh` are cast through `bfloat16` then back to `float32` on the host to construct the reference, matching the M5 convention ([`test_fir_m5.py` lines 104–105](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/test_fir_m5.py)).
 
 ## 4. Reference implementation (host, NumPy)
 
@@ -104,7 +104,7 @@ The v1 kernel is a scalar inner loop with two 8-float shift registers `hist_i[8]
 
 ### 5.1 Shift-and-ingest organization (M8 convention)
 
-The kernel is a single flat `for (int i = 0; i < 2048; ++i)` loop with no separate prime or tail phase, following [`tests/m8_pipeline/pipeline_kernel.cc`](../tests/m8_pipeline/pipeline_kernel.cc) lines 34–63 exactly — M8 runs a 2-channel 8-tap FIR inside its 2048-iteration main loop and is silicon-validated at 16/16 PASS on Phoenix NPU1 in v0.4.0. Both `hist_i` and `hist_q` start at zero; each iteration:
+The kernel is a single flat `for (int i = 0; i < 2048; ++i)` loop with no separate prime or tail phase, following [`tests/m8_pipeline/pipeline_kernel.cc`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m8_pipeline/pipeline_kernel.cc) lines 34–63 exactly — M8 runs a 2-channel 8-tap FIR inside its 2048-iteration main loop and is silicon-validated at 16/16 PASS on Phoenix NPU1 in v0.4.0. Both `hist_i` and `hist_q` start at zero; each iteration:
 
 1. reads one `(I, Q)` pair from `in_iq` into scalars `ii`, `qq`;
 2. shifts the window one slot left and writes `ii, qq` into slot `L − 1`;
@@ -124,11 +124,11 @@ therefore evaluates `out[i] = sum_{k=0..L-1} h[k] * x[i − k]` (Oppenheim & Sch
 
 ### 5.3 Stack size and ERT deadline
 
-The Worker in `test_fir_complex_m19.py` passes `stack_size=0x4000` (16 KB) to override the IRON default, matching [`tests/m17_radix2_fft/test_fft_m17_v3.py`](../tests/m17_radix2_fft/test_fft_m17_v3.py) line 76. Earlier attempts at this milestone without an explicit `stack_size` hung with XRT [`ERT_CMD_STATE_TIMEOUT`](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/ert.h) even though the same shift-and-ingest loop shape compiles and runs at 2048 iterations in M8 — M8 does not need the override because its inner loop uses only one pair of shift registers whereas the M19 kernel's unrolled twin dot products spill more temporaries. The AIE2 core's stack limit is 32 KB (see [`tests/m8_pipeline/pipeline_kernel.cc`](../tests/m8_pipeline/pipeline_kernel.cc) line 4), so a 16 KB request stays well inside the ceiling.
+The Worker in `test_fir_complex_m19.py` passes `stack_size=0x4000` (16 KB) to override the IRON default, matching [`tests/m17_radix2_fft/test_fft_m17_v3.py`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m17_radix2_fft/test_fft_m17_v3.py) line 76. Earlier attempts at this milestone without an explicit `stack_size` hung with XRT [`ERT_CMD_STATE_TIMEOUT`](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/ert.h) even though the same shift-and-ingest loop shape compiles and runs at 2048 iterations in M8 — M8 does not need the override because its inner loop uses only one pair of shift registers whereas the M19 kernel's unrolled twin dot products spill more temporaries. The AIE2 core's stack limit is 32 KB (see [`tests/m8_pipeline/pipeline_kernel.cc`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m8_pipeline/pipeline_kernel.cc) line 4), so a 16 KB request stays well inside the ceiling.
 
 `unroll_count(4)` matches the M8 pipeline kernel's proven factor and is a Clang loop-hint pragma ([LLVM/Clang language extensions](https://clang.llvm.org/docs/LanguageExtensions.html#extensions-for-loop-hint-optimizations)); it does not change the numerical result.
 
-Includes and extern-C wrapping match M5/M6/M8: `<aie_api/aie.hpp>` and `"sdr_dsp_common.hpp"` ([`include/sdr_dsp/sdr_dsp_common.hpp`](../include/sdr_dsp/sdr_dsp_common.hpp)), which defines the `cbfloat16_t` struct we do not yet use in v1 (kept as documentation of the layout).
+Includes and extern-C wrapping are minimal: `<aie_api/aie.hpp>` for the AIE2 vector types and intrinsics, plus the standard C headers. This tutorial ships as a stand-alone drop-in and does not depend on the upstream project's [`include/sdr_dsp/sdr_dsp_common.hpp`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/include/sdr_dsp/sdr_dsp_common.hpp) shared header — the v1 kernel does not use any symbol from it. That header remains in the upstream project as future-work scaffolding for a `cbfloat16_t` struct and vector-lane constants.
 
 ## 6. Test plan (`test_fir_complex_m19.py`)
 
@@ -146,7 +146,7 @@ Additional local (host-side, no NPU) sanity checks documented below and asserted
 
 Tests 1–3 and 5 are constructed in the host script but exercised on the reference implementation before silicon dispatch, so a mismatch surfaces as a `AssertionError` before we even build the xclbin. Test 4 is the silicon PASS gate.
 
-The silicon-side script is otherwise a direct clone of `tests/m6_mixer/test_mixer_m6.py`: `@iron.jit`, `ExternalFunction`, `Runtime(seq_fn, fn_args=[...])`, `Program(..., workers=[worker])`, `XRTTensor`. The context-manager `with rt.sequence(...)` form is not used — that was removed at v1.4.1 per [`docs/ROADMAP.md` §"Toolchain events"](ROADMAP.md#toolchain-events).
+The silicon-side script is otherwise a direct clone of `tests/m6_mixer/test_mixer_m6.py`: `@iron.jit`, `ExternalFunction`, `Runtime(seq_fn, fn_args=[...])`, `Program(..., workers=[worker])`, `XRTTensor`. The context-manager `with rt.sequence(...)` form is not used — that was removed at v1.4.1 per [`docs/ROADMAP.md` §"Toolchain events"](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/docs/ROADMAP.md#toolchain-events).
 
 ## 7. Bit-accuracy contract
 
@@ -156,7 +156,7 @@ The reference performs no reordering of the sum — the additions are done in th
 
 ## 8. What "silicon PASS" enables — and what it does not
 
-A bit-exact PASS on Phoenix NPU1 closes the §16 M19 gap in [`docs/ROADMAP.md`](ROADMAP.md) — the "Complex-valued (complex taps × complex I/Q input) variant is the canonical M19 gap" line loses its footnote. Nothing else changes automatically. In particular:
+A bit-exact PASS on Phoenix NPU1 closes the §16 M19 gap in [`docs/ROADMAP.md`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/docs/ROADMAP.md) — the "Complex-valued (complex taps × complex I/Q input) variant is the canonical M19 gap" line loses its footnote. Nothing else changes automatically. In particular:
 
 - The v0.4.0 tag and release are unchanged.
 - The published 16/16 regression contract in `run_all_silicon_tests.py` is unchanged. A M19 addition would take the runner to 17/17 and is deferred until an explicit approval after silicon PASS.
@@ -191,8 +191,8 @@ A bit-exact PASS on Phoenix NPU1 closes the §16 M19 gap in [`docs/ROADMAP.md`](
 
 ### 9.4 Project-internal references
 
-- Canonical milestone plan: `../Phoenix-SDR-DSP-Master-Prompt.md` §16 (M19), §13 (engineering rules), §20 (response format).
-- Shipped M5 real FIR kernel: [`tests/m5_fir/fir_kernel.cc`](../tests/m5_fir/fir_kernel.cc).
-- Shipped M6 complex mixer kernel (complex multiply reference): [`tests/m6_mixer/mixer_kernel.cc`](../tests/m6_mixer/mixer_kernel.cc).
-- Shared DSP header (`cbfloat16_t`, vector lane constants): [`include/sdr_dsp/sdr_dsp_common.hpp`](../include/sdr_dsp/sdr_dsp_common.hpp).
-- Roadmap M19 row and §16 divergences: [`docs/ROADMAP.md`](ROADMAP.md).
+- Canonical milestone plan (upstream project's master prompt, §16 M19 gap statement): [`Phoenix-SDR-DSP-Master-Prompt.md`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/Phoenix-SDR-DSP-Master-Prompt.md).
+- Shipped M5 real FIR kernel: [`tests/m5_fir/fir_kernel.cc`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/fir_kernel.cc).
+- Shipped M6 complex mixer kernel (complex multiply reference): [`tests/m6_mixer/mixer_kernel.cc`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m6_mixer/mixer_kernel.cc).
+- Shared DSP header in the upstream project (`cbfloat16_t`, vector lane constants; not required by this tutorial): [`include/sdr_dsp/sdr_dsp_common.hpp`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/include/sdr_dsp/sdr_dsp_common.hpp).
+- Roadmap M19 row and §16 divergences: [`docs/ROADMAP.md`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/docs/ROADMAP.md).

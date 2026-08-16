@@ -120,14 +120,14 @@ A single call to the runtime dispatches the kernel with the two buffer pointers.
 
 The NumPy reference in the test file walks the same shift-and-ingest schedule as the kernel — same tap values, same operand promotion (`bfloat16` → `float32`), same order of multiplies and adds, same single `bfloat16` truncation on store. The reference is therefore *bit-exact*, not just approximately equal.
 
-Verification runs 100 randomized seeds. Each seed:
+The silicon dispatch uses a single fixed-seed random I/Q vector (NumPy `seed = 456`, 2048 complex samples, uniform on `[-1, 1]`):
 
 1. Draws 4096 random `bfloat16` values as the (I, Q) input.
 2. Runs the kernel on the NPU.
 3. Runs the NumPy reference on the same input.
-4. Asserts that every one of the 4096 output `bfloat16` elements agrees with the NumPy reference to within one bfloat16 ULP.
+4. Asserts that every one of the 4096 output `bfloat16` elements agrees with the NumPy reference to within one bfloat16 ULP (`atol = 0.01`, which for values in this range corresponds to one least-significant-bit difference in the final `bfloat16` truncation).
 
-The **host-side reference checks** (impulse, DC, pure tone, real-taps degeneration) are bit-exact: a single non-zero deviation aborts the run before silicon dispatch. The **silicon vs. reference comparison** for a random I/Q vector is within one bfloat16 ULP, because AIE2 hardware and NumPy compute the fp32 accumulation identically but round the final truncation to `bfloat16` differently at the least-significant bit — this is a truncation-rounding difference, not a computational difference.
+The **host-side reference checks** (impulse, DC, pure tone, real-taps degeneration) that run *before* silicon dispatch are bit-exact: a single non-zero deviation aborts the run. The **silicon vs. reference comparison** for the random I/Q vector is within one bfloat16 ULP, because AIE2 hardware and NumPy compute the fp32 accumulation identically but may round the final truncation to `bfloat16` differently at the least-significant bit — this is a truncation-rounding difference, not a computational difference.
 
 Expected output when the test runs (abbreviated, values from a real Phoenix-NPU1 run on Windows 11 Pro / MLIR-AIE v1.4.1):
 
