@@ -28,7 +28,7 @@ For a length-`L` FIR with taps `h[0..L-1]` acting on input `x[n]`, the direct-fo
 y[n] \;=\; \sum_{k=0}^{L-1} h[k]\,x[n-k].
 \]
 
-For the M19 kernel we adopt the causal-forward tap indexing already used by [`tests/m5_fir/`](https://github.com/midhatn/phoenix-sdr-dsp/tree/main/tests/m5_fir) in the upstream project — i.e. `out[i] = sum_{k=0}^{L-1} h[k] * in[i + k]`, `L = 8`, zero-pad past the buffer end. This is the same filter as the direct-form definition above, phase-shifted by `L-1` samples (a relabelling of the output sample index, not a different computation). We keep this convention because it is the one M5 uses, so the complex-taps kernel here degenerates cleanly to the M5 real-taps kernel when `Qh = 0` and `Qx = 0`.
+The M19 kernel implements this direct form using a shift-and-ingest schedule: an `L`-slot history register is initialized to zero, one new input sample is shifted in per output, and the accumulator dot-products the register against the tap vector so that the newest sample pairs with `h[0]` and the oldest with `h[L-1]`. This is the classical causal FIR with zero-history warmup: for `n < L - 1` some slots are still zero, matching `x[n] = 0` for `n < 0` in the equation above. The kernel body in `fir_complex_kernel.cc` and the NumPy reference in `test_fir_complex_m19.py` walk exactly the same schedule element-for-element.
 
 ### 2.2 Complex multiply
 
@@ -40,12 +40,12 @@ With `x = Ix + j·Qx` and `h = Ih + j·Qh`,
 
 which is the same identity M6 uses for `(I + jQ)·(cos + j·sin)` in the upstream mixer kernel ([`tests/m6_mixer/mixer_kernel.cc`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m6_mixer/mixer_kernel.cc), lines 41–42) and is a textbook complex product ([NIST Digital Library of Mathematical Functions §1.9](https://dlmf.nist.gov/1.9); [Oppenheim & Schafer §2.2](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003286/9780137348244)).
 
-The bit-accurate expansion of a single M19 output pair `(I_out[i], Q_out[i])` is therefore
+The bit-accurate expansion of a single M19 output pair `(I_out[i], Q_out[i])` under the shift-and-ingest schedule is therefore
 
-    I_out[i] = sum_{k=0..L-1} ( Ix[i+k] * Ih[k]  -  Qx[i+k] * Qh[k] )
-    Q_out[i] = sum_{k=0..L-1} ( Ix[i+k] * Qh[k]  +  Qx[i+k] * Ih[k] )
+    I_out[i] = sum_{k=0..L-1} ( Ix[i-k] * Ih[k]  -  Qx[i-k] * Qh[k] )
+    Q_out[i] = sum_{k=0..L-1} ( Ix[i-k] * Qh[k]  +  Qx[i-k] * Ih[k] )
 
-evaluated left-to-right with `float32` accumulation, `bfloat16` operand rounding, and a single `bfloat16` truncation on the final store — exactly matching M5's scalar chain (M5 accumulates into a `float sum` and truncates once via `(bfloat16)sum`, [`fir_kernel.cc` lines 39–48](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/fir_kernel.cc)). The reference in §4 evaluates the same expression in the same order.
+with the convention `Ix[n] = Qx[n] = 0` for `n < 0`, evaluated left-to-right with `float32` accumulation, `bfloat16` operand rounding on the I/Q inputs, `float32` taps loaded directly into the multiply-accumulate unit, and a single `bfloat16` truncation on the final store — the same scalar chain M5 uses (M5 accumulates into a `float sum` and truncates once via `(bfloat16)sum`, [`fir_kernel.cc` lines 39–48](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m5_fir/fir_kernel.cc)). The reference in §4 evaluates the same expression in the same order.
 
 ### 2.3 Interleaved I/Q layout
 
@@ -78,17 +78,27 @@ The reference performs the same operation the kernel does, in the same order, wi
     Ix      = in_f[0::2]                            # 2048 f32
     Qx      = in_f[1::2]                            # 2048 f32
 
-    Ix_ext = np.pad(Ix, (0, L), mode='constant')    # 2056 f32
-    Qx_ext = np.pad(Qx, (0, L), mode='constant')    # 2056 f32
-
+    # Zero-history warmup: the shift register is initialized to zeros and
+    # ingests one new (I, Q) sample per output. For i < L - 1 some slots
+    # are still zero, which matches the kernel's cold-start behaviour.
     M = 2048
+    hist_i = np.zeros(L, dtype=np.float32)
+    hist_q = np.zeros(L, dtype=np.float32)
     ref = np.zeros(2 * M, dtype=np.float32)
+
     for i in range(M):
-        Iacc = 0.0
-        Qacc = 0.0
+        # Shift left by one, newest sample ingested at slot L - 1.
+        hist_i[0:L-1] = hist_i[1:L]; hist_i[L-1] = Ix[i]
+        hist_q[0:L-1] = hist_q[1:L]; hist_q[L-1] = Qx[i]
+
+        # Direct form: newest sample hist[L-1] pairs with tap 0.
+        # This is out[i] = sum_{k=0..L-1} h[k] * x[i - k].
+        Iacc = np.float32(0.0)
+        Qacc = np.float32(0.0)
         for k in range(L):
-            Iacc += Ix_ext[i + k] * Ih[k] - Qx_ext[i + k] * Qh[k]
-            Qacc += Ix_ext[i + k] * Qh[k] + Qx_ext[i + k] * Ih[k]
+            si = hist_i[L - 1 - k]; sq = hist_q[L - 1 - k]
+            Iacc += si * Ih[k] - sq * Qh[k]
+            Qacc += si * Qh[k] + sq * Ih[k]
         ref[2*i]     = Iacc
         ref[2*i + 1] = Qacc
 

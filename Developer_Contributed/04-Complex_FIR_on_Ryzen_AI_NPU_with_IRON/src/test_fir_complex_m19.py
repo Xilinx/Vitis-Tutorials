@@ -6,8 +6,10 @@
 # Target architecture: AMD Phoenix NPU1 / XDNA1 / AIE2.
 # Input types: bfloat16 interleaved I/Q signal (4096 elements = 2048 pairs).
 # Output types: bfloat16 filtered I/Q output verified against the reference.
-# Scaling: direct bfloat16 operand load, float32 multiply-accumulate,
-#          single bfloat16 truncation on store, matching M5/M6.
+# Scaling: direct bfloat16 operand load on I/Q samples, float32 taps loaded
+#          straight into the multiply-accumulate unit, single bfloat16
+#          truncation on store. The reference here mirrors that operand
+#          contract exactly (no bf16 round-trip on the taps).
 # Alignment assumptions: handled by IRON XRTTensor / BO runtime.
 # State requirements: device 0 (NPU Phoenix).
 # Error handling: Bit-accurate tolerance check against reference complex FIR.
@@ -44,16 +46,22 @@ from ml_dtypes import bfloat16
 # Taps hard-coded to match tests/m19_complex_fir/fir_complex_kernel.cc.
 # Ih matches tests/m5_fir/fir_kernel.cc exactly so the M5-degeneracy check
 # is a real check of the I path.
+# Tap constants are stored as `const float` in fir_complex_kernel.cc. The kernel
+# loads them directly into the float32 multiply-accumulate unit; only the input
+# I/Q samples and the output word are bfloat16. The reference below therefore
+# keeps taps in float32 with no bf16 round-trip, so it computes with the exact
+# same tap values the silicon computes with (bit-exact operand contract on
+# taps; inputs and store still follow the kernel's bf16 -> f32 -> bf16 path).
 COEFFS_I_F = [0.05, 0.10, 0.20, 0.30, 0.30, 0.20, 0.10, 0.05]
 COEFFS_Q_F = [0.05, 0.10, 0.20, 0.30, -0.30, -0.20, -0.10, -0.05]
 L = 8
 
 
-def _bf16_coeffs():
-    """Cast tap constants through bfloat16 then back to float32, matching
-    the M5 convention (tests/m5_fir/test_fir_m5.py lines 104-105)."""
-    Ih = np.array([float(bfloat16(c)) for c in COEFFS_I_F], dtype=np.float32)
-    Qh = np.array([float(bfloat16(c)) for c in COEFFS_Q_F], dtype=np.float32)
+def _f32_coeffs():
+    """Return the tap arrays as float32, matching the `const float` taps
+    baked into fir_complex_kernel.cc (see kernel lines 66-82)."""
+    Ih = np.array(COEFFS_I_F, dtype=np.float32)
+    Qh = np.array(COEFFS_Q_F, dtype=np.float32)
     return Ih, Qh
 
 
@@ -73,7 +81,7 @@ def complex_fir_reference(in_bf16):
     -------
     ref_bf16 : np.ndarray of dtype bfloat16, shape (2 * M,), interleaved I/Q.
     """
-    Ih, Qh = _bf16_coeffs()
+    Ih, Qh = _f32_coeffs()
 
     in_f = in_bf16.astype(np.float32)
     Ix = in_f[0::2]
@@ -174,9 +182,11 @@ def _local_impulse_check(N):
 
     Under textbook direct-form out[i] = sum_k h[k] * x[i-k] with a unit
     impulse at x[0], the impulse response is out[k] = h[k] for k in
-    [0, L-1] and zero elsewhere.
+    [0, L-1] and zero elsewhere. The impulse coefficient path goes through
+    a single bf16 store at the end of the reference, so the expected
+    samples are bf16-truncated tap values.
     """
-    Ih, Qh = _bf16_coeffs()
+    Ih, Qh = _f32_coeffs()
     M = N // 2
     Ix = np.zeros(M, dtype=np.float32)
     Qx = np.zeros(M, dtype=np.float32)
@@ -185,6 +195,7 @@ def _local_impulse_check(N):
 
     ref = complex_fir_reference(in_bf16).astype(np.float32)
 
+    # Expected impulse response = h[k], then bf16 truncated (single store).
     expected = np.zeros(2 * M, dtype=np.float32)
     Ih_bf = np.array(Ih, dtype=bfloat16).astype(np.float32)
     Qh_bf = np.array(Qh, dtype=bfloat16).astype(np.float32)
@@ -202,7 +213,7 @@ def _local_dc_check(N):
     """Test 2: DC input on I only, Q = 0. Steady-state samples of the I
     output must equal sum(Ih); of the Q output must equal sum(Qh). The
     filter enters steady state at index L - 1 = 7."""
-    Ih, Qh = _bf16_coeffs()
+    Ih, Qh = _f32_coeffs()
     M = N // 2
     Ix = np.ones(M, dtype=np.float32)
     Qx = np.zeros(M, dtype=np.float32)
@@ -241,7 +252,7 @@ def _local_tone_check(N):
     ref = complex_fir_reference(in_bf16).astype(np.float32)
     ref_cplx = ref[0::2] + 1j * ref[1::2]
 
-    Ih, Qh = _bf16_coeffs()
+    Ih, Qh = _f32_coeffs()
     h_cplx = (Ih + 1j * Qh).astype(np.complex128)
     w = 2.0 * np.pi * f_bin / M
     H = np.sum(h_cplx * np.exp(-1j * w * np.arange(L, dtype=np.float64)))
@@ -271,7 +282,7 @@ def _local_m5_degeneracy_check(N):
     Qx = np.zeros(M, dtype=np.float32)
     in_bf16 = _pack_iq(Ix, Qx, N)
 
-    Ih, _ = _bf16_coeffs()
+    Ih, _ = _f32_coeffs()
 
     # Reference under this kernel's convention with Qh=0.
     Qh_saved = COEFFS_Q_F.copy()

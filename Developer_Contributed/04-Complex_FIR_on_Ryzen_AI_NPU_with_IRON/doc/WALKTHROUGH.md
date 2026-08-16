@@ -95,14 +95,22 @@ Open `src/test_fir_complex_m19.py`. The host program is written in the IRON `Run
 
 ### 3.1. Placement
 
-A single AIE2 compute tile is placed on the Phoenix NPU:
+A single AIE2 compute tile runs the kernel on the Phoenix NPU. The tutorial takes the IRON-canonical implicit-placement path: a `Worker` is constructed around the kernel `core_body`, and the enclosing `Program` binds the worker to a compute tile the runtime chooses from the Phoenix topology.
 
 ```python
-rt = iron.Runtime(device="npu1")
-compute_tile = rt.tile(0, 2)   # column 0, row 2
+worker = Worker(
+    core_body,
+    fn_args=[of_in.cons(), of_out.prod(), fir_func],
+    stack_size=0x4000,        # 16 KiB tile stack, empirically sized
+)
+rt = Runtime(
+    sequence,
+    [in_ty, out_ty, of_in.prod(), of_out.cons()],
+)
+my_program = Program(iron.get_current_device(), rt, workers=[worker])
 ```
 
-Row 2 is the first user-compute row on the Phoenix 4×5 topology (rows 0 and 1 are shim and mem-tile respectively). No inter-tile fabric is used — everything the kernel needs fits in a single tile's local memory.
+The worker lands on a user-compute row of the Phoenix topology (see the [kernel.org XDNA docs](https://docs.kernel.org/accel/amdxdna/amd_hwp_arch.html) for the tile array layout). No inter-tile fabric is used — everything the kernel needs fits in a single tile's local memory. The `stack_size=0x4000` is not decorative: the AIE2 core stack default was observed to be too small for the local 8-float shift-register arrays plus the unrolled dot product temporaries, and the default hangs with `ERT_CMD_STATE_TIMEOUT`; 16 KiB fixes it. This value is copied from [`tests/m17_radix2_fft/test_fft_m17_v3.py`](https://github.com/midhatn/phoenix-sdr-dsp/blob/main/tests/m17_radix2_fft/test_fft_m17_v3.py) in the upstream project.
 
 ### 3.2. Buffers
 
@@ -118,7 +126,7 @@ A single call to the runtime dispatches the kernel with the two buffer pointers.
 
 ## 4. Verify
 
-The NumPy reference in the test file walks the same shift-and-ingest schedule as the kernel — same tap values, same operand promotion (`bfloat16` → `float32`), same order of multiplies and adds, same single `bfloat16` truncation on store. The reference is therefore *bit-exact*, not just approximately equal.
+The NumPy reference in the test file walks the same shift-and-ingest schedule as the kernel — same `float32` tap values (loaded from `const float` slots in `fir_complex_kernel.cc` on the silicon side, and from the same tap constants in `float32` on the reference side), same operand promotion (`bfloat16` → `float32` on I/Q inputs), same order of multiplies and adds, same single `bfloat16` truncation on store. The reference is therefore *bit-exact against the kernel's operand contract*: any residual difference on a given sample is bounded by one `bfloat16` ULP from the final truncation, not by a discrepancy in what the two paths compute with.
 
 The silicon dispatch uses a single fixed-seed random I/Q vector (NumPy `seed = 456`, 2048 complex samples, uniform on `[-1, 1]`):
 

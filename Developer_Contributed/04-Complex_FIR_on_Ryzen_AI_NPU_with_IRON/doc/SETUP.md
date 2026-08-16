@@ -72,7 +72,7 @@ Both must succeed. This is the toolchain readiness gate before running the tutor
 
 ## Test dependency
 
-The tutorial's Python test uses `numpy`, which is already present in the standard `ironenv`. The test is a self-contained `main()`-driven script; no `pytest` invocation is needed. No additional wheels are required.
+The tutorial's Python test uses `numpy` and `ml_dtypes` (for the `bfloat16` dtype). Both wheels are already installed inside the standard IRON `ironenv` virtual environment used for MLIR-AIE examples, so no additional `pip install` step is needed. Verify with `python -c "import numpy, ml_dtypes; print(numpy.__version__, ml_dtypes.__version__)"` inside `ironenv`; if either import fails, install with `pip install numpy ml_dtypes`. The test is a self-contained `main()`-driven script and does not require `pytest`.
 
 <hr class="sphinxhide"></hr>
 
