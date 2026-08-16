@@ -3,13 +3,7 @@
 """Validate the Python packages required by the M19 tutorial."""
 
 import sys
-from importlib.metadata import version
-
-import aie
-import ml_dtypes
-import numpy
-import pyxrt
-from numpy.lib import NumpyVersion
+from importlib.metadata import PackageNotFoundError, version
 
 
 def main():
@@ -17,9 +11,26 @@ def main():
         "mlir-aie": "1.4.1",
         "llvm-aie": "21.0.0.2026080301+c9c5ecb7",
     }
-    actual = {name: version(name) for name in expected}
+    try:
+        actual = {name: version(name) for name in expected}
+    except PackageNotFoundError as exc:
+        raise RuntimeError(
+            f"required Python distribution is not installed: {exc.name}"
+        ) from None
     if actual != expected:
         raise RuntimeError(f"package mismatch: expected {expected}, found {actual}")
+
+    try:
+        import aie
+        import ml_dtypes
+        import numpy
+        import pyxrt
+        from numpy.lib import NumpyVersion
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(
+            f"required Python module is not importable: {exc.name}"
+        ) from None
+
     if not (
         NumpyVersion("2.5.1") <= NumpyVersion(numpy.__version__) < NumpyVersion("3.0.0")
     ):
