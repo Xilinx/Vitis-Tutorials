@@ -1,5 +1,17 @@
 # Vitis-Tutorials ChangeLog
 
+## 2026.1_update (Aug. 14, 2026)
+
+### New Tutorials
+
+- Vitis_System_Design/Feature_Tutorials/03-Vitis_Hardware_in_the_Loop/
+
+### Tutorial Updates
+
+- Revamped a tutorial to use the Vitis Subsystem tutorial's build flow as a selectable option.
+    - Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/
+    - Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/
+
 ## 2026.1 (Jul. 15, 2026)
 
 ### New Tutorials
