@@ -35,6 +35,6 @@ jobs:
         run: |
           _regression/scripts/agent_wrapper.sh \
             --system-prompt _regression/agents/code-reviewer.md \
-            --max-turns 15 \
+            --max-turns 30 \
             --max-budget-usd 3 \
             "$AGENT_PROMPT"
