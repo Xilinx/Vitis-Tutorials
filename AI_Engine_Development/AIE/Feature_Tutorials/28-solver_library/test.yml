@@ -1,0 +1,11 @@
+name: AIE_F_28-solver_library
+category: canary
+platform: [xilinx_vck190_base]
+flow: versal
+env:
+  build: env_setup_versal.sh
+targets:
+  vitis_aie_sim:
+    timeout: 100m
+    memory: 32GB
+    run: cd design && make all
