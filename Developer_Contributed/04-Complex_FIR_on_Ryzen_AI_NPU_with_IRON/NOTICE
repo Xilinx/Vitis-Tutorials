@@ -1,0 +1,13 @@
+Complex FIR on the AMD Ryzen AI NPU with IRON
+Copyright (c) 2026 Midhat Nashar
+
+This tutorial is adapted from contributor-owned, MIT-licensed source in:
+
+  Repository: https://github.com/midhatn/phoenix-sdr-dsp
+  Revision:   4bc0f158e9208469cf356d1349cef1aff55e8e47
+  Paths:
+    tests/m19_complex_fir/fir_complex_kernel.cc
+    tests/m19_complex_fir/test_fir_complex_m19.py
+
+The tutorial adaptation, documentation, and scripts are distributed under
+the MIT License included in this directory.
