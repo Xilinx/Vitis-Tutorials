@@ -110,28 +110,31 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 ## Step 4: Run or Debug the System in Hardware using JTAG
 We will now test our system first by booting it through JTAG. As discussed previously, the segmented flow will use two PDI files; boot and PLD. The AIE binaries are applied to the PLD PDI. We have to tell the IDE to use both of them
+Due to a limitation in the Vitis IDE in 2026.1, the run needs to be launched through XSDB instead of the IDE
 
-1. In the flow navigator, select the A-to-Z_app component and click on the configuration icon which appear on the right of the Run option when you hover it with you mouse
-   ![missing image](images/251_jtag_config.jpg)
-
-2. Click on New Launch Configuration
-
-3. Set up you target connection (local or remote)
-
-4. Select **Load PL PDI** and set the path to **${workspaceFolder}/simple_aie_application_system_project/build/hw/package/package/binary_container_1.pdi**
-
-5. Power up the board
+1. Power up the board
 
 The output will be send to UART0. 
 
-6. If you are using a Rev B. board, open a serial terminal to get the UART0. If you are using a RevA, the UART0 is not available through the serial interfaces but is routed to the System Controller for remote UART functionality. To access it, log in to the system controller and set an IP address for the PS ethernet inteface and an IP address of the same network group to your PC (for example 192.168.1.2 and 192.168.1.1). Then open a Telnet Terminal (for example in tera term) and connect to 192.168.1.2:4001 to get the UART0 terminal
+2. If you are using a Rev B. board, open a serial terminal to get the UART0. If you are using a RevA, the UART0 is not available through the serial interfaces but is routed to the System Controller for remote UART functionality. To access it, log in to the system controller and set an IP address for the PS ethernet inteface and an IP address of the same network group to your PC (for example 192.168.1.2 and 192.168.1.1). Then open a Telnet Terminal (for example in tera term) and connect to 192.168.1.2:4001 to get the UART0 terminal
 
    ![missing image](images/Telnet_tera_term.jpg)
 
-7. Click on Run. You should see the application running successfully
-
-   ![missing image](images/UART_out.jpg)
-
+3. Start xsdb from the workspace folder and run the following commands:
+ ```bash
+connect
+targets -set -nocase -filter {name =~"APU Cluster #0*"}
+rst -system
+after 3000
+targets -set -filter {name=="PMC" }
+device program ./A-to-Z_app/_ide/bootimage/resources/vpl_gen_fixed_boot.pdi
+device program ./simple_aie_application_system_project/build/hw/package/package/container.pdi
+targets -set -nocase -filter {name =~ "*A78*#0.0"}
+rst -processor
+dow ./A-to-Z_app/build/A-to-Z_app.elf
+con
+```
+   
 ## Summary
 
 In this tutorial, you have performed an end-to-end flow to create a platform based on the VEK385 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to control the system. Then you have run the system is hardware emulation and hardware.
