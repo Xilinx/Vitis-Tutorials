@@ -446,6 +446,20 @@ These tutorials target the **VCK190** board. Use the following table to find ava
  <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/28-solver_library/">Solving Linear Systems Using Solver Libraries</a></td>
+ <td>Base/Part</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr> 
  </table>
 

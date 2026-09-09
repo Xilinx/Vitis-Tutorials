@@ -125,6 +125,10 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./27-system-timeline/">System Timeline Tutorial</a></td>
  <td>This tutorial demonstrates how to use System Timeline, a new feature that traces all subsystems of the device (PL, PS and AI Engine array). It displays them in Vitis Analyzer on the same graph with a synchronized timeline. </td>
  </tr>   
+ <tr>
+ <td align="center"><a href="./28-solver_library/">Solving Linear Systems Using Solver Libraries</a></td>
+ <td>In this tutorial, we demonstrate how to use the Vitis Solver Libraries on the AI Engine. Through two practical use cases, we illustrate the configuration process and discuss the key parameters involved. After configuring the parameters, implement and simulate the design, and then examine the resulting performance metrics to gain insights into its behavior and efficiency.</td>
+ </tr>
  </table>
 
 

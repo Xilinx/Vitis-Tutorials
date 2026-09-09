@@ -404,6 +404,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/27-system-timeline/">System Timeline Tutorial</a>         
             </td>
             <td>              
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/28-solver_library/">Solving Linear Systems Using Solver Libraries :new: </a>
             </td>
             <td>
             </td> 

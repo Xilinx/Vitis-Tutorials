@@ -21,7 +21,7 @@
 
 Many wireless and signal-processing algorithms reduce to **solving linear systems** or related least-squares problems. The AI Engine Solver Library provides optimized building blocks—such as **Cholesky decomposition** and **forward/backward substitution**—that you can connect in a dataflow graph to solve structured problems efficiently on Versal AI Engines.
 
-**IMPORTANT**: Before starting this tutorial, read and follow the *Vitis Software Platform Release Notes* (v2026.1) to set up the software and install the **VCK190** base platform.
+**IMPORTANT**: Before starting this tutorial, read and follow the *Vitis Software Platform Release Notes* (v2026.1) to set up the software. This tutorial compiles and simulates the AI Engine graph directly against the `xcvc1902-vsva2197-2MP-e-S` part (the device used on the **VCK190** board) using the x86 and AI Engine simulators, so no base platform installation or hardware build is required.
 
 Then complete the following steps:
 

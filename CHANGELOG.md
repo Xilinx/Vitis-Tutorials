@@ -1,5 +1,11 @@
 # Vitis-Tutorials ChangeLog
 
+## 2026.1_update (Sep. 8, 2026)
+
+### New Tutorials
+
+- AI_Engine_Development/AIE/Feature_Tutorials/28-solver_library/
+
 ## 2026.1_update (Aug. 14, 2026)
 
 ### New Tutorials
